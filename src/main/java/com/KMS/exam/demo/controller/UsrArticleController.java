@@ -3,15 +3,20 @@ package com.KMS.exam.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.vo.Article;
+
 
 @Controller
 public class UsrArticleController {
-
+	
+	@Autowired
+	private ArticleService articleservice;
 	private int lastArticleId;
 	private List<Article> articles;
 
@@ -97,17 +102,12 @@ public class UsrArticleController {
 	}
 	@RequestMapping("/usr/article/detail")
 	@ResponseBody
-	public String showDetail(int id) {
+	public Object showDetail(int id) {
 		Article article = getArticle(id);
 		if(article == null) {
 			return id+"번 게시물은 존재하지 않습니다.";
 		}
-		String articleDetail ="";
-		articleDetail += (article.getId()+"번 게시물 상세보기");
-		articleDetail += ("제목: "+article.getTitle()+"\n");
-		articleDetail += ("내용: "+article.getBody());
-		
-		return articleDetail;
+		return article;
 	}
 	
 }
