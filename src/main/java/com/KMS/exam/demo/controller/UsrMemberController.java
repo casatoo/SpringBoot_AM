@@ -24,7 +24,7 @@ public class UsrMemberController {
 	/**
 	 * dojoin 맵핑하기 return 값은 회원가입 메시지를 주기 위해 가입시키고 member 값을 받아온다. 인자값은
 	 * id,pw,이름,닉네임,전화번호,이메일 vo에 member 만들어야 함 Service에 doJoin 메서드 생성 가입절차 시작 전에 아이디
-	 * 중복 여부 확인
+	 * 중복 여부 확인 -1 이면 아이디 중복 -2 이면 이름+이메일 중복
 	 */
 	@RequestMapping("/usr/member/dojoin")
 	@ResponseBody
@@ -52,10 +52,10 @@ public class UsrMemberController {
 		
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
-		if(id == 0) {
-			return "이미 가입된 회원입니다.";
+		if(id == -2) {
+			return ut.printF("%s, %s 는 이미 가입된 회원입니다.", name, email);
 		}else if(id == -1) {
-			return "사용중인 ID 입니다.";
+			return ut.printF("%s 는 사용중인 ID 입니다.", loginId);
 		}else {
 			Member member = memberService.getMember(id);
 			return member;
@@ -70,7 +70,7 @@ public class UsrMemberController {
 	 * 비밀번호 유효 여부 판단. 잘못된 비밀번호일 경우 메세지
 	 * 모두 일치 확인하면 로그인 성공 메세지
 	 * 이것도 서비스에서 int 로 받아오자.
-	 * -1 이면 아이디 잘못 0 이면 비밀번호 잘못 1 이상은 참이니까
+	 * -1 이면 아이디 잘못 -2 이면 비밀번호 잘못 1 이상은 참이니까
 	 * 세션에 정보를 저장
 	 * 
 	 */
@@ -87,7 +87,7 @@ public class UsrMemberController {
 		if(doLogin == -1) {
 			return "존재하지 않는 아이디 입니다.";
 		}
-		if(doLogin == 0) {
+		if(doLogin == -2) {
 			return "잘못된 비밀번호 입니다.";
 		}
 		Member member = memberService.getMemberByLoginId(loginId);

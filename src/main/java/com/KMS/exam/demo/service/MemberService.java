@@ -38,7 +38,7 @@ public class MemberService {
 		}
 		int matchMember = memberRepository.matchMember(name, email);
 		if(matchMember == 1) {
-			return 0;
+			return -2;
 		}
 		memberRepository.Join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
@@ -53,7 +53,7 @@ public class MemberService {
 		}
 		String getLoginPw = memberRepository.getLoginPw(loginId);
 		if(!getLoginPw.equals(loginPw)) {
-			return 0;
+			return -2;
 		}
 		return 1;
 		
