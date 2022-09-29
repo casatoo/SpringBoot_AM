@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.MemberService;
+import com.KMS.exam.demo.util.ut;
 import com.KMS.exam.demo.vo.Member;
 
 /**
@@ -14,15 +15,6 @@ import com.KMS.exam.demo.vo.Member;
  */
 @Controller
 public class UsrMemberController {
-	
-	boolean checkStr(String str) {
-		str.replaceAll(" ","");
-		if(str == null || str.equals("")) {
-			return true;
-		}
-		return false;
-	}
-	
 	/**
 	 * memberService 와 연결
 	 */
@@ -39,22 +31,22 @@ public class UsrMemberController {
 	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
-		if(checkStr(loginId)) {
+		if(ut.checkStr(loginId)) {
 			return "아이디를 입력해주세요";
 		}
-		if(checkStr(loginPw)) {
+		if(ut.checkStr(loginPw)) {
 			return "비밀번호를 입력해주세요";
 		}
-		if(checkStr(name)) {
+		if(ut.checkStr(name)) {
 			return "이름을 입력해주세요";
 		}
-		if(checkStr(nickname)) {
+		if(ut.checkStr(nickname)) {
 			return "닉네임을 입력해주세요";
 		}
-		if(checkStr(cellphoneNum)) {
+		if(ut.checkStr(cellphoneNum)) {
 			return "전화번호를 입력해주세요";
 		}
-		if(checkStr(email)) {
+		if(ut.checkStr(email)) {
 			return "이메일을 입력해주세요";
 		}
 		
@@ -83,10 +75,10 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw) {
-		if(checkStr(loginId)) {
+		if(ut.checkStr(loginId)) {
 			return "아이디를 입력해주세요";
 		}
-		if(checkStr(loginPw)) {
+		if(ut.checkStr(loginPw)) {
 			return "비밀번호를 입력해주세요";
 		}
 		int doLogin= memberService.doLogin(loginId,loginPw);
