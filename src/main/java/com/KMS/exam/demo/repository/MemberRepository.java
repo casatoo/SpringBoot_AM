@@ -18,5 +18,7 @@ public interface MemberRepository {
 	public String getLoginPw(String loginId);
 	
 	public Member getMemberByLoginId(String loginId);
+	
+	public int matchMember(String name, String email);
 
 }

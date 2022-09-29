@@ -52,8 +52,10 @@ public class UsrMemberController {
 		
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
-		if(id == -1) {
-			return "이미 사용중인 ID 입니다.";
+		if(id == 0) {
+			return "이미 가입된 회원입니다.";
+		}else if(id == -1) {
+			return "사용중인 ID 입니다.";
 		}else {
 			Member member = memberService.getMember(id);
 			return member;
@@ -83,7 +85,7 @@ public class UsrMemberController {
 		}
 		int doLogin= memberService.doLogin(loginId,loginPw);
 		if(doLogin == -1) {
-			return "잘못된 아이디 입니다.";
+			return "존재하지 않는 아이디 입니다.";
 		}
 		if(doLogin == 0) {
 			return "잘못된 비밀번호 입니다.";

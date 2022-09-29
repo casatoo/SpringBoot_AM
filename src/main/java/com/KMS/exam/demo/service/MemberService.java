@@ -36,6 +36,10 @@ public class MemberService {
 		if(matchLoginId == 1) {
 			return -1;
 		}
+		int matchMember = memberRepository.matchMember(name, email);
+		if(matchMember == 1) {
+			return 0;
+		}
 		memberRepository.Join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
 		return id;
@@ -58,14 +62,6 @@ public class MemberService {
 	
 	public Member getMember(int id) {
 		return memberRepository.getMember(id);
-	}
-	
-	public int mathloginId(String loginId) {
-		return memberRepository.matchLoginId(loginId);
-	}
-	
-	public String getLoginPw(String loginId) {
-		return memberRepository.getLoginPw(loginId);
 	}
 	
 	public Member getMemberByLoginId(String loginId) {
