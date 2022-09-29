@@ -31,14 +31,45 @@ public class MemberService {
 		 * 맴버 생성
 		 * 라스트생성 아이디 가져옴 반환함
 		 */
+		int matchLoginId = memberRepository.matchLoginId(loginId);
+		
+		if(matchLoginId == 1) {
+			return -1;
+		}
 		memberRepository.Join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
 		return id;
 	}
 	
+	public int doLogin(String loginId, String loginPw) {
+		
+		int matchLoginId = memberRepository.matchLoginId(loginId);
+		if(matchLoginId == 0) {
+			return -1;
+		}
+		String getLoginPw = memberRepository.getLoginPw(loginId);
+		if(!getLoginPw.equals(loginPw)) {
+			return 0;
+		}
+		return 1;
+		
+	}
+	
 	
 	public Member getMember(int id) {
 		return memberRepository.getMember(id);
+	}
+	
+	public int mathloginId(String loginId) {
+		return memberRepository.matchLoginId(loginId);
+	}
+	
+	public String getLoginPw(String loginId) {
+		return memberRepository.getLoginPw(loginId);
+	}
+	
+	public Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
 	}
 	
 }

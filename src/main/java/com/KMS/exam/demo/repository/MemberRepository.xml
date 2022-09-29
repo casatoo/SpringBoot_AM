@@ -25,4 +25,36 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
+
+	<select id="matchLoginId" resultType="int">
+		SELECT COUNT(*)
+		FROM `member`
+		WHERE loginId
+		= #{loginId}
+	</select>
+	
+	<select id="getLoginPw" resultType="String">
+		SELECT loginPw
+		FROM `member`
+		WHERE loginId
+		= #{loginId}
+	</select>
+	
+	<select id="getMemberByLoginId" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE loginId 
+		= #{loginId}
+	</select>
+	
+	<select id="matchMember" resultType="int">
+		SELECT COUNT(*)
+		FROM `member`
+		WHERE `name`
+		= #{name}
+		AND email
+		= #{email}
+	</select>
+	
+	
 </mapper>
