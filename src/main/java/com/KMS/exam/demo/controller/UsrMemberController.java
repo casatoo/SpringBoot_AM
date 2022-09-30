@@ -1,5 +1,8 @@
 package com.KMS.exam.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import com.KMS.exam.demo.vo.Member;
  */
 @Controller
 public class UsrMemberController {
+	
 	/**
 	 * memberService 와 연결
 	 */
@@ -76,7 +80,7 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw) {
+	public String doLogin(String loginId, String loginPw, HttpServletRequest request) {
 		if(ut.checkStr(loginId)) {
 			return "아이디를 입력해주세요";
 		}
@@ -91,6 +95,10 @@ public class UsrMemberController {
 			return "잘못된 비밀번호 입니다.";
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
+		HttpSession session = request.getSession();
+		session.setAttribute("loginedId",member.getId());
+		
+		
 		return member.getName()+"님 환영합니다.";
 	}
 }

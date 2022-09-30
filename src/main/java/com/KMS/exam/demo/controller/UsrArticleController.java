@@ -2,6 +2,9 @@ package com.KMS.exam.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +24,12 @@ public class UsrArticleController {
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public Article doAdd(String title, String body) {
-		int id = articleService.writeArticle(title, body);
+	public Article doAdd(String title, String body ,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		int loginedId = (int) session.getAttribute("loginedId");
+		
+		int id = articleService.writeArticle(title, body, loginedId);
 
 		Article article = articleService.getArticle(id);
 

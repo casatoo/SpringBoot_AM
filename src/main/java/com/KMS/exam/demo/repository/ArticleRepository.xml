@@ -9,7 +9,8 @@
 		updateDate =
 		NOW(),
 		title = #{title},
-		`body` = #{body}
+		`body` = #{body},
+		loginedId =  #{loginedId}
 	</insert>
 
 	<select id="getArticles" resultType="Article">

@@ -13,7 +13,7 @@ import com.KMS.exam.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 
-	public void writeArticle(String title, String body);
+	public void writeArticle(String title, String body, int loginedId);
 
 	public Article getArticle(int id);
 
