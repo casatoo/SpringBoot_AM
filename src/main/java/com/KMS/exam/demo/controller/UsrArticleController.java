@@ -26,27 +26,38 @@ public class UsrArticleController {
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(String title, String body ,HttpServletRequest request) {
+	public ResultData<Article> doAdd(String title, String body ,HttpServletRequest request) {
+		
+		if(Ut.empty(title)) {
+			return ResultData.from("F-1", "제목을 입력해주세요");
+		}
+		if(Ut.empty(body)) {
+			return ResultData.from("F-1", "내용을 입력해주세요");
+		}
 		
 		HttpSession session = request.getSession();
 		int loginedId = (int) session.getAttribute("loginedId");
 		
-		int id = articleService.writeArticle(title, body, loginedId);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, loginedId);
+		
+		int id = (int) writeArticleRd.getData1();
 
 		Article article = articleService.getArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시물작성.", id), article);
+		return ResultData.newData(writeArticleRd, article);
 	}
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public List<Article> getArticles() {
-		return articleService.getArticles();
+	public ResultData<List<Article>> getArticles() {
+		List<Article> articles = articleService.getArticles();
+
+		return ResultData.from("S-1", "Article List", articles);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id) {
+	public ResultData<Article> doDelete(int id) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
@@ -60,7 +71,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
+	public ResultData<Article> doModify(int id, String title, String body) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
@@ -75,7 +86,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id) {
+	public ResultData<Article> getArticle(int id) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KMS.exam.demo.service.MemberService;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Member;
+import com.KMS.exam.demo.vo.ResultData;
 
 /**
  * 
@@ -32,39 +33,35 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("/usr/member/dojoin")
 	@ResponseBody
-	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
-		if(Ut.checkStr(loginId)) {
-			return "아이디를 입력해주세요";
+		if(Ut.empty(loginId)) {
+			return ResultData.from("F-1","아이디를 입력해주세요");
 		}
-		if(Ut.checkStr(loginPw)) {
-			return "비밀번호를 입력해주세요";
+		if(Ut.empty(loginPw)) {
+			return ResultData.from("F-2","비밀번호를 입력해주세요");
 		}
-		if(Ut.checkStr(name)) {
-			return "이름을 입력해주세요";
+		if(Ut.empty(name)) {
+			return ResultData.from("F-3","이름을 입력해주세요");
 		}
-		if(Ut.checkStr(nickname)) {
-			return "닉네임을 입력해주세요";
+		if(Ut.empty(nickname)) {
+			return ResultData.from("F-4","닉네임을 입력해주세요");
 		}
-		if(Ut.checkStr(cellphoneNum)) {
-			return "전화번호를 입력해주세요";
+		if(Ut.empty(cellphoneNum)) {
+			return ResultData.from("F-5","전화번호를 입력해주세요");
 		}
-		if(Ut.checkStr(email)) {
-			return "이메일을 입력해주세요";
+		if(Ut.empty(email)) {
+			return ResultData.from("F-6","이메일을 입력해주세요");
 		}
 		
-		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData doJoinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
-		if(id == -2) {
-			return Ut.f("%s, %s 는 이미 가입된 회원입니다.", name, email);
-		}else if(id == -1) {
-			return Ut.f("%s 는 사용중인 ID 입니다.", loginId);
-		}else {
-			Member member = memberService.getMember(id);
-			return member;
+		if(doJoinRd.isFail()) {
+			return doJoinRd;
 		}
-
+		Member member = memberService.getMember((int) doJoinRd.getData1());
+		return ResultData.newData(doJoinRd,member);
 	}
 	/**
 	 * 로그인 기능 구현
@@ -81,10 +78,10 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, HttpServletRequest request) {
-		if(Ut.checkStr(loginId)) {
+		if(Ut.empty(loginId)) {
 			return "아이디를 입력해주세요";
 		}
-		if(Ut.checkStr(loginPw)) {
+		if(Ut.empty(loginPw)) {
 			return "비밀번호를 입력해주세요";
 		}
 		int doLogin= memberService.doLogin(loginId,loginPw);

@@ -2,7 +2,7 @@ package com.KMS.exam.demo.util;
 
 public class Ut {
 	
-	public static boolean checkStr(Object obj) {
+	public static boolean empty(Object obj) {
 		if(obj == null) {
 			return true;
 		}

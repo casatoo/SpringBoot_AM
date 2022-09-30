@@ -10,12 +10,12 @@ regDate DATETIME NOT NULL,
 updateDate DATETIME NOT NULL,
 title VARCHAR(200) NOT NULL,
 `body` TEXT NOT NULL,
-memberId INT(10) NOT NULL
+loginedId INT(10) NOT NULL
 );
 
 SELECT * FROM article;
 
-INSERT INTO article(regDate,updateDate,title,`body`,memberId)VALUES
+INSERT INTO article(regDate,updateDate,title,`body`,loginedId)VALUES
 (NOW(),NOW(),'제목1','내용1',2),
 (NOW(),NOW(),'제목2','내용2',3),
 (NOW(),NOW(),'제목3','내용3',1),

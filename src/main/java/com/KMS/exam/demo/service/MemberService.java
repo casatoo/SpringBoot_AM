@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KMS.exam.demo.repository.MemberRepository;
+import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Member;
+import com.KMS.exam.demo.vo.ResultData;
 
 /**
  * 
@@ -26,7 +28,7 @@ public class MemberService {
 	 * article과 같이 맴버생성하고 생성한 맴버 조회해서 값을 넘기는걸로 한다.
 	 * 
 	 */
-	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public ResultData<Integer> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 		/**
 		 * 맴버 생성
 		 * 라스트생성 아이디 가져옴 반환함
@@ -34,15 +36,15 @@ public class MemberService {
 		int matchLoginId = memberRepository.matchLoginId(loginId);
 		
 		if(matchLoginId == 1) {
-			return -1;
+			return ResultData.from("F-7",Ut.f("이미 가입된 회원입니다. %s, %s",name, email));
 		}
 		int matchMember = memberRepository.matchMember(name, email);
 		if(matchMember == 1) {
-			return -2;
+			return ResultData.from("F-8",Ut.f("이미 사용중인 아이디 %s 입니다.",loginId));
 		}
 		memberRepository.Join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
-		return id;
+		return ResultData.from("S-1","회원가입 성공",id);
 	}
 	
 	public int doLogin(String loginId, String loginPw) {
