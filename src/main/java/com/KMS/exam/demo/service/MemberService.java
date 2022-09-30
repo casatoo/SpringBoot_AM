@@ -47,17 +47,17 @@ public class MemberService {
 		return ResultData.from("S-1","회원가입 성공",id);
 	}
 	
-	public int doLogin(String loginId, String loginPw) {
+	public ResultData<Integer> doLogin(String loginId, String loginPw) {
 		
 		int matchLoginId = memberRepository.matchLoginId(loginId);
 		if(matchLoginId == 0) {
-			return -1;
+			return ResultData.from("F-3",Ut.f("%s 는 존재하지 않는 아이디 입니다.",loginId));
 		}
 		String getLoginPw = memberRepository.getLoginPw(loginId);
 		if(!getLoginPw.equals(loginPw)) {
-			return -2;
+			return ResultData.from("F-4",Ut.f("비밀번호가 틀렸습니다."));
 		}
-		return 1;
+		return ResultData.from("S-1",Ut.f("로그인 성공"));
 		
 	}
 	

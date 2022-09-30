@@ -72,30 +72,46 @@ public class UsrMemberController {
 	 * 모두 일치 확인하면 로그인 성공 메세지
 	 * 이것도 서비스에서 int 로 받아오자.
 	 * -1 이면 아이디 잘못 -2 이면 비밀번호 잘못 1 이상은 참이니까
-	 * 세션에 정보를 저장
-	 * 
+	 * 세션에 정보를 저장 리퀘스트를 받아서 세션을 생성
+	 * loginedId 저장
 	 */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw, HttpServletRequest request) {
+	public ResultData<Member> doLogin(String loginId, String loginPw, HttpServletRequest request) {
 		if(Ut.empty(loginId)) {
-			return "아이디를 입력해주세요";
+			return ResultData.from("F-1", Ut.f("아이디를 입력해주세요"));
 		}
 		if(Ut.empty(loginPw)) {
-			return "비밀번호를 입력해주세요";
+			return ResultData.from("F-2", Ut.f("비밀번호를 입력해주세요"));
 		}
-		int doLogin= memberService.doLogin(loginId,loginPw);
-		if(doLogin == -1) {
-			return "존재하지 않는 아이디 입니다.";
-		}
-		if(doLogin == -2) {
-			return "잘못된 비밀번호 입니다.";
+		ResultData doLoginRd= memberService.doLogin(loginId,loginPw);
+		if(doLoginRd.isFail()) {
+			return ResultData.from(doLoginRd.getResultCode(),doLoginRd.getMsg());
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
 		HttpSession session = request.getSession();
 		session.setAttribute("loginedId",member.getId());
 		
+		return ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()),member);
+	}
+	/**
+	 * 로그아웃 기능
+	 * 팹핑
+	 * 로그인 하지 않으면 세션자체가 null 상태이기 때문에 오류가 발생한다.
+	 * 조건식으로 세션이 null 이거나 loginedId 가 0 일경우 로그인 하지 않은걸로 한다.
+	 * 
+	 */
+	@RequestMapping("usr/member/logout")
+	@ResponseBody
+	public ResultData doLogout(HttpServletRequest request) {
 		
-		return member.getName()+"님 환영합니다.";
+		HttpSession session = request.getSession();
+		int loginedId = (int) session.getAttribute("loginedId");
+		
+		if(session == null || loginedId == 0) {
+		return ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
+		}
+		session.setAttribute("loginedId",0);		
+		return ResultData.from("S-1",Ut.f("로그아웃 되었습니다."));
 	}
 }

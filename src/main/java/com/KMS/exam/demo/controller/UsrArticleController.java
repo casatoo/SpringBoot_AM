@@ -28,15 +28,19 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData<Article> doAdd(String title, String body ,HttpServletRequest request) {
 		
+		HttpSession session = request.getSession();
+		
+		int loginedId = (int) session.getAttribute("loginedId");
+		
+		if(session == null || loginedId == 0){
+			return ResultData.from("F-1", "로그인 하세요");
+		}
 		if(Ut.empty(title)) {
-			return ResultData.from("F-1", "제목을 입력해주세요");
+			return ResultData.from("F-2", "제목을 입력해주세요");
 		}
 		if(Ut.empty(body)) {
-			return ResultData.from("F-1", "내용을 입력해주세요");
+			return ResultData.from("F-3", "내용을 입력해주세요");
 		}
-		
-		HttpSession session = request.getSession();
-		int loginedId = (int) session.getAttribute("loginedId");
 		
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, loginedId);
 		
