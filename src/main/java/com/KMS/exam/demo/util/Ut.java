@@ -1,6 +1,6 @@
 package com.KMS.exam.demo.util;
 
-public class ut {
+public class Ut {
 	
 	public static boolean checkStr(Object obj) {
 		if(obj == null) {
@@ -15,7 +15,7 @@ public class ut {
 		return str.trim().length() == 0;
 	}
 	
-    public static String printF(String format, Object... args){
+    public static String f(String format, Object... args){
         return String.format(format,args);
     }
 }

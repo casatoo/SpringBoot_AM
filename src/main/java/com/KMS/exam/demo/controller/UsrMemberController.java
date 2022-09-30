@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.MemberService;
-import com.KMS.exam.demo.util.ut;
+import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Member;
 
 /**
@@ -35,31 +35,31 @@ public class UsrMemberController {
 	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
-		if(ut.checkStr(loginId)) {
+		if(Ut.checkStr(loginId)) {
 			return "아이디를 입력해주세요";
 		}
-		if(ut.checkStr(loginPw)) {
+		if(Ut.checkStr(loginPw)) {
 			return "비밀번호를 입력해주세요";
 		}
-		if(ut.checkStr(name)) {
+		if(Ut.checkStr(name)) {
 			return "이름을 입력해주세요";
 		}
-		if(ut.checkStr(nickname)) {
+		if(Ut.checkStr(nickname)) {
 			return "닉네임을 입력해주세요";
 		}
-		if(ut.checkStr(cellphoneNum)) {
+		if(Ut.checkStr(cellphoneNum)) {
 			return "전화번호를 입력해주세요";
 		}
-		if(ut.checkStr(email)) {
+		if(Ut.checkStr(email)) {
 			return "이메일을 입력해주세요";
 		}
 		
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if(id == -2) {
-			return ut.printF("%s, %s 는 이미 가입된 회원입니다.", name, email);
+			return Ut.f("%s, %s 는 이미 가입된 회원입니다.", name, email);
 		}else if(id == -1) {
-			return ut.printF("%s 는 사용중인 ID 입니다.", loginId);
+			return Ut.f("%s 는 사용중인 ID 입니다.", loginId);
 		}else {
 			Member member = memberService.getMember(id);
 			return member;
@@ -81,10 +81,10 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, HttpServletRequest request) {
-		if(ut.checkStr(loginId)) {
+		if(Ut.checkStr(loginId)) {
 			return "아이디를 입력해주세요";
 		}
-		if(ut.checkStr(loginPw)) {
+		if(Ut.checkStr(loginPw)) {
 			return "비밀번호를 입력해주세요";
 		}
 		int doLogin= memberService.doLogin(loginId,loginPw);
