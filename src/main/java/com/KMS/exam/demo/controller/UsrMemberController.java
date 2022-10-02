@@ -78,11 +78,18 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData<Member> doLogin(String loginId, String loginPw, HttpServletRequest request) {
+		
+		int loginedId = Ut.getLoginedId(request);
+		
+		if(loginedId != 0) {
+			return ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
+		}
+		
 		if(Ut.empty(loginId)) {
-			return ResultData.from("F-1", Ut.f("아이디를 입력해주세요"));
+			return ResultData.from("F-2", Ut.f("아이디를 입력해주세요"));
 		}
 		if(Ut.empty(loginPw)) {
-			return ResultData.from("F-2", Ut.f("비밀번호를 입력해주세요"));
+			return ResultData.from("F-3", Ut.f("비밀번호를 입력해주세요"));
 		}
 		ResultData doLoginRd= memberService.doLogin(loginId,loginPw);
 		if(doLoginRd.isFail()) {

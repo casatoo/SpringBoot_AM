@@ -51,11 +51,11 @@ public class MemberService {
 		
 		int matchLoginId = memberRepository.matchLoginId(loginId);
 		if(matchLoginId == 0) {
-			return ResultData.from("F-3",Ut.f("%s 는 존재하지 않는 아이디 입니다.",loginId));
+			return ResultData.from("F-4",Ut.f("%s 는 존재하지 않는 아이디 입니다.",loginId));
 		}
 		String getLoginPw = memberRepository.getLoginPw(loginId);
 		if(!getLoginPw.equals(loginPw)) {
-			return ResultData.from("F-4",Ut.f("비밀번호가 틀렸습니다."));
+			return ResultData.from("F-5",Ut.f("비밀번호가 틀렸습니다."));
 		}
 		return ResultData.from("S-1",Ut.f("로그인 성공"));
 		
