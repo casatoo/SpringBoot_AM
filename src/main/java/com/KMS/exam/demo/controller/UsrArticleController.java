@@ -87,11 +87,23 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Article> doModify(int id, String title, String body) {
+	public ResultData<Article> doModify(int id, String title, String body, HttpServletRequest request) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
+		}
+		int loginedId = Ut.getLoginedId(request);
+		
+		if(loginedId == 0) {
+			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
+		}
+		
+		Member member = memberService.getMember(loginedId);
+		int loginedLevel = member.getAuthLevel();
+		
+		if(loginedId != article.getLoginedId() &&  loginedLevel != 7) {
+			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
 		}
 
 		articleService.modifyArticle(id, title, body);
