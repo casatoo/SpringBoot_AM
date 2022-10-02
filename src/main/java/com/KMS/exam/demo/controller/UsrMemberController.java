@@ -24,7 +24,7 @@ public class UsrMemberController {
 	 * memberService 와 연결
 	 */
 	@Autowired
-	public MemberService memberService;
+	private MemberService memberService;
 
 	/**
 	 * dojoin 맵핑하기 return 값은 회원가입 메시지를 주기 위해 가입시키고 member 값을 받아온다. 인자값은
@@ -105,13 +105,13 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData doLogout(HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		int loginedId = (int) session.getAttribute("loginedId");
+		int loginedId = Ut.getLoginedId(request);
 		
-		if(session == null || loginedId == 0) {
+		if(loginedId == 0) {
 		return ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
 		}
-		session.setAttribute("loginedId",0);		
+		HttpSession session = request.getSession();
+		session.setAttribute("loginedId",null);
 		return ResultData.from("S-1",Ut.f("로그아웃 되었습니다."));
 	}
 }
