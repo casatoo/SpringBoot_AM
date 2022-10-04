@@ -30,12 +30,5 @@ public class Ut {
         return String.format(format,args);
     }
     
-    public static int getLoginedId(HttpServletRequest request) {
-    	HttpSession session = request.getSession();
-    	if(session.getAttribute("loginedId")==null) {
-    		return 0;
-    	}
-    	int loginedId = (int) session.getAttribute("loginedId");
-    	return loginedId;
-    }
+
 }

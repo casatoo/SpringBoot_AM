@@ -3,6 +3,7 @@ package com.KMS.exam.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.service.MemberService;
+import com.KMS.exam.demo.util.Session;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Article;
 import com.KMS.exam.demo.vo.Member;
@@ -29,11 +31,10 @@ public class UsrArticleController {
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData<Article> doAdd(String title, String body ,HttpServletRequest request) {
+	public ResultData<Article> doAdd(String title, String body, HttpSession httpSession) {
 		
-		int loginedId = Ut.getLoginedId(request);
 		
-		if(loginedId == 0){
+		if(httpSession.getAttribute("loginedId") == null){
 			return ResultData.from("F-1", "로그인 하세요");
 		}
 		if(Ut.empty(title)) {
@@ -42,6 +43,8 @@ public class UsrArticleController {
 		if(Ut.empty(body)) {
 			return ResultData.from("F-3", "내용을 입력해주세요");
 		}
+		
+		int loginedId = Session.getLoginedId(httpSession);
 		
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, loginedId);
 		
@@ -62,45 +65,43 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData<Article> doDelete(int id, HttpServletRequest request) {
+	public ResultData<Integer> doDelete(int id, HttpSession httpSession) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
-		int loginedId = Ut.getLoginedId(request);
 		
-		if(loginedId == 0) {
+		if(httpSession.getAttribute("loginedId") == null) {
 			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
 		}
 		
-		Member member = memberService.getMember(loginedId);
-		int loginedLevel = member.getAuthLevel();
+		int loginedId = Session.getLoginedId(httpSession);
+		int loginedLevel = Session.getLoginedLevel(httpSession);
 		
 		if(loginedId != article.getLoginedId() &&  loginedLevel != 7) {
 			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
 		}
 
 		articleService.deleteArticle(id);
-		return ResultData.from("S-1", Ut.f("%d번 게시물삭제.", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시물삭제.", id), id);
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Article> doModify(int id, String title, String body, HttpServletRequest request) {
+	public ResultData<Article> doModify(int id, String title, String body, HttpSession httpSession) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
-		int loginedId = Ut.getLoginedId(request);
 		
-		if(loginedId == 0) {
+		if(httpSession.getAttribute("loginedId") == null) {
 			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
 		}
 		
-		Member member = memberService.getMember(loginedId);
-		int loginedLevel = member.getAuthLevel();
+		int loginedId = Session.getLoginedId(httpSession);
+		int loginedLevel = Session.getLoginedLevel(httpSession);
 		
 		if(loginedId != article.getLoginedId() &&  loginedLevel != 7) {
 			return ResultData.from("F-3", Ut.f("권한이 없습니다."));

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.MemberService;
+import com.KMS.exam.demo.util.Session;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Member;
 import com.KMS.exam.demo.vo.ResultData;
@@ -33,7 +34,7 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("/usr/member/dojoin")
 	@ResponseBody
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
 		if(Ut.empty(loginId)) {
@@ -77,11 +78,10 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public ResultData<Member> doLogin(String loginId, String loginPw, HttpServletRequest request) {
+	public ResultData<Member> doLogin(String loginId, String loginPw, HttpSession httpSession) {
 		
-		int loginedId = Ut.getLoginedId(request);
-		
-		if(loginedId != 0) {
+	    
+		if(httpSession.getAttribute("loginedId") != null) {
 			return ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
 		}
 		
@@ -96,9 +96,8 @@ public class UsrMemberController {
 			return ResultData.from(doLoginRd.getResultCode(),doLoginRd.getMsg());
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
-		HttpSession session = request.getSession();
-		session.setAttribute("loginedId",member.getId());
 		
+		Session.doLogin(httpSession, member);
 		return ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()),member);
 	}
 	/**
@@ -108,17 +107,14 @@ public class UsrMemberController {
 	 * 조건식으로 세션이 null 이거나 loginedId 가 0 일경우 로그인 하지 않은걸로 한다.
 	 * 
 	 */
-	@RequestMapping("usr/member/logout")
+	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public ResultData doLogout(HttpServletRequest request) {
+	public ResultData doLogout(HttpSession httpSession) {
 		
-		int loginedId = Ut.getLoginedId(request);
-		
-		if(loginedId == 0) {
+		if(httpSession.getAttribute("loginedId") == null) {
 		return ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
 		}
-		HttpSession session = request.getSession();
-		session.setAttribute("loginedId",null);
+		Session.doLogout(httpSession);
 		return ResultData.from("S-1",Ut.f("로그아웃 되었습니다."));
 	}
 }
