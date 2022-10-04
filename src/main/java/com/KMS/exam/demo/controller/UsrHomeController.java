@@ -22,8 +22,10 @@ public class UsrHomeController {
 	@RequestMapping("/usr/home/main")
 	@ResponseBody
 	public Object showMain(HttpSession httpSession) {
+	    
+	Member member = Session.loginMember;
 		
-		return "안녕하세요";
+		return member;
 	}
 	
 }

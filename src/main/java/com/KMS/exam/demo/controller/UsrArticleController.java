@@ -34,7 +34,7 @@ public class UsrArticleController {
 	public ResultData<Article> doAdd(String title, String body, HttpSession httpSession) {
 		
 		
-		if(httpSession.getAttribute("loginedId") == null){
+		if(Session.isLogined(httpSession)){
 			return ResultData.from("F-1", "로그인 하세요");
 		}
 		if(Ut.empty(title)) {
@@ -72,7 +72,7 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
-		if(httpSession.getAttribute("loginedId") == null) {
+		if(Session.isLogined(httpSession)) {
 			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
 		}
 		
@@ -96,14 +96,11 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
-		if(httpSession.getAttribute("loginedId") == null) {
+		if(Session.isLogined(httpSession)) {
 			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
 		}
 		
-		int loginedId = Session.getLoginedId(httpSession);
-		int loginedLevel = Session.getLoginedLevel(httpSession);
-		
-		if(loginedId != article.getLoginedId() &&  loginedLevel != 7) {
+		if(Session.authorization(httpSession, article.getLoginedId())) {
 			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
 		}
 

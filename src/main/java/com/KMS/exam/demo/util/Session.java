@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.KMS.exam.demo.vo.Member;
+import com.KMS.exam.demo.vo.ResultData;
 
 public class Session {
     public static Member loginMember;
@@ -12,6 +13,20 @@ public class Session {
         loginMember = member;
         httpSession.setAttribute("loginedId",member.getId());
         httpSession.setAttribute("loginedLevel",member.getAuthLevel());
+    }
+    
+    public static boolean isLogined(HttpSession httpSession) {
+        if(httpSession.getAttribute("loginedId")==null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean authorization(HttpSession httpSession, int id) {
+        if(loginMember.getId() != id &&  loginMember.getAuthLevel() != 7) {
+            return true;
+        }
+        return false;
     }
     
     public static int getLoginedId(HttpSession httpSession) {

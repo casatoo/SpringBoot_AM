@@ -81,7 +81,7 @@ public class UsrMemberController {
 	public ResultData<Member> doLogin(String loginId, String loginPw, HttpSession httpSession) {
 		
 	    
-		if(httpSession.getAttribute("loginedId") != null) {
+		if(!Session.isLogined(httpSession)) {
 			return ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
 		}
 		
@@ -111,7 +111,7 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData doLogout(HttpSession httpSession) {
 		
-		if(httpSession.getAttribute("loginedId") == null) {
+		if(Session.isLogined(httpSession)) {
 		return ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
 		}
 		Session.doLogout(httpSession);
