@@ -11,13 +11,13 @@ import com.KMS.exam.demo.vo.Member;
 @Controller
 public class UsrHomeController {
 	
-	@RequestMapping("/usr/home/main")
+	@RequestMapping("/home")
 	@ResponseBody
 	public Object showMain(HttpSession httpSession) {
 	    
-	Member member = SessionController.loginMember;
+	    
 		
-		return member;
+		return "안녕하세요";
 	}
 	
 }

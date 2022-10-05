@@ -60,7 +60,7 @@ public class UsrMemberController {
 			return doJoinRd;
 		}
 		Member member = memberService.getMember((int) doJoinRd.getData1());
-		return ResultData.newData(doJoinRd,member);
+		return ResultData.newData(doJoinRd,"member",member);
 	}
 	/**
 	 * 로그인 기능 구현
@@ -76,7 +76,7 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public ResultData<Member> doLogin(String loginId, String loginPw, HttpSession httpSession) {
+	public ResultData doLogin(String loginId, String loginPw, HttpSession httpSession) {
 		
 	    
 		if(!SessionController.isLogined(httpSession)) {
@@ -96,7 +96,7 @@ public class UsrMemberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		SessionController.doLogin(httpSession, member);
-		return ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()),member);
+		return ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()));
 	}
 	/**
 	 * 로그아웃 기능
