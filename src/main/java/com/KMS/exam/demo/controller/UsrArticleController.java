@@ -2,7 +2,6 @@ package com.KMS.exam.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.service.MemberService;
-import com.KMS.exam.demo.util.Session;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Article;
-import com.KMS.exam.demo.vo.Member;
 import com.KMS.exam.demo.vo.ResultData;
 
 
@@ -34,7 +31,7 @@ public class UsrArticleController {
 	public ResultData<Article> doAdd(String title, String body, HttpSession httpSession) {
 		
 		
-		if(Session.isLogined(httpSession)){
+		if(SessionController.isLogined(httpSession)){
 			return ResultData.from("F-1", "로그인 하세요");
 		}
 		if(Ut.empty(title)) {
@@ -44,7 +41,7 @@ public class UsrArticleController {
 			return ResultData.from("F-3", "내용을 입력해주세요");
 		}
 		
-		int loginedId = Session.getLoginedId(httpSession);
+		int loginedId = SessionController.getLoginedId(httpSession);
 		
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, loginedId);
 		
@@ -72,12 +69,12 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
-		if(Session.isLogined(httpSession)) {
+		if(SessionController.isLogined(httpSession)) {
 			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
 		}
 		
-		int loginedId = Session.getLoginedId(httpSession);
-		int loginedLevel = Session.getLoginedLevel(httpSession);
+		int loginedId = SessionController.getLoginedId(httpSession);
+		int loginedLevel = SessionController.getLoginedLevel(httpSession);
 		
 		if(loginedId != article.getLoginedId() &&  loginedLevel != 7) {
 			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
@@ -96,11 +93,11 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
-		if(Session.isLogined(httpSession)) {
+		if(SessionController.isLogined(httpSession)) {
 			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
 		}
 		
-		if(Session.authorization(httpSession, article.getLoginedId())) {
+		if(SessionController.authorization(httpSession, article.getLoginedId())) {
 			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
 		}
 

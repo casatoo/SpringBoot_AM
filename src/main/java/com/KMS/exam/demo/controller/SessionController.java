@@ -1,12 +1,10 @@
-package com.KMS.exam.demo.util;
+package com.KMS.exam.demo.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.KMS.exam.demo.vo.Member;
-import com.KMS.exam.demo.vo.ResultData;
 
-public class Session {
+public class SessionController {
     public static Member loginMember;
     
     public static void doLogin(HttpSession httpSession,Member member) {

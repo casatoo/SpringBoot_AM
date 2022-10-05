@@ -1,6 +1,5 @@
 package com.KMS.exam.demo.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.MemberService;
-import com.KMS.exam.demo.util.Session;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Member;
 import com.KMS.exam.demo.vo.ResultData;
@@ -81,7 +79,7 @@ public class UsrMemberController {
 	public ResultData<Member> doLogin(String loginId, String loginPw, HttpSession httpSession) {
 		
 	    
-		if(!Session.isLogined(httpSession)) {
+		if(!SessionController.isLogined(httpSession)) {
 			return ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
 		}
 		
@@ -97,7 +95,7 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
 		
-		Session.doLogin(httpSession, member);
+		SessionController.doLogin(httpSession, member);
 		return ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()),member);
 	}
 	/**
@@ -111,10 +109,10 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData doLogout(HttpSession httpSession) {
 		
-		if(Session.isLogined(httpSession)) {
+		if(SessionController.isLogined(httpSession)) {
 		return ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
 		}
-		Session.doLogout(httpSession);
+		SessionController.doLogout(httpSession);
 		return ResultData.from("S-1",Ut.f("로그아웃 되었습니다."));
 	}
 }
