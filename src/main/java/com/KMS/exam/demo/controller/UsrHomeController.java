@@ -11,12 +11,9 @@ import com.KMS.exam.demo.vo.Member;
 @Controller
 public class UsrHomeController {
 	
-	@RequestMapping("/home")
-	@ResponseBody
-	public Object showMain(HttpSession httpSession) {
-	    
-	    
-		
+	@RequestMapping("/usr/home/main")
+	public Object showMain() {
+	    	
 		return "안녕하세요";
 	}
 	
