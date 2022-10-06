@@ -123,7 +123,7 @@ public class UsrMemberController {
 		Member loginMember = SessionController.loginMember;
 		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("resultRd",resultRd);
-		return "usr/home/main";
+		return "usr/member/loginForm";
 	}
 	/**
 	 * 로그아웃 기능

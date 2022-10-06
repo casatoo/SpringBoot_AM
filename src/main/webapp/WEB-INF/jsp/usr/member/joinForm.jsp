@@ -3,39 +3,38 @@
 <c:set var="pageTitle" value="JOIN"/>
 <%@ include file="../common/head.jspf" %>
     <section class="flex justify-center mt-14">
-    	<div>
+      	<div class="p-5 bg-blue-100 rounded-md">
         <h1>JOIN</h1>
         <form action="../member/dojoin?">
             <div>
-                <input type="text" name="loginId" id="loginId" autocomplete="off" placeholder="LOGINID" required>
-                <label for="id"> &nbsp;&nbsp;LOGINID</label>
+                <label for="id" class="block">ID</label>
+                <input type="text" name="loginId" id="loginId" autocomplete="off"required>
             </div>
             <div>
-                <input type="text" name="loginPw" id="loginPw" autocomplete="off" placeholder="PASSWORD" required>
-                <label for="id"> &nbsp;&nbsp;PASSWORD</label>
+                <label for="id" class="block">PASSWORD</label>
+                <input type="text" name="loginPw" id="loginPw" autocomplete="off"  required>
             </div>
              <div>
-                <input type="text" name="name" id="name" autocomplete="off" placeholder="NAME" required>
-                <label for="id"> &nbsp;&nbsp;NAME</label>
+                <label for="id" class="block">NAME</label>
+                <input type="text" name="name" id="name" autocomplete="off" required>
             </div>
             <div>
-                <input type="text" name="nickname" id="loginPw" autocomplete="off" placeholder="NICK NAME" required>
-                <label for="id"> &nbsp;&nbsp;NICK NAME</label>
+                <label for="id" class="block">NICK NAME</label>
+                <input type="text" name="nickname" id="loginPw" autocomplete="off" required>
             </div>
             <div>
+                <label for="id" class="block">PHONE NUMBER</label>
                 <input type="tel" id="cellphoneNum" name="cellphoneNum" placeholder="01012341234" pattern="[0-9]{11}" autocomplete="off" required>
-                <label for="id"> &nbsp;&nbsp;PHONE NUMBER</label>
             </div>
             <div>
-                <input type="email" name="email" id="email" autocomplete="off" placeholder="E-MAIL" required>
-                <label for="id"> &nbsp;&nbsp;E-MAIL</label>
+                <label for="id" class="block">E-MAIL</label>
+                <input type="email" name="email" id="email" autocomplete="off" required>
             </div>
-            <div>
-                <button type="submit">JOIN</button>
+            <div class="block">
+                <button type="submit" class="hover:text-blue-700 p-5">JOIN</button>
+		        <a href="../home/main" class="hover:text-blue-700 p-5">메인페이지로 이동</a>
             </div>
         </form>
-
-        <a href="../home/main">메인페이지로 이동</a>
         </div>
     </section>
 <%@ include file="../common/foot.jspf" %>

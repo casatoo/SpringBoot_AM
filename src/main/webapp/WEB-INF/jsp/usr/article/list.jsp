@@ -32,17 +32,17 @@
 						<tbody>
 							<c:forEach var="article" items="${articles}">
 								<tr>
-									<td	class=" text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8]">
+									<td	class=" text-center text-dark font-medium text-base py-5 px-2 bg-blue-100 border-b border-[#E8E8E8]">
 									${article.id}
 									</td>
-									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8]">
+									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-blue-100 border-b border-[#E8E8E8]">
 									${article.regDate.substring(5,16)}
 									</td>
-									<td	class=" text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8] hover:text-blue-700"
+									<td	class=" text-center text-dark font-medium text-base py-5 px-2 bg-blue-100 border-b border-[#E8E8E8] hover:text-blue-700"
 									onClick="location.href='../article/getArticle?id=${article.id}'" style="cursor:pointer;">
 									${article.title}
 									</td>
-									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8]">
+									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-blue-100 border-b border-[#E8E8E8]">
 									${article.name}
 									</td>
 								</tr>
