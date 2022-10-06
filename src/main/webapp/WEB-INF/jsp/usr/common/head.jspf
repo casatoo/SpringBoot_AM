@@ -24,16 +24,18 @@
 	alert("${resultRd.msg}");
 	</script>
 </c:if>
-<header>
-<nav class="nav-bar flex justify-between flex-grow container mx-auto mt-8">
+<header class="bg-gray-300">
+<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20">
 	<a href="#" class="flex items-center px-3">
 	<span>로고</span>
 	</a>
-	<h1 class="flex items-center px-3">
-	<a href="../home/main" class="hover:underline">메인페이지</a>
-	</h1>
-	<div class="flex items-center px-3">
-	<a href="../article/getArticles" class="hover:underline">게시물 보기</a>
+	<div class="flex justify-end flex-grow">
+		<h1 class="flex items-center px-3">
+			<a href="../home/main" class="hover:underline">메인페이지</a>
+		</h1>
+		<div class="flex items-center px-3">
+			<a href="../article/getArticles" class="hover:underline">게시물 보기</a>
+		</div>
 	</div>
 		<c:set var="loginMember" value="${loginMember}" />
 	
