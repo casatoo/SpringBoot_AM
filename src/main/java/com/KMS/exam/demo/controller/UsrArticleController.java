@@ -113,11 +113,13 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/getArticle")
-	public Object getArticle(int id, Model model) {
+	public String getArticle(int id, Model model) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
+			ResultData resultRd = ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/article/list";
 		}
 		Member loginMember = SessionController.loginMember;
 		
