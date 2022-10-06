@@ -3,7 +3,6 @@ CREATE DATABASE SB_AM;
 USE SB_AM;
 
 DROP TABLE IF EXISTS article;
-
 CREATE TABLE article(
 id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 regDate DATETIME NOT NULL,
@@ -13,15 +12,22 @@ title VARCHAR(200) NOT NULL,
 loginedId INT(10) NOT NULL
 );
 
+INSERT INTO article(regDate,updateDate,title,`body`,loginedId)VALUES
+(NOW(),NOW(),'제목1','내용1',1),
+(NOW(),NOW(),'제목2','내용2',2),
+(NOW(),NOW(),'제목3','내용3',3),
+(NOW(),NOW(),'제목4','내용4',4);
+
 SELECT * FROM article;
 
-INSERT INTO article(regDate,updateDate,title,`body`,loginedId)VALUES
-(NOW(),NOW(),'제목1','내용1',2),
-(NOW(),NOW(),'제목2','내용2',3),
-(NOW(),NOW(),'제목3','내용3',1),
-(NOW(),NOW(),'제목4','내용4',1);
+SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, article.loginedId, `member`.name FROM article INNER JOIN `member` ON article.loginedId = `member`.id ORDER BY id DESC;
 
 DELETE FROM article WHERE id = 5;
+
+		SELECT *
+		FROM article
+		WHERE id
+		= 2;
 
 UPDATE article SET 
 updateDate = NOW(),
@@ -31,7 +37,7 @@ WHERE id = 1;
 
 SELECT LAST_INSERT_ID();
 
-DROP TABLE IF EXISTS `member`;
+
 CREATE TABLE `member`(
 id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 regDate DATETIME NOT NULL,
@@ -52,22 +58,8 @@ INSERT INTO `member`(regDate,updateDate,loginId,loginPw,`authLevel`,`name`,nickn
 (NOW(),NOW(),'id1','pw1',3,'사용자1','사용자1','01012345678','asdasfasfg@gmail.com'),
 (NOW(),NOW(),'id2','pw2',3,'사용자2','사용자2','01056789012','a1223fg@gmail.com');
 
-SELECT * FROM `member`;
+SELECT loginPw FROM `member`
+WHERE loginId = 'id1';
 
-		SELECT COUNT(*)
-		FROM `member`
-		WHERE loginId
-		= 'id4';
-		
-		SELECT loginPw
-		FROM `member`
-		WHERE loginId
-		= 'id4';
-		
-		SELECT COUNT(*)
-		FROM `member`
-		WHERE `name`
-		= '사용자1' 
-		AND email
-		= 'asdasfasfg@gmail.com';
-		 
+
+SELECT * FROM `member`;

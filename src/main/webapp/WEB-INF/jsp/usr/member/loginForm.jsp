@@ -6,7 +6,7 @@
     <section class="flex justify-center mt-14">
     	<div>
         <h1>LOGIN</h1>
-        <form action="../member/doLogin?${loginId}${loginPw}">
+        <form action="../member/doLogin?">
             <div>
                 <input type="text" name="loginId" id="loginId" autocomplete="off" required>
                 <label for="id">USER NAME</label>

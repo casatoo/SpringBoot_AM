@@ -14,10 +14,12 @@
 	</insert>
 
 	<select id="getArticles" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY
-		id DESC
+		SELECT article.*, 
+		`member`.name 
+		FROM article 
+		INNER JOIN `member` 
+		ON article.loginedId = `member`.id 
+		ORDER BY id DESC;
 	</select>
 
 	<select id="getArticle" resultType="Article">

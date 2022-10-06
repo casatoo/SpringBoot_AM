@@ -19,7 +19,7 @@
 								번호
 								</th>
 								<th	class="  w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
-								날짜
+								작성일시
 								</th>
 								<th	class="  w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
 								제목
@@ -36,14 +36,14 @@
 									${article.id}
 									</td>
 									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8]">
-									${article.regDate.substring(0,10)}
+									${article.regDate.substring(5,16)}
 									</td>
 									<td	class=" text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8] hover:text-blue-700"
 									onClick="location.href='../article/getArticle?id=${article.id}'" style="cursor:pointer;">
 									${article.title}
 									</td>
 									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-[#F3F6FF] border-b border-[#E8E8E8]">
-									${article.loginedId}
+									${article.name}
 									</td>
 								</tr>
 							</c:forEach>
