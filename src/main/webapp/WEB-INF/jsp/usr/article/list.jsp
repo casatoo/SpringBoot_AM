@@ -35,8 +35,8 @@ justify-content: space-around;
 		<c:when test="${loginMember.name eq null}">
 			<ul>
 				<li>접속하기</li>
-				<li><a href="../member/login">로그인</a></li>
-				<li><a href="../member/join">회원가입</a></li>
+				<li><a href="../member/loginForm">로그인</a></li>
+				<li><a href="../member/joinForm">회원가입</a></li>
 			</ul>
 		</c:when>
 		<c:otherwise>

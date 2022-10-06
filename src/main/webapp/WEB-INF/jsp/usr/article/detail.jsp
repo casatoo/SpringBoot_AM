@@ -54,7 +54,7 @@ justify-content: space-around;
 	<div>제목 : ${article.title}</div>
 	<div>작성일 : ${article.regDate.substring(0,10)}</div>
 	<div>작성자 : ${article.loginedId}</div>
-	</div>
 	<div>내용 : ${article.body}</div>
+	</div>
 </body>
 </html>
