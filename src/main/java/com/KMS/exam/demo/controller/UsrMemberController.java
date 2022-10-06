@@ -32,36 +32,53 @@ public class UsrMemberController {
 	 * 중복 여부 확인 -1 이면 아이디 중복 -2 이면 이름+이메일 중복
 	 */
 	@RequestMapping("/usr/member/dojoin")
-	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
+	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+			String email, Model model) {
+		
+		ResultData resultRd;
 		
 		if(Ut.empty(loginId)) {
-			return ResultData.from("F-1","아이디를 입력해주세요");
+			resultRd = ResultData.from("F-1","아이디를 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		if(Ut.empty(loginPw)) {
-			return ResultData.from("F-2","비밀번호를 입력해주세요");
+			resultRd = ResultData.from("F-2","비밀번호를 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		if(Ut.empty(name)) {
-			return ResultData.from("F-3","이름을 입력해주세요");
+			resultRd = ResultData.from("F-3","이름을 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		if(Ut.empty(nickname)) {
-			return ResultData.from("F-4","닉네임을 입력해주세요");
+			resultRd = ResultData.from("F-4","닉네임을 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		if(Ut.empty(cellphoneNum)) {
-			return ResultData.from("F-5","전화번호를 입력해주세요");
+			resultRd = ResultData.from("F-5","전화번호를 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		if(Ut.empty(email)) {
-			return ResultData.from("F-6","이메일을 입력해주세요");
+			resultRd = ResultData.from("F-6","이메일을 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		
 		ResultData doJoinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if(doJoinRd.isFail()) {
-			return doJoinRd;
+			resultRd = doJoinRd;
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/joinForm";
 		}
 		Member member = memberService.getMember((int) doJoinRd.getData1());
-		return ResultData.newData(doJoinRd,"member",member);
+		resultRd = ResultData.newData(doJoinRd,"member",member);
+		model.addAttribute("resultRd",resultRd);
+		return "usr/home/main";
 	}
 	/**
 	 * 로그인 기능 구현
@@ -133,5 +150,11 @@ public class UsrMemberController {
 		Member loginMember = SessionController.loginMember;
 		model.addAttribute("loginMember",loginMember);
 		return "usr/member/loginForm";
+	}
+	@RequestMapping("usr/member/joinForm")
+	public String joinForm(Model model) {
+		Member loginMember = SessionController.loginMember;
+		model.addAttribute("loginMember",loginMember);
+		return "usr/member/joinForm";
 	}
 }

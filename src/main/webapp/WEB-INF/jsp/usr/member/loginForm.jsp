@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="LOGIN"/>
 <%@ include file="../common/head.jspf" %>
-<div class="articleList">
     <section class="flex justify-center mt-14">
     	<div>
         <h1>LOGIN</h1>
