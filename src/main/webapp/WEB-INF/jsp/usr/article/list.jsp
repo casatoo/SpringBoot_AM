@@ -23,12 +23,23 @@ margin:0 50px;
 display: flex;
 justify-content: space-around;
 }
+.articleList {
+display: flex;
+justify-content: center;
+}
+table{
+width: 600px;
+}
+table > tbody {
+text-align: center;
+}
 </style>
 <title>LIST</title>
 </head>
 <body>
 <nav class="nav-bar">
-	<h1>List</h1>
+<h1><a href="../home/main">Article Manager</a></h1>
+	<h1>LIST</h1>
 	<c:set var="loginMember" value="${loginMember}" />
 
 	<c:choose>
@@ -48,6 +59,7 @@ justify-content: space-around;
 	</c:choose>
 	</nav>
 	<hr />
+	<div class="articleList">
 	<table border="1">
 		<thead>
 			<tr>
@@ -69,9 +81,7 @@ justify-content: space-around;
 				</tr>
 			</c:forEach>
 		</tbody>
-
-
-
 	</table>
+	</div>
 </body>
 </html>

@@ -14,3 +14,7 @@ spring:
     password: mkop9074!@
 mybatis:
   type-aliases-package: com.KMS.exam.demo.vo
+custom:
+ logging:
+   dir: log
+   level: debug

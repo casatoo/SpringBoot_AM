@@ -24,12 +24,13 @@ display: flex;
 justify-content: space-around;
 }
 </style>
-<title>detail</title>
+<title>DETAIL</title>
 </head>
 <body>
 
 <nav class="nav-bar">
-<h1>Detail</h1>
+<h1><a href="../home/main">Article Manager</a></h1>
+<h1>DETAIL</h1>
 	<c:set var="loginMember" value="${loginMember}" />
 
 	<c:choose>

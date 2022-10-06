@@ -25,14 +25,15 @@ justify-content: space-around;
 
 <nav class="nav-bar">
     <section>
+    <h1><a href="../home/main">Article Manager</a></h1>
         <h1>LOGIN</h1>
-        <form action="../member/doLogin?loginId=${id}&loginPw=${pw}">
+        <form action="../member/doLogin?${loginId}${loginPw}">
             <div>
-                <input type="text" name="id" id="id" autocomplete="off" required>
+                <input type="text" name="loginId" id="loginId" autocomplete="off" required>
                 <label for="id">USER NAME</label>
             </div>
             <div>
-                <input type="password" name="pw" id="pw" autocomplete="off" required>
+                <input type="password" name="loginPw" id="loginPw" autocomplete="off" required>
                 <label for="id">PASSWORD</label>
             </div>
             <div>

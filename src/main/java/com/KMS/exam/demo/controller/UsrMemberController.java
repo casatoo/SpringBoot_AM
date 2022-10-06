@@ -78,12 +78,11 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession httpSession) {
-		
+		ResultData resultRd;
 	    
 		if(!SessionController.isLogined(httpSession)) {
 			return ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
 		}
-		
 		if(Ut.empty(loginId)) {
 			return ResultData.from("F-2", Ut.f("아이디를 입력해주세요"));
 		}
@@ -107,18 +106,22 @@ public class UsrMemberController {
 	 * 
 	 */
 	@RequestMapping("usr/member/doLogout")
-	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession) {
-		
+	public String doLogout(HttpSession httpSession, Model model) {
+		ResultData resultRd;
 		if(SessionController.isLogined(httpSession)) {
-		return ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
+			resultRd = ResultData.from("F-1",Ut.f("로그인 하지 않았습니다."));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		SessionController.doLogout(httpSession);
-		return ResultData.from("S-1",Ut.f("로그아웃 되었습니다."));
+		resultRd = ResultData.from("S-1",Ut.f("로그아웃 되었습니다."));
+		model.addAttribute("resultRd",resultRd);
+		return "usr/home/main";
 	}
 	@RequestMapping("usr/member/loginForm")
 	public String loginForm(Model model) {
-		
+		Member loginMember = SessionController.loginMember;
+		model.addAttribute("loginMember",loginMember);
 		return "usr/member/loginForm";
 	}
 }
