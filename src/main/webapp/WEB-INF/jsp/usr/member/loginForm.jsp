@@ -1,16 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>LOGIN</title>
-<link rel="stylesheet" href="/resource/common.css" />
-<script src="/resource/common.js" defer="defer"></script>
-</head>
-<body>
-
-<nav class="nav-bar">
+<c:set var="pageTitle" value="ARTICLE LIST"/>
+<%@ include file="../common/head.jspf" %>
+<div class="articleList">
     <section class="login-box">
         <h1>LOGIN</h1>
         <form action="../member/doLogin?${loginId}${loginPw}">
@@ -30,5 +22,4 @@
            <a href="../home/main">메인페이지로 이동</a>
         </div>
     </section>
-</body>
-</html>
+<%@ include file="../common/foot.jspf" %>
