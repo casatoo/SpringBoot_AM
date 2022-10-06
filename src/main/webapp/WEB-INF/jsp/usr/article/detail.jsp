@@ -49,25 +49,12 @@ justify-content: space-around;
 	</c:choose>
 </nav>
 	<hr />
-	<table border="1">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>날짜</th>
-				<th>제목</th>
-				<th>내용</th>
-				<th>작성자</th>
-			</tr>
-		</thead>
-		<tbody>
-				<tr>
-					<td>${article.id}</td>
-					<td>${article.regDate.substring(0,10)}</td>
-					<td>${article.title}</td>
-					<td>${article.body} </td>
-					<td>${article.loginedId}</td>
-				</tr>
-		</tbody>
-	</table>
+	<div>
+	<div>게시글 번호: ${article.id}</div>
+	<div>제목 : ${article.title}</div>
+	<div>작성일 : ${article.regDate.substring(0,10)}</div>
+	<div>작성자 : ${article.loginedId}</div>
+	</div>
+	<div>내용 : ${article.body}</div>
 </body>
 </html>
