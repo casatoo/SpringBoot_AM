@@ -4,51 +4,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-body, ul, li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-a{
-	text-decoration: none;
-	color: inherit;
-}
-.nav-bar ul , li , h1{
-display: flex;
-align-items: center;
-margin:0 50px;
-}
-.nav-bar{
-display: flex;
-justify-content: space-around;
-}
-</style>
 <title>DETAIL</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-
+<header>
 <nav class="nav-bar">
 <h1><a href="../home/main">Article Manager</a></h1>
-<h1>DETAIL</h1>
+<div><a href="../article/getArticles">게시물 보기</a></div>
 	<c:set var="loginMember" value="${loginMember}" />
 
 	<c:choose>
 		<c:when test="${loginMember.name eq null}">
 			<ul>
-				<li>접속하기</li>
-				<li><a href="../member/login">로그인</a></li>
-				<li><a href="../member/join">회원가입</a></li>
+				<li><a href="../member/loginForm">로그인</a></li>
+				<li><a href="../member/joinForm">회원가입</a></li>
 			</ul>
 		</c:when>
 		<c:otherwise>
 			<ul >
-				<li>회원관리</li>
 				<li><a href="../member/doLogout">로그아웃</a></li>
 			</ul>
 		</c:otherwise>
 	</c:choose>
 </nav>
+</header>
 	<hr />
 	<div>
 	<div>게시글 번호: ${article.id}</div>

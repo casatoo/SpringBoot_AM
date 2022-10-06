@@ -4,27 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-body, ul, li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-a{
-	text-decoration: none;
-	color: inherit;
-}
-.nav-bar ul , li , h1{
-display: flex;
-align-items: center;
-margin:0 50px;
-}
-.nav-bar{
-display: flex;
-justify-content: space-around;
-}
-</style>
 <title>HOME</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
 <c:set var="resultRd" value="${resultRd}" />
@@ -33,9 +15,10 @@ justify-content: space-around;
 	alert("${resultRd.msg}");
 	</script>	
 </c:if>
+<header>
 <nav class="nav-bar">
 <h1><a href="../home/main">Article Manager</a></h1>
-<h1><a href="../article/getArticles">게시물 보기</a></h1>
+<div><a href="../article/getArticles">게시물 보기</a></div>
 	<c:set var="loginMember" value="${loginMember}" />
 
 	<c:choose>
@@ -52,5 +35,6 @@ justify-content: space-around;
 		</c:otherwise>
 	</c:choose>
 </nav>
+</header>
 </body>
 </html>

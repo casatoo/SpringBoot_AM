@@ -4,28 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-body, ul, li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-a{
-	text-decoration: none;
-	color: inherit;
-}
-.nav-bar{
-display: flex;
-justify-content: space-around;
-}
-</style>
 <title>LOGIN</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
 
 <nav class="nav-bar">
-    <section>
-    <h1><a href="../home/main">Article Manager</a></h1>
+    <section class="login-box">
         <h1>LOGIN</h1>
         <form action="../member/doLogin?${loginId}${loginPw}">
             <div>
@@ -41,7 +27,7 @@ justify-content: space-around;
             </div>
         </form>
         <div>
-            <a href="">Forget password?</a>
+           <a href="../home/main">메인페이지로 이동</a>
         </div>
     </section>
 </body>
