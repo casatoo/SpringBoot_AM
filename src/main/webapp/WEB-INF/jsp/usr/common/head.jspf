@@ -30,6 +30,10 @@
 	<span>로고</span>
 	</a>
 	<div class="flex justify-end flex-grow">
+		<c:if test="${loginMember.name ne null
+		}">
+			<h1 class="flex items-center px-3">${loginMember.name} 회원 로그인 중</h1>
+		</c:if>
 		<h1 class="flex items-center px-3">
 			<a href="../home/main" class="hover:underline">메인페이지</a>
 		</h1>

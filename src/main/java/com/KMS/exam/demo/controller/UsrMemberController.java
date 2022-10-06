@@ -76,27 +76,37 @@ public class UsrMemberController {
 	 * loginedId 저장
 	 */
 	@RequestMapping("/usr/member/doLogin")
-	@ResponseBody
-	public ResultData doLogin(String loginId, String loginPw, HttpSession httpSession) {
+	public String doLogin(String loginId, String loginPw, HttpSession httpSession, Model model) {
 		ResultData resultRd;
 	    
 		if(!SessionController.isLogined(httpSession)) {
-			return ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
+			resultRd = ResultData.from("F-1", Ut.f("이미 로그인중입니다."));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/home/main";
 		}
 		if(Ut.empty(loginId)) {
-			return ResultData.from("F-2", Ut.f("아이디를 입력해주세요"));
+			resultRd = ResultData.from("F-2", Ut.f("아이디를 입력해주세요"));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		if(Ut.empty(loginPw)) {
-			return ResultData.from("F-3", Ut.f("비밀번호를 입력해주세요"));
+			resultRd = ResultData.from("F-3", Ut.f("비밀번호를 입력해주세요"));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		ResultData doLoginRd= memberService.doLogin(loginId,loginPw);
 		if(doLoginRd.isFail()) {
-			return ResultData.from(doLoginRd.getResultCode(),doLoginRd.getMsg());
+			resultRd = ResultData.from(doLoginRd.getResultCode(),doLoginRd.getMsg());
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
-		
 		SessionController.doLogin(httpSession, member);
-		return ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()));
+		resultRd = ResultData.from("S-1",Ut.f("%s 회원님 환영합니다.",member.getName()));
+		Member loginMember = SessionController.loginMember;
+		model.addAttribute("loginMember",loginMember);
+		model.addAttribute("resultRd",resultRd);
+		return "usr/home/main";
 	}
 	/**
 	 * 로그아웃 기능

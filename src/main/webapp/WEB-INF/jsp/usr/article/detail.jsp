@@ -40,7 +40,7 @@
 			</table>
 		</div>
 
-		<div class="btns">
+		<div class="btns ml-20 hover:text-blue-700">
 			<button type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 	</div>

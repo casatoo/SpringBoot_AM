@@ -15,16 +15,16 @@
 					<table class="table-auto w-full">
 						<thead>
 							<tr class="bg-primary text-center">
-								<th	class="  w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
+								<th	class="w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
 								번호
 								</th>
-								<th	class="  w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
+								<th	class="w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
 								작성일시
 								</th>
-								<th	class="  w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
+								<th	class="w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
 								제목
 								</th>
-								<th	class="  w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
+								<th	class="w-1/6 min-w-[160px] text-lg font-semibold text-white  py-4 lg:py-7  px-3 lg:px-4">
 								작성자
 								</th>
 							</tr>
