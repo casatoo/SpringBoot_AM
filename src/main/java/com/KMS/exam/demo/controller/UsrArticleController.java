@@ -14,6 +14,7 @@ import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.service.MemberService;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Article;
+import com.KMS.exam.demo.vo.Member;
 import com.KMS.exam.demo.vo.ResultData;
 
 
@@ -57,14 +58,15 @@ public class UsrArticleController {
 	public String showList(Model model) {
 	    
 		List<Article> articles = articleService.getArticles();
+		Member loginMember = SessionController.loginMember;
 		
+    	model.addAttribute("loginMember",loginMember);
 		model.addAttribute("articles",articles);
 		
 		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/doDelete")
-	@ResponseBody
 	public ResultData<Integer> doDelete(int id, HttpSession httpSession) {
 		Article article = articleService.getArticle(id);
 
@@ -111,15 +113,18 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/getArticle")
-	@ResponseBody
-	public ResultData<Article> getArticle(int id) {
+	public Object getArticle(int id, Model model) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
-
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id),"article", article);
+		Member loginMember = SessionController.loginMember;
+		
+    	model.addAttribute("loginMember",loginMember);
+		model.addAttribute("article",article);
+		
+		return "usr/article/detail";
 	}
 
 }

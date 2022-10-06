@@ -24,11 +24,12 @@ display: flex;
 justify-content: space-around;
 }
 </style>
-<title>LIST</title>
+<title>detail</title>
 </head>
 <body>
+
 <nav class="nav-bar">
-	<h1>List</h1>
+<h1>Detail</h1>
 	<c:set var="loginMember" value="${loginMember}" />
 
 	<c:choose>
@@ -46,7 +47,7 @@ justify-content: space-around;
 			</ul>
 		</c:otherwise>
 	</c:choose>
-	</nav>
+</nav>
 	<hr />
 	<table border="1">
 		<thead>
@@ -54,24 +55,19 @@ justify-content: space-around;
 				<th>번호</th>
 				<th>날짜</th>
 				<th>제목</th>
+				<th>내용</th>
 				<th>작성자</th>
 			</tr>
 		</thead>
-
 		<tbody>
-			<c:forEach var="article" items="${articles }">
 				<tr>
 					<td>${article.id}</td>
 					<td>${article.regDate.substring(0,10)}</td>
-					<td><a href="../article/getArticle?id=${article.id}">${article.title}</a></td>
+					<td>${article.title}</td>
+					<td>${article.body} </td>
 					<td>${article.loginedId}</td>
-
 				</tr>
-			</c:forEach>
 		</tbody>
-
-
-
 	</table>
 </body>
 </html>

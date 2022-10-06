@@ -3,8 +3,8 @@ package com.KMS.exam.demo.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.vo.Member;
 
@@ -12,9 +12,10 @@ import com.KMS.exam.demo.vo.Member;
 public class UsrHomeController {
 	
 	@RequestMapping("/usr/home/main")
-	public Object showMain() {
-	    	
-		return "안녕하세요";
+	public Object showMain(HttpSession httpSession, Model model) {
+			Member loginMember = SessionController.loginMember;
+	    	model.addAttribute("loginMember",loginMember);
+		return "/usr/home/main";
 	}
 	
 }
