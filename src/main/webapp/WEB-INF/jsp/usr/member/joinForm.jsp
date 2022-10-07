@@ -1,40 +1,72 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="JOIN"/>
-<%@ include file="../common/head.jspf" %>
-    <section class="flex justify-center mt-14">
-      	<div class="p-5 bg-blue-100 rounded-md">
-        <h1>JOIN</h1>
-        <form action="../member/dojoin?">
-            <div>
-                <label for="id" class="block">ID</label>
-                <input type="text" name="loginId" id="loginId" autocomplete="off"required>
-            </div>
-            <div>
-                <label for="id" class="block">PASSWORD</label>
-                <input type="text" name="loginPw" id="loginPw" autocomplete="off"  required>
-            </div>
-             <div>
-                <label for="id" class="block">NAME</label>
-                <input type="text" name="name" id="name" autocomplete="off" required>
-            </div>
-            <div>
-                <label for="id" class="block">NICK NAME</label>
-                <input type="text" name="nickname" id="loginPw" autocomplete="off" required>
-            </div>
-            <div>
-                <label for="id" class="block">PHONE NUMBER</label>
-                <input type="tel" id="cellphoneNum" name="cellphoneNum" placeholder="01012341234" pattern="[0-9]{11}" autocomplete="off" required>
-            </div>
-            <div>
-                <label for="id" class="block">E-MAIL</label>
-                <input type="email" name="email" id="email" autocomplete="off" required>
-            </div>
-            <div class="block">
-                <button type="submit" class="hover:text-blue-700 p-5">JOIN</button>
-		        <a href="../home/main" class="hover:text-blue-700 p-5">메인페이지로 이동</a>
-            </div>
-        </form>
-        </div>
-    </section>
-<%@ include file="../common/foot.jspf" %>
+<c:set var="pageTitle" value="JOIN" />
+<%@ include file="../common/head.jspf"%>
+<section class="flex justify-center mt-14">
+		<form action="../member/dojoin?" class="w-full max-w-lg">
+			<div class="flex flex-wrap -mx-3 mb-6">
+				<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+					<label
+						class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						for="grid-first-name"> ID </label> <input
+						class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+						type="text" name="loginId" id="loginId" autocomplete="off"
+						required>
+				</div>
+				<div class="w-full md:w-1/2 px-3">
+					<label
+						class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						for="grid-last-name"> NAME </label> <input
+						class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+						type="text" name="name" id="name" autocomplete="off" required>
+				</div>
+			</div>
+			<div class="flex flex-wrap -mx-3 mb-6">
+				<div class="w-full px-3">
+					<label
+						class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						for="grid-password"> PASSWORD </label> <input
+						class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+						type="text" name="loginPw" id="loginPw" autocomplete="off"
+						required>
+					<p class="text-gray-600 text-xs italic">Make it as long and as
+						crazy as you'd like</p>
+				</div>
+			</div>
+			<div class="flex flex-wrap -mx-3 mb-6">
+				<div class="w-full px-3">
+					<label
+						class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						for="grid-password"> NICK NAME </label> <input
+						class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+						type="text" name="nickname" id="nickname" autocomplete="off"
+						required>
+				</div>
+			</div>
+			<div class="flex flex-wrap -mx-3 mb-6">
+				<div class="w-full px-3">
+					<label
+						class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						for="grid-password"> PHONE NUMBER </label> <input
+						class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+						type="tel" id="cellphoneNum" name="cellphoneNum"
+						placeholder="01012341234" pattern="[0-9]{11}" autocomplete="off"
+						required>
+				</div>
+			</div>
+			<div class="flex flex-wrap -mx-3 mb-6">
+				<div class="w-full px-3">
+					<label
+						class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						for="grid-password"> E-MAIL </label> <input
+						class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+						type="email" name="email" id="email" autocomplete="off" required>
+				</div>
+			</div>
+			<button
+					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+					type="submit">Sign up</button>
+		</form>
+</section>
+<%@ include file="../common/foot.jspf"%>
