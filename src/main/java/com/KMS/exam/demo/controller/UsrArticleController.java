@@ -29,29 +29,35 @@ public class UsrArticleController {
 	
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
-	@ResponseBody
-	public ResultData<Article> doAdd(String title, String body, HttpSession httpSession) {
+	public String doAdd(String title, String body, HttpSession httpSession, Model model) {
+		ResultData resultRd;
 		
-		
+    	
 		if(SessionController.isLogined(httpSession)){
-			return ResultData.from("F-1", "로그인 하세요");
+			resultRd = ResultData.from("F-1", "로그인 하세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		if(Ut.empty(title)) {
-			return ResultData.from("F-2", "제목을 입력해주세요");
+			resultRd = ResultData.from("F-2", "제목을 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/article/writeForm" ;
 		}
 		if(Ut.empty(body)) {
-			return ResultData.from("F-3", "내용을 입력해주세요");
+			resultRd = ResultData.from("F-3", "내용을 입력해주세요");
+			model.addAttribute("resultRd",resultRd);
+			return "usr/article/writeForm" ;
 		}
+		Member loginMember = SessionController.loginMember;
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, loginMember.getId());
+		resultRd = ResultData.from(writeArticleRd.getResultCode(),writeArticleRd.getMsg());
+		List<Article> articles = articleService.getArticles();
 		
-		int loginedId = SessionController.getLoginedId(httpSession);
-		
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, loginedId);
-		
-		int id = (int) writeArticleRd.getData1();
+    	model.addAttribute("loginMember",loginMember);
+		model.addAttribute("articles",articles);
+    	model.addAttribute("resultRd",resultRd);
 
-		Article article = articleService.getArticle(id);
-
-		return ResultData.newData(writeArticleRd,"article", article);
+		return "/usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/getArticles")
@@ -67,66 +73,88 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doDelete")
-	public ResultData<Integer> doDelete(int id, HttpSession httpSession) {
+	public String doDelete(int id, HttpSession httpSession, Model model) {
+		ResultData resultRd;
 		Article article = articleService.getArticle(id);
 
-		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id),"id", id);
-		}
-		
 		if(SessionController.isLogined(httpSession)) {
-			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
+			resultRd = ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		
 		int loginedId = SessionController.getLoginedId(httpSession);
 		int loginedLevel = SessionController.getLoginedLevel(httpSession);
 		
-		if(loginedId != article.getLoginedId() &&  loginedLevel != 7) {
-			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
+		if(SessionController.authorization(httpSession, article.getLoginedId())) {
+			resultRd = ResultData.from("F-3", Ut.f("권한이 없습니다."));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/home/main";
 		}
 
 		articleService.deleteArticle(id);
-		return ResultData.from("S-1", Ut.f("%d번 게시물삭제.", id), "id", id);
+		resultRd = ResultData.from("S-1", Ut.f("%d번 게시물삭제.", id), "id", id);
+		List<Article> articles = articleService.getArticles();
+		Member loginMember = SessionController.loginMember;
+		
+    	model.addAttribute("loginMember",loginMember);
+		model.addAttribute("articles",articles);
+		model.addAttribute("resultRd",resultRd);
+		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/doModify")
-	@ResponseBody
-	public ResultData doModify(int id, String title, String body, HttpSession httpSession) {
+	public String doModify(int id, String title, String body, HttpSession httpSession, Model model) {
+		ResultData resultRd;
 		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id),"id",id);
-		}
 		
 		if(SessionController.isLogined(httpSession)) {
-			return ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
+			resultRd = ResultData.from("F-2", Ut.f("로그인 하지 않았습니다."));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/member/loginForm";
 		}
 		
 		if(SessionController.authorization(httpSession, article.getLoginedId())) {
-			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
+			resultRd = ResultData.from("F-3", Ut.f("권한이 없습니다."));
+			model.addAttribute("resultRd",resultRd);
+			return "usr/home/main";
 		}
 
 		articleService.modifyArticle(id, title, body);
 		article = articleService.getArticle(id);
-
-		return ResultData.from("S-1", Ut.f("%d번 게시물수정.", id),"article", article);
+		resultRd = ResultData.from("S-1", Ut.f("%d번 게시물수정.", id),"article", article);
+		List<Article> articles = articleService.getArticles();
+		Member loginMember = SessionController.loginMember;
+		
+    	model.addAttribute("loginMember",loginMember);
+		model.addAttribute("articles",articles);
+		model.addAttribute("resultRd",resultRd);
+		
+		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/getArticle")
 	public String getArticle(int id, Model model) {
 		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			ResultData resultRd = ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
-			model.addAttribute("resultRd",resultRd);
-			return "usr/article/list";
-		}
 		Member loginMember = SessionController.loginMember;
 		
     	model.addAttribute("loginMember",loginMember);
 		model.addAttribute("article",article);
 		
 		return "usr/article/detail";
+	}
+	
+	@RequestMapping("usr/article/writeForm")
+	public String articleWriteForm(Model model) {
+		Member loginMember = SessionController.loginMember;
+		model.addAttribute("loginMember",loginMember);
+		return "usr/article/writeForm" ;
+	}
+	@RequestMapping("usr/article/modifyForm")
+	public String articleModifyForm(Model model) {
+		Member loginMember = SessionController.loginMember;
+		model.addAttribute("loginMember",loginMember);
+		return "usr/article/modifyForm" ;
 	}
 
 }

@@ -43,12 +43,17 @@
 									${article.title}
 									</td>
 									<td class="text-center text-dark font-medium text-base py-5 px-2 bg-blue-100 border-b border-[#E8E8E8]">
-									${article.name}
+									${article.nickname}
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+					type="button" 
+					onclick="location.href='../article/writeForm';">
+					글 작성
+					</button>
 				</div>
 			</div>
 		</div>

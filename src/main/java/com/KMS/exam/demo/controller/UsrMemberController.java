@@ -77,6 +77,8 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMember((int) doJoinRd.getData1());
 		resultRd = ResultData.newData(doJoinRd,"member",member);
+		Member loginMember = SessionController.loginMember;
+		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("resultRd",resultRd);
 		return "usr/home/main";
 	}

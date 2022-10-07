@@ -1,14 +1,30 @@
 @charset "UTF-8";
 
 @font-face {
-	font-family: 'GangwonEduPowerExtraBoldA';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'ChosunCentennial';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
-
 html>body {
 	font-family: 'GangwonEduPowerExtraBoldA';
+}
+/*라이브러리*/
+.table-box-type-1>table {
+	width: 100%;
+}
+
+.table-box-type-1>table th, .table-box-type-1>table td {
+	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+.btn-text-link {
+	color: grey;
+}
+
+.btn-text-link:hover {
+	color: green;
+	text-decoration: underline;
 }

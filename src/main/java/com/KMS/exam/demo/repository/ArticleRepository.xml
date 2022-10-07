@@ -15,18 +15,20 @@
 
 	<select id="getArticles" resultType="Article">
 		SELECT article.*, 
-		`member`.name 
+		`member`.nickname 
 		FROM article 
 		INNER JOIN `member` 
 		ON article.loginedId = `member`.id 
-		ORDER BY id DESC;
+		ORDER BY id DESC
 	</select>
 
 	<select id="getArticle" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE id
-		= #{id}
+		SELECT article.*, 
+		`member`.nickname 
+		FROM article 
+		INNER JOIN `member`
+		ON article.loginedId = `member`.id
+		AND article.id = #{id}
 	</select>
 
 	<delete id="deleteArticle">
