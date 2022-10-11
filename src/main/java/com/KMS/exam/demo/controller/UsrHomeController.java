@@ -10,12 +10,13 @@ import com.KMS.exam.demo.vo.Member;
 
 @Controller
 public class UsrHomeController {
-	
 	@RequestMapping("/usr/home/main")
-	public Object showMain(HttpSession httpSession, Model model) {
-			Member loginMember = SessionController.loginMember;
-	    	model.addAttribute("loginMember",loginMember);
-		return "/usr/home/main";
+	public String showMain() {
+		return "usr/home/main";
 	}
-	
+
+	@RequestMapping("/")
+	public String showRoot() {
+		return "redirect:/usr/home/main";
+	}
 }

@@ -25,7 +25,7 @@
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<td>${article.nickname }</td>
+						<td>${article.extra__writerName }</td>
 					</tr>
 					<tr>
 						<th>제목</th>
@@ -42,7 +42,7 @@
 
 		<div class="btns">
 			<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
-			<c:if test="${loginMember.id eq article.loginedId || loginMember.authLevel eq 7}">
+			<c:if test="${loginMember.id eq article.memberId || loginMember.authLevel eq 7}">
 				<a class="btn-text-link hover:text-blue-700" href="../article/modify?id=${article.id }">수정</a>
 				<a class="btn-text-link hover:text-blue-700" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 				href="../article/doDelete?id=${article.id }"

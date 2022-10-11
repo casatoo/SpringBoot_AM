@@ -38,7 +38,7 @@
 			<a href="../home/main" class="hover:underline">메인페이지</a>
 		</h1>
 		<div class="flex items-center px-3">
-			<a href="../article/getArticles" class="hover:underline">게시물 보기</a>
+			<a href="../article/list" class="hover:underline">게시물 보기</a>
 		</div>
 	</div>
 		<c:set var="loginMember" value="${loginMember}" />
