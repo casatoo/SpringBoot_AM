@@ -114,7 +114,7 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
 		httpSession.setAttribute("loginedMemberId", member.getId());
-		return Ut.jsReplace(Ut.f("환영합니다."),"../home/main");
+		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),"../home/main");
 	}
 	/**
 	 * 로그아웃 기능

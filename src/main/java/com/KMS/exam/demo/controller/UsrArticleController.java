@@ -78,21 +78,24 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(HttpServletRequest req, int id, String title, String body) {
+	public String doModify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-		
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다", id), "id", id);
+			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
 		}
-
-		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
-
-		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+		if (article.getMemberId() != rq.getLoginedMemberId()) {
+			return Ut.jsHistoryBack(Ut.f("%d번 게시물에 대한 권한이 없습니다.", id));
 		}
-		return articleService.modifyArticle(id, title, body);
+		if(Ut.empty(title)) {
+			return Ut.jsHistoryBack(Ut.f("제목을 입력해주세요"));
+		}
+		if(Ut.empty(body)) {
+			return Ut.jsHistoryBack(Ut.f("내용을 입력해주세요"));
+		}
+		articleService.modifyArticle(id, title, body);
+		return Ut.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), "../article/list");
 
 	}
 
@@ -110,7 +113,10 @@ public class UsrArticleController {
 		return "usr/article/write" ;
 	}
 	@RequestMapping("usr/article/modify")
-	public String articleModifyForm(HttpServletRequest req, Model model) {
+	public String articleModifyForm(HttpServletRequest req, Model model,int id) {
+		Rq rq = (Rq) req.getAttribute("rq");
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		model.addAttribute("article", article);
 		return "usr/article/modify" ;
 	}
 
