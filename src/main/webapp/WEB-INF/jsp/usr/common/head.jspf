@@ -18,21 +18,15 @@
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-<c:set var="resultRd" value="${resultRd}" />
-<c:if test="${resultRd.resultCode ne null}">
-	<script>
-	alert("${resultRd.msg}");
-	</script>
-</c:if>
+<c:set var="rq" value="${rq}" />
 <header class="bg-blue-100">
 <nav class="nav-bar flex justify-between flex-grow container mx-auto h-20">
 	<a href="#" class="flex items-center px-3">
 	<span>로고</span>
 	</a>
 	<div class="flex justify-end flex-grow">
-		<c:if test="${loginMember.name ne null
-		}">
-			<h1 class="flex items-center px-3">${loginMember.name} 회원 로그인 중</h1>
+		<c:if test="${rq.loginedMemberId ne 0}">
+			<h1 class="flex items-center px-3">${rq.loginedMemberId} 회원 로그인 중</h1>
 		</c:if>
 		<h1 class="flex items-center px-3">
 			<a href="../home/main" class="hover:underline">메인페이지</a>
@@ -44,12 +38,12 @@
 		<c:set var="loginMember" value="${loginMember}" />
 	
 		<c:choose>
-			<c:when test="${loginMember.name eq null}">
+			<c:when test="${rq.loginedMemberId eq 0}">
 				<ul class="flex items-center px-3">
-					<li><a href="../member/loginForm" class="h-full px-3 flex items-center px-3">
+					<li><a href="../member/login" class="h-full px-3 flex items-center px-3">
 					<span>로그인</span>
 					</a></li>
-					<li><a href="../member/joinForm" class="h-full px-3 flex items-center px-3">
+					<li><a href="../member/join" class="h-full px-3 flex items-center px-3">
 					<span>회원가입</span>
 					</a></li>
 				</ul>
