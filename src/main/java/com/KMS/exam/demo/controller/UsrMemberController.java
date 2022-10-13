@@ -98,7 +98,7 @@ public class UsrMemberController {
 	public String doLogin(String loginId, String loginPw,HttpServletRequest req, HttpSession httpSession, Model model) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		if(rq.isLogined() == true){
+		if(rq.isLogined()){
 			return Ut.jsReplace(Ut.f("이미 로그인중입니다"),"../home/main");
 		}
 		if(Ut.empty(loginId)) {
@@ -113,7 +113,7 @@ public class UsrMemberController {
 			return Ut.jsReplace(resultRd.getMsg(), "../member/login");
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
-		httpSession.setAttribute("loginedMemberId", member.getId());
+		rq.login(member);
 		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),"../home/main");
 	}
 	/**
@@ -126,19 +126,16 @@ public class UsrMemberController {
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
 	public String doLogout(HttpServletRequest req, Model model, HttpSession httpSession) {
-		httpSession.setAttribute("loginedMemberId", null);
+		Rq rq = (Rq) req.getAttribute("rq");
+		rq.logout();
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),"../home/main");
 	}
 	@RequestMapping("usr/member/login")
 	public String loginForm(HttpServletRequest req, Model model) {
-		Rq rq = (Rq) req.getAttribute("rq");
-		model.addAttribute("rq",rq);
 		return "usr/member/login";
 	}
 	@RequestMapping("usr/member/join")
 	public String joinForm(HttpServletRequest req, Model model) {
-		Rq rq = (Rq) req.getAttribute("rq");
-		model.addAttribute("rq",rq);
 		return "usr/member/join";
 	}
 }

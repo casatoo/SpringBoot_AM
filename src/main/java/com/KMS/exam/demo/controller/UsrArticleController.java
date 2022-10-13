@@ -71,7 +71,6 @@ public class UsrArticleController {
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물에 대한 권한이 없습니다.", id));
 		}
-
 		articleService.deleteArticle(id);
 		return Ut.jsReplace(Ut.f("%d번 게시물을 삭제했습니다", id), "../article/list");
 	}
@@ -80,7 +79,6 @@ public class UsrArticleController {
 	@ResponseBody
 	public String doModify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
-		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		if (article == null) {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
@@ -95,7 +93,7 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack(Ut.f("내용을 입력해주세요"));
 		}
 		articleService.modifyArticle(id, title, body);
-		return Ut.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), "../article/list");
+		return Ut.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), Ut.f("../article/detail?id=%d", id));
 
 	}
 
@@ -116,6 +114,10 @@ public class UsrArticleController {
 	public String articleModifyForm(HttpServletRequest req, Model model,int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		if (article.getMemberId() != rq.getLoginedMemberId()) {
+			
+				return rq.jsHistoryBackOnView("권한이 없습니다.");
+		}
 		model.addAttribute("article", article);
 		return "usr/article/modify" ;
 	}

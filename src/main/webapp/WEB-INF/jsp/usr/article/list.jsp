@@ -49,11 +49,13 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<c:if test="${rq.loginedMemberId ne 0}">
 					<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
 					type="button" 
 					onclick="location.href='../article/write';">
 					글 작성
 					</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
