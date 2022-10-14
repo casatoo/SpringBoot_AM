@@ -34,52 +34,44 @@ public class UsrMemberController {
 	 * 중복 여부 확인 -1 이면 아이디 중복 -2 이면 이름+이메일 중복
 	 */
 	@RequestMapping("/usr/member/dojoin")
+	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email, Model model) {
 		
 		ResultData resultRd;
 		
 		if(Ut.empty(loginId)) {
-			resultRd = ResultData.from("F-1","아이디를 입력해주세요");
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			return Ut.jsHistoryBack(Ut.f("아이디를 입력해주세요"));
 		}
 		if(Ut.empty(loginPw)) {
-			resultRd = ResultData.from("F-2","비밀번호를 입력해주세요");
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			return Ut.jsHistoryBack(Ut.f("비밀번호를 입력해주세요"));
 		}
 		if(Ut.empty(name)) {
-			resultRd = ResultData.from("F-3","이름을 입력해주세요");
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			return Ut.jsHistoryBack(Ut.f("이름을 입력해주세요"));
 		}
 		if(Ut.empty(nickname)) {
-			resultRd = ResultData.from("F-4","닉네임을 입력해주세요");
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			return Ut.jsHistoryBack(Ut.f("닉네임을 입력해주세요"));
 		}
 		if(Ut.empty(cellphoneNum)) {
-			resultRd = ResultData.from("F-5","전화번호를 입력해주세요");
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			return Ut.jsHistoryBack(Ut.f("전화번호를 입력해주세요"));
 		}
 		if(Ut.empty(email)) {
-			resultRd = ResultData.from("F-6","이메일을 입력해주세요");
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			return Ut.jsHistoryBack(Ut.f("이메일을 입력해주세요"));
 		}
 		
 		ResultData doJoinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if(doJoinRd.isFail()) {
-			resultRd = doJoinRd;
-			model.addAttribute("resultRd",resultRd);
-			return "usr/member/join";
+			if(doJoinRd.getResultCode().equals("F-1")) {
+				return Ut.jsHistoryBack(Ut.f("이미 사용중인 아이디 입니다."));
+			}
+			if(doJoinRd.getResultCode().equals("F-2")) {
+				return Ut.jsHistoryBack(Ut.f("이미 가입된 회원입니다."));
+			}
 		}
 		Member member = memberService.getMember((int) doJoinRd.getData1());
 		resultRd = ResultData.newData(doJoinRd,"member",member);
-		return "usr/home/main";
+		return Ut.jsReplace(Ut.f("회원가입 성공!"), "/");
 	}
 	/**
 	 * 로그인 기능 구현

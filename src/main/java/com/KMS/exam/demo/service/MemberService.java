@@ -36,11 +36,11 @@ public class MemberService {
 		int matchLoginId = memberRepository.matchLoginId(loginId);
 		
 		if(matchLoginId == 1) {
-			return ResultData.from("F-7",Ut.f("이미 사용중인 아이디 %s 입니다.",loginId));
+			return ResultData.from("F-1",Ut.f("이미 사용중인 아이디 %s 입니다.",loginId));
 		}
 		int matchMember = memberRepository.matchMember(name, email);
 		if(matchMember == 1) {
-			return ResultData.from("F-8",Ut.f("이미 가입된 회원입니다. %s, %s",name, email));
+			return ResultData.from("F-2",Ut.f("이미 가입된 회원입니다. %s, %s",name, email));
 		}
 		memberRepository.Join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();

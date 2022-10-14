@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="WRITEARTICLE" />
+<c:set var="pageTitle" value="WRITE ARTICLE" />
 <%@ include file="../common/head.jspf"%>
 	<div class="m-11">
 		<form action="../article/doAdd?">
 			<div>
 				<label for="title">글 제목</label>
-				<input type="text" id="title" name="title"  size="30" />
+				<input type="text" placeholder="제목" id="title" name="title" size="30" class="input input-bordered input-sm w-full max-w-xs"/>
 			</div>
 			<div class="mt-5">
 				<label for="body">글 내용</label>
-				<textarea name="body" id="body" cols="100" rows="10"></textarea>
+				<textarea class="textarea textarea-success" name="body" id="body" placeholder="내용" cols="100" rows="10"></textarea>
 			</div>
 			<button
-				class="mt-11 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+				class="btn btn-outline mt-11"
 				type="submit">글 작성</button>
 		</form>
 	</div>

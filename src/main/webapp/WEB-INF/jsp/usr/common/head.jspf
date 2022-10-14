@@ -12,6 +12,7 @@
 
 <%-- 테일윈드 불러오기 --%> 
 <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css" rel="stylesheet" type="text/css" />
 
 <%-- 폰트 어썸 --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
@@ -20,10 +21,10 @@
 </head>
 <body>
 <c:set var="rq" value="${rq}" />
-<header class="bg-blue-100">
+<header>
 <nav class="nav-bar flex justify-between flex-grow container mx-auto h-20">
 	<a href="#" class="flex items-center px-3">
-	<i class="fa-solid fa-microchip" style="font-size:30px;"></i>
+	<i class="fa-solid fa-pen-to-square" style="font-size:30px;"></i>
 	</a>
 	<div class="flex justify-end flex-grow">
 		<h1 class="flex items-center px-3">

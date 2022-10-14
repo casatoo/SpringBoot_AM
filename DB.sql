@@ -7,18 +7,19 @@ CREATE TABLE article(
 id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 regDate DATETIME NOT NULL,
 updateDate DATETIME NOT NULL,
+memberId INT(10) NOT NULL,
+boardId INT(10) UNSIGNED NOT NULL,
 title VARCHAR(200) NOT NULL,
-`body` TEXT NOT NULL,
-loginedId INT(10) NOT NULL
+`body` TEXT NOT NULL
 );
 
-INSERT INTO article(regDate,updateDate,title,`body`,loginedId)VALUES
-(NOW(),NOW(),'제목1','내용1',1),
-(NOW(),NOW(),'제목2','내용2',2),
-(NOW(),NOW(),'제목3','내용3',3),
-(NOW(),NOW(),'제목4','내용4',4);
+INSERT INTO article(regDate,updateDate,memberId,boardId,title,`body`)VALUES
+(NOW(),NOW(),1,2,'제목1','내용1'),
+(NOW(),NOW(),2,2,'제목2','내용2'),
+(NOW(),NOW(),3,2,'제목3','내용3'),
+(NOW(),NOW(),1,2,'제목4','내용4');
 
-SELECT * FROM article;
+SELECT * FROM article WHERE boardId = ;
 
 SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, article.loginedId, `member`.name FROM article INNER JOIN `member` ON article.loginedId = `member`.id ORDER BY id DESC;
 
@@ -37,7 +38,7 @@ WHERE id = 1;
 
 SELECT LAST_INSERT_ID();
 
-
+DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member`(
 id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 regDate DATETIME NOT NULL,
@@ -57,6 +58,23 @@ INSERT INTO `member`(regDate,updateDate,loginId,loginPw,`authLevel`,`name`,nickn
 (NOW(),NOW(),'admin','admin',7,'관리자','관리자','01012341234','casato6666@gmail.com'),
 (NOW(),NOW(),'id1','pw1',3,'사용자1','사용자1','01012345678','asdasfasfg@gmail.com'),
 (NOW(),NOW(),'id2','pw2',3,'사용자2','사용자2','01056789012','a1223fg@gmail.com');
+
+DROP TABLE IF EXISTS board;
+CREATE TABLE board(
+id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+`code` VARCHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free1(자유게시판1), free2(자유게시판2), ...',
+`name` VARCHAR(50) NOT NULL UNIQUE COMMENT '게시판이름',
+delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부 (0=삭제 전, 1= 삭제 후)',
+delDate DATETIME COMMENT '삭제날짜'
+);
+
+INSERT INTO board(regDate,updateDate,`code`,`name`)VALUES
+(NOW(),NOW(),'notice','공지사항'),
+(NOW(),NOW(),'free','자유게시판');
+
+
 
 SELECT loginPw FROM `member`
 WHERE loginId = 'id1';

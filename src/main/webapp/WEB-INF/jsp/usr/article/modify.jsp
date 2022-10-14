@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="WRITEARTICLE" />
+<c:set var="pageTitle" value="MODIFY ARTICLE" />
 <%@ include file="../common/head.jspf"%>
-	<div class="m-11">
+	<div class="mt-11 ml-11">
+	<div class="text-4xl mb-11 ml-11">${article.id}번 글 수정</div>
 	<c:set var="article" value="${article}" />
 		<form action="../article/doModify?">
 			<div>
@@ -18,7 +19,7 @@
 				<textarea name="body" id="body" cols="100" rows="10">${article.body}</textarea>
 			</div>
 			<button
-				class="mt-11 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+				class="mt-11 btn btn-outline"
 				type="submit">글 수정</button>
 		</form>
 	</div>

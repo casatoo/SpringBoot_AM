@@ -25,8 +25,6 @@ public class UsrArticleController {
 	// 인스턴스 변수
 	@Autowired
 	private ArticleService articleService;
-	@Autowired
-	private MemberService memberService;
 	
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
@@ -44,7 +42,7 @@ public class UsrArticleController {
 		
 		int id = (int) writeArticleRd.getData1();
 		
-		return Ut.jsReplace(Ut.f("%d번 게시물 작성", id), "../article/list");
+		return Ut.jsReplace(Ut.f("%d번 게시물 작성", id),  Ut.f("../article/detail?id=%d", id));
 	}
 
 	@RequestMapping("/usr/article/list")
@@ -115,7 +113,6 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			
 				return rq.jsHistoryBackOnView("권한이 없습니다.");
 		}
 		model.addAttribute("article", article);

@@ -41,16 +41,10 @@
 		</div>
 
 		<div class="btns mt-4">
-			<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-					type="button" 
-					onclick="location.href='../article/list';">
-					리스트로 이동
-			</button>
+			<button class="btn btn-outline" onclick="location.href='../article/list';">리스트로 이동</button>
 			<c:if test="${rq.loginedMemberId eq article.memberId}">
-				<a class="btn-text-link hover:text-blue-700" href="../article/modify?id=${article.id }">수정</a>
-				<a class="btn-text-link hover:text-blue-700" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-				href="../article/doDelete?id=${article.id }"
-			>삭제</a>
+			<button class="btn btn-outline btn-primary" onclick="location.href='../article/modify?id=${article.id }';">수정</button>
+			<button class="btn btn-outline btn-accent" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false; location.href='../article/doDelete?id=${article.id }';">삭제</button>
 			</c:if>
 		</div>
 	</div>
