@@ -21,8 +21,8 @@
 </head>
 <body>
 <c:set var="rq" value="${rq}" />
-<header>
-<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20">
+<header class="bg-black text-white">
+<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 ">
 	<a href="#" class="flex items-center px-3">
 	<i class="fa-solid fa-pen-to-square" style="font-size:30px;"></i>
 	</a>
@@ -31,7 +31,13 @@
 			<a href="../home/main" class="hover:underline">메인페이지</a>
 		</h1>
 		<div class="flex items-center px-3">
-			<a href="../article/list" class="hover:underline">게시물 보기</a>
+			<a href="../article/list" class="hover:underline">전체 글 보기</a>
+		</div>
+				<div class="flex items-center px-3">
+			<a href="../article/list?boardId=1" class="hover:underline">공지사항</a>
+		</div>
+				<div class="flex items-center px-3">
+			<a href="../article/list?boardId=2" class="hover:underline">자유게시판</a>
 		</div>
 	</div>
 		<c:set var="loginMember" value="${loginMember}" />

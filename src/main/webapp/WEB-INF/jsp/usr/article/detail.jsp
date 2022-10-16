@@ -3,13 +3,9 @@
 <c:set var="pageTitle" value="ARTICLE DETAIL"/>
 <%@ include file="../common/head.jspf" %>
 <section class="mt-8 text-xl">
-	<div class="container mx-auto px-3">
-		<div class="table-box-type-1">
-			<table>
-				<colgroup>
-					<col width="200" />
-				</colgroup>
-
+	<div class="mx-96">
+		<div class="overflow-x-auto mt-11 text-center table-box-type-1">
+			<table class="w-full ">
 				<tbody>
 					<tr>
 						<th>번호</th>
@@ -40,7 +36,7 @@
 			</table>
 		</div>
 
-		<div class="btns mt-4">
+		<div class="btns mt-4 ">
 			<button class="btn btn-outline" onclick="location.href='../article/list';">리스트로 이동</button>
 			<c:if test="${rq.loginedMemberId eq article.memberId}">
 			<button class="btn btn-outline btn-primary" onclick="location.href='../article/modify?id=${article.id }';">수정</button>

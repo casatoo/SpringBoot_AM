@@ -9,11 +9,13 @@ import com.KMS.exam.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 
-	public void writeArticle(int memberId, String title, String body);
+	public void writeArticle(int memberId, String title, String body, int boardId);
 
 	public Article getForPrintArticle(int id);
 
-	public List<Article> getArticles();
+	public List<Article> getArticles(int boardId);
+	
+	public List<Article> getAllArticles();
 
 	public void deleteArticle(int id);
 

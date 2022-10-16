@@ -35,18 +35,23 @@ public class ArticleService {
 
 	}
 
-	public List<Article> getForPrintArticles(int actorId) {
-		List<Article> articles = articleRepository.getArticles();
-
+	public List<Article> getForPrintArticles(int actorId, int boardId) {
+		List<Article> articles;
+		if(boardId == 0) {
+			articles = articleRepository.getAllArticles();
+		}else {
+			articles = articleRepository.getArticles(boardId);
+		}
+		
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);
 		}
-
+		
 		return articles;
 	}
 
-	public ResultData<Integer> writeArticle(int memberId, String title, String body) {
-		articleRepository.writeArticle(memberId, title, body);
+	public ResultData<Integer> writeArticle(int memberId, String title, String body, int boardId) {
+		articleRepository.writeArticle(memberId, title, body, boardId);
 		int id = articleRepository.getLastInsertId();
 
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다", id), "id", id);

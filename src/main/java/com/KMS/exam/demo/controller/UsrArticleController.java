@@ -29,7 +29,7 @@ public class UsrArticleController {
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public String doAdd(String title, String body, HttpServletRequest req, Model model) {
+	public String doAdd(String title, String body, int boardId, HttpServletRequest req, Model model) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		if(Ut.empty(title)) {
@@ -38,7 +38,7 @@ public class UsrArticleController {
 		if(Ut.empty(body)) {
 			return Ut.jsHistoryBack(Ut.f("내용을 입력해주세요"));
 		}
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body, boardId);
 		
 		int id = (int) writeArticleRd.getData1();
 		
@@ -46,11 +46,13 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model) {
+	public String showList(HttpServletRequest req, Model model,Integer boardId) {
+		if(boardId==null) {
+			boardId = 0;
+		}
 		Rq rq = (Rq) req.getAttribute("rq");
-
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
-
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId);
+		model.addAttribute("boardId",boardId);
 		model.addAttribute("articles", articles);
 		model.addAttribute("rq",rq);
 		return "usr/article/list";
@@ -105,7 +107,8 @@ public class UsrArticleController {
 
 	
 	@RequestMapping("usr/article/write")
-	public String articleWriteForm(HttpServletRequest req, Model model) {
+	public String articleWriteForm(HttpServletRequest req, Model model, int boardId) {
+		model.addAttribute("boardId", boardId);
 		return "usr/article/write" ;
 	}
 	@RequestMapping("usr/article/modify")

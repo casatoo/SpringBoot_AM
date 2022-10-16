@@ -6,6 +6,18 @@
 	<div class="m-11">
 		<form action="../article/doAdd?">
 			<div>
+				<c:choose>
+					<c:when test="${boardId == 1}">
+								<label for="boardId">공지사항 작성</label>
+								<input type="hidden" id="boardId" name="boardId" value="1" class="input input-bordered input-sm w-full max-w-xs"/>
+					</c:when>
+					<c:when test="${boardId == 0 || boardId == 2}">
+								<label for="boardId">자유 게시글 작성</label>
+								<input type="hidden" id="boardId" name="boardId" value="2" class="input input-bordered input-sm w-full max-w-xs"/>
+					</c:when>
+				</c:choose>
+			</div>
+			<div>
 				<label for="title">글 제목</label>
 				<input type="text" placeholder="제목" id="title" name="title" size="30" class="input input-bordered input-sm w-full max-w-xs"/>
 			</div>
