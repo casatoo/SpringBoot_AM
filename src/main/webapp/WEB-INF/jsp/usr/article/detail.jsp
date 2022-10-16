@@ -3,32 +3,32 @@
 <c:set var="pageTitle" value="ARTICLE DETAIL"/>
 <%@ include file="../common/head.jspf" %>
 <section class="mt-8 text-xl">
-	<div class="mx-96">
+	<div class="mx-40">
 		<div class="overflow-x-auto mt-11 text-center table-box-type-1">
 			<table class="w-full ">
 				<tbody>
 					<tr>
-						<th>번호</th>
+						<th class="w-20">번호</th>
 						<td>${article.id }</td>
 					</tr>
 					<tr>
-						<th>작성날짜</th>
+						<th class="w-36">작성날짜</th>
 						<td>${article.regDate }</td>
 					</tr>
 					<tr>
-						<th>수정날짜</th>
+						<th class="w-36">수정날짜</th>
 						<td>${article.updateDate }</td>
 					</tr>
 					<tr>
-						<th>작성자</th>
+						<th class="w-36">작성자</th>
 						<td>${article.extra__writerName }</td>
 					</tr>
 					<tr>
-						<th>제목</th>
+						<th class="w-36">제목</th>
 						<td>${article.title }</td>
 					</tr>
 					<tr>
-						<th>내용</th>
+						<th class="w-36 h-96">내용</th>
 						<td>${article.body }</td>
 					</tr>
 				</tbody>

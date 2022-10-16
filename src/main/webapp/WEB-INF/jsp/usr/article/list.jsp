@@ -1,25 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../common/head.jspf"%>
-<div class="text-center text-3xl mt-11">
 <c:set var="boardId" value="${boardId}"/>
 <c:choose>
 	<c:when test="${boardId == 0}">
 		<c:set var="pageTitle" value="ARTICLE LIST" />
-		<h1>전체 글 목록</h1>
 	</c:when>
 	<c:when test="${boardId == 1}">
 		<c:set var="pageTitle" value="ARTICLE NOTICE" />
-		<h1>공지사항</h1>
 	</c:when>
 	<c:when test="${boardId == 2}">
 		<c:set var="pageTitle" value="ARTICLE FREE" />
+	</c:when>
+</c:choose>
+<%@ include file="../common/head.jspf"%>
+<div class="text-center text-3xl mt-11">
+<c:choose>
+	<c:when test="${boardId == 0}">
+		<h1>전체 글 목록</h1>
+	</c:when>
+	<c:when test="${boardId == 1}">
+		<h1>공지사항</h1>
+	</c:when>
+	<c:when test="${boardId == 2}">
 		<h1>자유게시판</h1>
 	</c:when>
 </c:choose>
 </div>
-<div class="overflow-x-auto mx-96 mt-11 text-center table-box-type-1">
+<div class="overflow-x-auto mx-40 mt-11 text-center table-box-type-1">
   <table class=" w-full ">
     <thead class="bg-black text-white text-xl">
       <tr>
