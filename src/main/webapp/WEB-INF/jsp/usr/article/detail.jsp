@@ -37,7 +37,12 @@
 		</div>
 
 		<div class="btns mt-4 ">
-			<button class="btn btn-outline" onclick="location.href='../article/list';">리스트로 이동</button>
+			<c:if test="${article.boardId == 1}">
+				<button class="btn btn-outline" onclick="location.href='../article/list?boardId=1';">리스트로 이동</button>
+			</c:if>
+			<c:if test="${article.boardId == 2}">
+				<button class="btn btn-outline" onclick="location.href='../article/list?boardId=2';">리스트로 이동</button>
+			</c:if>
 			<c:if test="${rq.loginedMemberId eq article.memberId}">
 			<button class="btn btn-outline btn-primary" onclick="location.href='../article/modify?id=${article.id }';">수정</button>
 			<button class="btn btn-outline btn-accent" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false; location.href='../article/doDelete?id=${article.id }';">삭제</button>

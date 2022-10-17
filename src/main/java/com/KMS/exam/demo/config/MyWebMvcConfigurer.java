@@ -1,4 +1,4 @@
-package com.KMS.exam.demo;
+package com.KMS.exam.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

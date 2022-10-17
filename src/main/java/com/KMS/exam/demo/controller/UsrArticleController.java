@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.ArticleService;
-import com.KMS.exam.demo.service.MemberService;
+import com.KMS.exam.demo.service.BoardService;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Article;
-import com.KMS.exam.demo.vo.Member;
+import com.KMS.exam.demo.vo.Board;
 import com.KMS.exam.demo.vo.ResultData;
 import com.KMS.exam.demo.vo.Rq;
 
@@ -25,6 +25,8 @@ public class UsrArticleController {
 	// 인스턴스 변수
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private BoardService boardService;
 	
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
@@ -46,16 +48,20 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model,Integer boardId) {
-		if(boardId==null) {
-			boardId = 0;
-		}
+	public String showList(HttpServletRequest req, Model model,Integer boardId, Integer page) {
 		Rq rq = (Rq) req.getAttribute("rq");
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId);
+		if(boardId == null) {
+			return rq.jsHistoryBackOnView("지정되지 않은 게시판");
+		}
+		Board board = boardService.getBoardById(boardId);
+		if(board == null) {
+			return rq.jsHistoryBackOnView("게시판이 존재하지 않습니다.");
+		}
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId).subList(0, 10);
 		int pageCount = (int) Math.ceil((double)articles.size()/10);
-		
 		model.addAttribute("pageCount",pageCount);
 		model.addAttribute("boardId",boardId);
+		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
 		model.addAttribute("rq",rq);
 		return "usr/article/list";

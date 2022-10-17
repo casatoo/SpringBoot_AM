@@ -74,7 +74,7 @@ INSERT INTO board(regDate,updateDate,`code`,`name`)VALUES
 (NOW(),NOW(),'notice','공지사항'),
 (NOW(),NOW(),'free','자유게시판');
 
-select * from board;
+SELECT * FROM board;
 
 
 /**
@@ -82,13 +82,13 @@ select * from board;
 * 2 그냥 검색으로 가져와도?
 * 3 전체가져오는거랑은 따로 해도 되지 않을까.
 */
-select A.* from article A inner join board B on B.id = A.boardId where A.boardId = 2;
-select * from article where boardId = 2;
+SELECT A.* FROM article A INNER JOIN board B ON B.id = A.boardId WHERE A.boardId = 2;
+SELECT * FROM article WHERE boardId = 2;
 
 		SELECT A.*, M.nickname AS
 		extra__writerName
 		FROM article AS A
-		inner JOIN `member` AS M
+		INNER JOIN `member` AS M
 		ON A.memberId
 		= M.id AND A.boardId = 2
 		ORDER BY A.id DESC;
