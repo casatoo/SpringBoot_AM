@@ -29,7 +29,7 @@
 					</tr>
 					<tr>
 						<th class="w-36 h-96">내용</th>
-						<td>${article.body }</td>
+						<td class="text-left">${article.body }</td>
 					</tr>
 				</tbody>
 
