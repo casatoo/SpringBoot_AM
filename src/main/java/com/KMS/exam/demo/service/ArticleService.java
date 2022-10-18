@@ -34,9 +34,13 @@ public class ArticleService {
 		article.setExtra__actorCanDelete(actorCanDeleteRd.isSuccess());
 
 	}
+	
+	public int getTotalPage(int boardId) {
+		return articleRepository.getTotalPage(boardId);
+	}
 
-	public List<Article> getForPrintArticles(int actorId, int boardId) {
-		List<Article> articles = articleRepository.getArticles(boardId);
+	public List<Article> getForPrintArticles(int actorId, int boardId, int limitFrom, int itemsInAPage) {
+		List<Article> articles = articleRepository.getArticles(boardId,limitFrom,itemsInAPage);
 		
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);

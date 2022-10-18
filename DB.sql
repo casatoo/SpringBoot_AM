@@ -72,7 +72,7 @@ delDate DATETIME COMMENT '삭제날짜'
 
 INSERT INTO board(regDate,updateDate,`code`,`name`)VALUES
 (NOW(),NOW(),'notice','공지사항'),
-(NOW(),NOW(),'free','자유게시판');
+(NOW(),NOW(),'free','자유');
 
 SELECT * FROM board;
 

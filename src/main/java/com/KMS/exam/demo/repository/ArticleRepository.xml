@@ -13,6 +13,14 @@
 		`body` = #{body},
 		boardId =  #{boardId}
 	</insert>
+	
+	<select id="getTotalPage" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+		<if test="boardId !=0">
+		WHERE article.boardId = #{boardId}
+		</if>
+	</select>
 
 	<select id="getArticles" resultType="Article">
 		SELECT A.*, M.nickname AS
@@ -25,6 +33,7 @@
 		AND A.boardId = #{boardId}
 		</if>
 		ORDER BY A.id DESC
+		LIMIT #{limitFrom} , #{itemsInAPage}
 	</select>
 	<select id="getForPrintArticle" resultType="Article">
 		SELECT A.*, M.nickname AS extra__writerName

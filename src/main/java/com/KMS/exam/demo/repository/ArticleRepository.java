@@ -13,7 +13,9 @@ public interface ArticleRepository {
 
 	public Article getForPrintArticle(int id);
 
-	public List<Article> getArticles(int boardId);
+	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage);
+	
+	public int getTotalPage(int boardId);
 
 	public void deleteArticle(int id);
 
