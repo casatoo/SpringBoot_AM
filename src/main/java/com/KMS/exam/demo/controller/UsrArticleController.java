@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.ArticleService;
@@ -27,13 +28,16 @@ public class UsrArticleController {
 	private ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private Rq rq;
 	
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public String doAdd(String title, String body, int boardId, HttpServletRequest req, Model model) {
-		Rq rq = (Rq) req.getAttribute("rq");
-
+	public String doAdd(String title, String body, Integer boardId, Model model) {
+		if(Ut.empty(boardId)) {
+			return Ut.jsHistoryBack(Ut.f("게시판을 선택해주세요"));
+		}
 		if(Ut.empty(title)) {
 			return Ut.jsHistoryBack(Ut.f("제목을 입력해주세요"));
 		}
@@ -48,8 +52,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model,Integer boardId, Integer page) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String showList( Model model, @RequestParam(defaultValue = "1")Integer boardId,@RequestParam(defaultValue = "1")Integer page) {
 		if(boardId == null) {
 			return rq.jsHistoryBackOnView("지정되지 않은 게시판");
 		}
@@ -61,21 +64,21 @@ public class UsrArticleController {
 		int limitFrom = (page - 1) * itemsInAPage;
 		
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId,limitFrom,itemsInAPage);
-		int totalPage = articleService.getTotalPage(boardId);
-		int pageCount = (int) Math.ceil((double)totalPage/10);
+		int getTotalArticle = articleService.getTotalArticle(boardId);
+		int totalPage = (int) Math.ceil((double)getTotalArticle/10);
 		
-		model.addAttribute("pageCount",pageCount);
+		model.addAttribute("getTotalArticle",getTotalArticle);
+		model.addAttribute("page",page);
+		model.addAttribute("pageCount",totalPage);
 		model.addAttribute("boardId",boardId);
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
-		model.addAttribute("rq",rq);
 		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(HttpServletRequest req, int id) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doDelete(int id, int boardId) {
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
@@ -86,13 +89,12 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물에 대한 권한이 없습니다.", id));
 		}
 		articleService.deleteArticle(id);
-		return Ut.jsReplace(Ut.f("%d번 게시물을 삭제했습니다", id), "../article/list");
+		return Ut.jsReplace(Ut.f("%d번 게시물을 삭제했습니다", id), Ut.f("../article/list?boardId=%d&page=1",boardId));
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doModify(int id, String title, String body) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		if (article == null) {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
@@ -112,8 +114,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, Model model, int id) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String showDetail( Model model, int id) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		model.addAttribute("article", article);
 		return "usr/article/detail";
@@ -121,13 +122,11 @@ public class UsrArticleController {
 
 	
 	@RequestMapping("usr/article/write")
-	public String articleWriteForm(HttpServletRequest req, Model model, int boardId) {
-		model.addAttribute("boardId", boardId);
+	public String articleWriteForm(HttpServletRequest req, Model model) {
 		return "usr/article/write" ;
 	}
 	@RequestMapping("usr/article/modify")
-	public String articleModifyForm(HttpServletRequest req, Model model,int id) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String articleModifyForm( Model model,int id) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
 				return rq.jsHistoryBackOnView("권한이 없습니다.");

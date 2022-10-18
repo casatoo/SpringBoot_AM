@@ -35,8 +35,8 @@ public class ArticleService {
 
 	}
 	
-	public int getTotalPage(int boardId) {
-		return articleRepository.getTotalPage(boardId);
+	public int getTotalArticle(int boardId) {
+		return articleRepository.getTotalArticle(boardId);
 	}
 
 	public List<Article> getForPrintArticles(int actorId, int boardId, int limitFrom, int itemsInAPage) {

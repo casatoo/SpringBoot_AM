@@ -27,7 +27,8 @@ public class UsrMemberController {
 	 */
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private Rq rq;
 	/**
 	 * dojoin 맵핑하기 return 값은 회원가입 메시지를 주기 위해 가입시키고 member 값을 받아온다. 인자값은
 	 * id,pw,이름,닉네임,전화번호,이메일 vo에 member 만들어야 함 Service에 doJoin 메서드 생성 가입절차 시작 전에 아이디
@@ -87,8 +88,7 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw,HttpServletRequest req, HttpSession httpSession, Model model) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogin(String loginId, String loginPw, HttpSession httpSession, Model model) {
 		
 		if(rq.isLogined()){
 			return Ut.jsReplace(Ut.f("이미 로그인중입니다"),"../home/main");
@@ -117,8 +117,7 @@ public class UsrMemberController {
 	 */
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req, Model model, HttpSession httpSession) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogout( Model model, HttpSession httpSession) {
 		rq.logout();
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),"../home/main");
 	}

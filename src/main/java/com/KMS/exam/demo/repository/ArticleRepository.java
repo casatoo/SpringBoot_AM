@@ -15,7 +15,7 @@ public interface ArticleRepository {
 
 	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage);
 	
-	public int getTotalPage(int boardId);
+	public int getTotalArticle(int boardId);
 
 	public void deleteArticle(int id);
 

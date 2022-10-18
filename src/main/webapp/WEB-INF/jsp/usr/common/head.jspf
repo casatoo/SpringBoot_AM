@@ -4,13 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${pageTitle} PAGE</title>
+<title>${pageTitle}PAGE</title>
 <link rel="stylesheet" href="/resource/common.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 <%-- 제이쿼리 --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-<%-- 테일윈드 불러오기 --%> 
+<%-- 테일윈드 불러오기 --%>
 <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css" rel="stylesheet" type="text/css" />
 
@@ -20,44 +22,46 @@
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-<c:set var="rq" value="${rq}" />
-<header class="bg-black text-white">
-<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 ">
-	<a href="#" class="flex items-center px-3">
-	<i class="fa-solid fa-pen-to-square" style="font-size:30px;"></i>
-	</a>
-	<div class="flex justify-end flex-grow">
-		<h1 class="flex items-center px-3">
-			<a href="../home/main" class="hover:underline">메인페이지</a>
-		</h1>
-		<div class="flex items-center px-3">
-			<a href="../article/list?boardId=1&page=1" class="hover:underline">공지사항</a>
-		</div>
-				<div class="flex items-center px-3">
-			<a href="../article/list?boardId=2&page=1" class="hover:underline">자유게시판</a>
-		</div>
-	</div>
-		<c:set var="loginMember" value="${loginMember}" />
-	
-		<c:choose>
-			<c:when test="${!rq.isLogined()}">
-				<ul class="flex items-center px-3">
-					<li><a href="../member/login" class="h-full px-3 flex items-center px-3">
-					<span>로그인</span>
-					</a></li>
-					<li><a href="../member/join" class="h-full px-3 flex items-center px-3">
-					<span>회원가입</span>
-					</a></li>
-				</ul>
-			</c:when>
-			<c:otherwise>
-				<ul class="flex items-center px-3">
-					<li><a href="../member/doLogout" class="h-full px-3 flex items-center px-3">
-					<span>로그아웃</span>
-					</a></li>
-				</ul>
-			</c:otherwise>
-		</c:choose>
-</nav>
-</header>
-<main>
+		<c:set var="rq" value="${rq}" />
+		<header class="bg-black text-white">
+				<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 ">
+						<a href="#" class="flex items-center px-3"> <i class="fa-solid fa-pen-to-square" style="font-size: 30px;"></i>
+						</a>
+						<div class="flex justify-end flex-grow">
+								<h1 class="flex items-center px-3">
+										<a href="../home/main" class="hover:underline">메인페이지</a>
+								</h1>
+								<div class="flex items-center px-3">
+										<a href="../article/list?boardId=1&page=1" class="hover:underline">공지사항</a>
+								</div>
+								<div class="flex items-center px-3">
+										<a href="../article/list?boardId=2&page=1" class="hover:underline">자유게시판</a>
+								</div>
+								<div class="flex items-center px-3">
+										<c:if test="${rq.isLogined()}">
+											<a href="../article/write" class="hover:underline">글작성</a>
+										</c:if>
+								</div>
+						</div>
+						</div>
+						<c:set var="loginMember" value="${loginMember}" />
+
+						<c:choose>
+								<c:when test="${!rq.isLogined()}">
+										<ul class="flex items-center px-3">
+												<li><a href="../member/login" class="h-full px-3 flex items-center px-3"> <span>로그인</span>
+												</a></li>
+												<li><a href="../member/join" class="h-full px-3 flex items-center px-3"> <span>회원가입</span>
+												</a></li>
+										</ul>
+								</c:when>
+								<c:otherwise>
+										<ul class="flex items-center px-3">
+												<li><a href="../member/doLogout" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
+												</a></li>
+										</ul>
+								</c:otherwise>
+						</c:choose>
+				</nav>
+		</header>
+		<main>
