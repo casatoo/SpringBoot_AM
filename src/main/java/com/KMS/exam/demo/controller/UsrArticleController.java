@@ -63,8 +63,7 @@ public class UsrArticleController {
 		int itemsInAPage = 10;
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		String searchItem = search.concat("%");
-		searchItem += "%";
+		String searchItem = "%" + search.concat("%");
 		
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId,limitFrom,itemsInAPage, searchItem);
 		int getTotalArticle = articleService.getTotalArticle(boardId);
