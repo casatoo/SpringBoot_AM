@@ -33,27 +33,32 @@
 						<c:set var="startPage" value="${page-pageMenuLen >=1 ? page-pageMenuLen : 1}" />
 						<c:set var="endPage" value="${page + pageMenuLen <= pageCount ? page + pageMenuLen : pageCount}" />
 						<c:if test="${startPage > 1}">
-								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=1';">1</button>
+								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=1&searchWord=${searchWord}&searchFrom=${searchFrom}';">1</button>
 						</c:if>
 						<c:if test="${startPage > 2}">
 								<button class="btn btn-sm">...</button>
 						</c:if>
 						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
 								<button class="btn btn-sm ${page == pageNum ? 'btn-active' : '' }"
-										onclick="location.href='../article/list?boardId=${boardId}&page=${pageNum}';">${pageNum}</button>
+										onclick="location.href='../article/list?boardId=${boardId}&page=${pageNum}&searchWord=${searchWord}&searchFrom=${searchFrom}';">${pageNum}</button>
 						</c:forEach>
 						<c:if test="${endPage < pageCount-1}">
 								<button class="btn btn-sm">...</button>
 						</c:if>
 						<c:if test="${endPage < pageCount}">
-								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${pageCount}';">${pageCount}</button>
+								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${pageCount}&searchWord=${searchWord}&searchFrom=${searchFrom}';">${pageCount}</button>
 						</c:if>
 				</div>
 		</div>
 		<div class="mt-4">
 				<form action="../article/list?">
-						<input type="hidden" name="boardId" value="${boardId}" /> <input type="text" placeholder="searsh?" name="search"
-								class="input input-bordered input-xs w-full max-w-xs" />
+						<input type="hidden" name="boardId" value="${boardId}" /> 
+						<select name="searchFrom" required>
+								<option value="A.title">제목</option>
+								<option value="A.body">내용</option>
+								<option value="M.name">작성자</option>
+						</select> 
+						<input type="text" placeholder="search?" name="searchWord" class="input input-bordered input-xs w-full max-w-xs" />
 						<button type="submit" class="btn btn-sm">검색</button>
 				</form>
 		</div>
