@@ -52,7 +52,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList( Model model, @RequestParam(defaultValue = "1")Integer boardId,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "")String searchWord, String searchFrom) {
+	public String showList( Model model, @RequestParam(defaultValue = "1")Integer boardId,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "")String searchWord,@RequestParam(defaultValue = "") String searchFrom) {
 		if(boardId == null) {
 			return rq.jsHistoryBackOnView("지정되지 않은 게시판");
 		}
@@ -63,10 +63,8 @@ public class UsrArticleController {
 		int itemsInAPage = 10;
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		String searchItem = "%" + searchWord.concat("%");
-		
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId,limitFrom,itemsInAPage, searchItem, searchFrom);
-		int getTotalArticle = articleService.getTotalArticle(boardId, searchItem, searchFrom);
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId,limitFrom,itemsInAPage, searchWord, searchFrom);
+		int getTotalArticle = articleService.getTotalArticle(boardId, searchWord, searchFrom);
 		int pageCount = (int) Math.ceil((double)getTotalArticle/itemsInAPage);
 		
 		model.addAttribute("searchFrom",searchFrom);

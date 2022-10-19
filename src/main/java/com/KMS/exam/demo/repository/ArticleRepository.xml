@@ -23,8 +23,15 @@
 		<if test="boardId !=0">
 		AND A.boardId = #{boardId}
 		</if>
-		<if test="searchItem != '%%'">
-		AND ${searchFrom} LIKE #{searchItem}
+		<if test="searchWord !=''">
+			<choose>
+				<when test="searchFrom == ''">
+				AND (A.title LIKE '%${searchWord}%' OR A.body LIKE '%${searchWord}%'
+				</when>
+				<when test="searchFrom != ''">
+				AND ${searchFrom} LIKE '%${searchWord}%'
+				</when>
+			</choose>
 		</if>
 	</select>
 
@@ -38,8 +45,15 @@
 		<if test="boardId !=0">
 		AND A.boardId = #{boardId}
 		</if>
-		<if test="searchItem != '%%'">
-		AND ${searchFrom} LIKE #{searchItem}
+		<if test="searchWord !=''">
+			<choose>
+				<when test="searchFrom == ''">
+				AND (A.title LIKE '%${searchWord}%' OR A.body LIKE '%${searchWord}%'
+				</when>
+				<when test="searchFrom != ''">
+				AND ${searchFrom} LIKE '%${searchWord}%'
+				</when>
+			</choose>
 		</if>
 		ORDER BY A.id DESC
 		LIMIT #{limitFrom} , #{itemsInAPage}

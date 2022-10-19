@@ -54,6 +54,7 @@
 				<form action="../article/list?">
 						<input type="hidden" name="boardId" value="${boardId}" /> 
 						<select name="searchFrom" required>
+								<option disabled selected>검색조건</option>
 								<option value="A.title">제목</option>
 								<option value="A.body">내용</option>
 								<option value="M.name">작성자</option>

@@ -13,9 +13,9 @@ public interface ArticleRepository {
 
 	public Article getForPrintArticle(int id);
 
-	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage, String searchItem, String searchFrom);
+	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage, String searchWord, String searchFrom);
 	
-	public int getTotalArticle(int boardId, String searchItem,String searchFrom);
+	public int getTotalArticle(int boardId, String searchWord,String searchFrom);
 
 	public void deleteArticle(int id);
 
