@@ -32,7 +32,9 @@
 		<if test="boardId !=0">
 		AND A.boardId = #{boardId}
 		</if>
+		<if test="search != '%%'">
 		AND A.title LIKE #{search}
+		</if>
 		ORDER BY A.id DESC
 		LIMIT #{limitFrom} , #{itemsInAPage}
 	</select>
