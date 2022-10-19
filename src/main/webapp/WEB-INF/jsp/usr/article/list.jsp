@@ -6,6 +6,11 @@
 		<h1>${board.name}게시판</h1>
 		<div class="text-base ">게시글 ${getTotalArticle}개</div>
 </div>
+<form action="../article/list?">
+		<input type="hidden" name="boardId" value="${boardId}"/>
+		<input type="text" placeholder="searsh?" name="search" class="input input-bordered input-xs w-full max-w-xs ml-56" />
+		<button type="submit">검색</button>
+</form>
 <div class="overflow-x-auto mx-40 mt-11 text-center table-box-type-1">
 		<table class=" w-full ">
 				<thead class="bg-black text-white text-xl">
@@ -29,15 +34,9 @@
 		</table>
 		<div class="flex justify-between">
 				<div class="mt-4 btn-group">
-						<c:if test="${page > 1 }">
-								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=1';">◀◀</button>
-								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${page-1}';">◀</button>
-						</c:if>
-								<c:forEach var="page" begin="1" end="${pageCount}">
-										<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${page}';">${page}</button>
-								</c:forEach>
-						<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${page+1}';">▶</button>
-						<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${pageCount}';">▶▶</button>
+						<c:forEach var="page" begin="1" end="${pageCount}">
+								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${page}';">${page}</button>
+						</c:forEach>
 				</div>
 		</div>
 </div>

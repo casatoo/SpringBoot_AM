@@ -13,7 +13,7 @@ public interface ArticleRepository {
 
 	public Article getForPrintArticle(int id);
 
-	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage);
+	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage, String search);
 	
 	public int getTotalArticle(int boardId);
 

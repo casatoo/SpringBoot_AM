@@ -35,7 +35,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body, Integer boardId, Model model) {
-		if(Ut.empty(boardId)) {
+		if(boardId == null) {
 			return Ut.jsHistoryBack(Ut.f("게시판을 선택해주세요"));
 		}
 		if(Ut.empty(title)) {
@@ -52,7 +52,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList( Model model, @RequestParam(defaultValue = "1")Integer boardId,@RequestParam(defaultValue = "1")Integer page) {
+	public String showList( Model model, @RequestParam(defaultValue = "1")Integer boardId,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "")String search) {
 		if(boardId == null) {
 			return rq.jsHistoryBackOnView("지정되지 않은 게시판");
 		}
@@ -63,7 +63,10 @@ public class UsrArticleController {
 		int itemsInAPage = 10;
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId,limitFrom,itemsInAPage);
+		String searchItem = search.concat("%");
+		searchItem += "%";
+		
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(),boardId,limitFrom,itemsInAPage, searchItem);
 		int getTotalArticle = articleService.getTotalArticle(boardId);
 		int totalPage = (int) Math.ceil((double)getTotalArticle/10);
 		
