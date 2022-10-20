@@ -14,6 +14,7 @@
 								<th class="w-40">작성일시</th>
 								<th class="w-64">제목</th>
 								<th class="w-40">작성자</th>
+								<th class="w-20">조회수</th>								
 						</tr>
 				</thead>
 				<tbody>
@@ -23,6 +24,7 @@
 										<td>${article.regDate.substring(5,16)}</td>
 										<td onClick="location.href='../article/detail?id=${article.id}'" style="cursor: pointer;">${article.title}</td>
 										<td>${article.extra__writerName}</td>
+										<td>${article.hit}</td>
 								</tr>
 						</c:forEach>
 				</tbody>

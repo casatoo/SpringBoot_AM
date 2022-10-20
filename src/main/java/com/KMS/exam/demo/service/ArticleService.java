@@ -80,5 +80,8 @@ public class ArticleService {
 
 		return ResultData.from("S-1", "삭제 가능");
 	}
+	public void addHit(int id, int setHit) {
+		articleRepository.addHit(id, setHit);
+	}
 
 }

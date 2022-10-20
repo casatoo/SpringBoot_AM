@@ -92,4 +92,11 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
+	
+	<update id="addHit">
+		UPDATE article 
+		SET hit = ${setHit} 
+		WHERE id = ${id}
+	</update>
+	
 </mapper>
