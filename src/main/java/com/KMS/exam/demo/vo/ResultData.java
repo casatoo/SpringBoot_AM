@@ -1,7 +1,10 @@
 package com.KMS.exam.demo.vo;
 
 import lombok.Getter;
+import lombok.ToString;
 
+
+@ToString
 public class ResultData<DT> {
 	
 	@Getter
@@ -19,7 +22,6 @@ public class ResultData<DT> {
 	private ResultData() {
 
 	}
-	
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
 	}

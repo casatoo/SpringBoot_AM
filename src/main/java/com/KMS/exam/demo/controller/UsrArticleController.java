@@ -118,12 +118,22 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail( Model model, int id) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-		article.setHit(article.getHit()+1);
-		articleService.addHit(id, article.getHit());
-		
 		model.addAttribute("article", article);
 		return "usr/article/detail";
 	}
+	
+	@RequestMapping("/usr/article/doAddHit")
+	@ResponseBody
+	public ResultData<Integer> addHitRd(int id) {
+		ResultData<Integer> addHitRd = articleService.addHit(id);
+
+		if (addHitRd.isFail()) {
+			return addHitRd;
+		}
+		return ResultData.newData(addHitRd, "hitCount", articleService.getArticleHitCount(id));
+	}
+
+	
 
 	
 	@RequestMapping("usr/article/write")
@@ -139,5 +149,4 @@ public class UsrArticleController {
 		model.addAttribute("article", article);
 		return "usr/article/modify" ;
 	}
-
 }

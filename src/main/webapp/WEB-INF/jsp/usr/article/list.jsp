@@ -4,9 +4,26 @@
 <%@ include file="../common/head.jspf"%>
 <div class="text-center text-3xl mt-11">
 		<h1>${board.name}게시판</h1>
-		<div class="text-base ">게시글 ${getTotalArticle}개</div>
 </div>
+
 <div class="overflow-x-auto mx-40 mt-11 text-center table-box-type-1">
+		<div class="h-14 relative ">
+				<div class="absolute">게시글: ${getTotalArticle}개</div>
+				<div class="relative w-3/5 left-80">
+						<form action="../article/list?">
+								<input type="hidden" name="boardId" value="${param.boardId}" /> <select
+										data-value="${param.searchFrom}" name="searchFrom" class="select select-bordered w-fullw-32"
+										required>
+										<option disabled selected>검색조건</option>
+										<option value="A.title">제목</option>
+										<option value="A.body">내용</option>
+										<option value="M.name">작성자</option>
+								</select> <input type="text" placeholder="검색어를 입력해주세요" name="searchWord"
+										class="input input-bordered input-primary w-full w-64" value="${param.searchWord}"/>
+								<button type="submit" class="btn btn-sm ">검색</button>
+						</form>
+				</div>
+		</div>
 		<table class=" w-full table-fixed">
 				<thead class="bg-black text-white text-xl">
 						<tr>
@@ -14,7 +31,7 @@
 								<th class="w-40">작성일시</th>
 								<th class="w-64">제목</th>
 								<th class="w-40">작성자</th>
-								<th class="w-20">조회수</th>								
+								<th class="w-20">조회수</th>
 						</tr>
 				</thead>
 				<tbody>
@@ -29,16 +46,16 @@
 						</c:forEach>
 				</tbody>
 		</table>
-		<div class="flex justify-center">
+		<div class="flex justify-center mb-11">
 				<div class="mt-4 btn-group">
 						<c:set var="pageMenuLen" value="4" />
 						<c:set var="startPage" value="${page-pageMenuLen >=1 ? page-pageMenuLen : 1}" />
 						<c:set var="endPage" value="${page + pageMenuLen <= pageCount ? page + pageMenuLen : pageCount}" />
-						
-						<c:set var="pageBaseUri" value="?boardId=${boardId}"/>
-						<c:set var="pageBaseUri" value="${pageBaseUri}&searchWord=${param.searchWord}"/>
-						<c:set var="pageBaseUri" value="${pageBaseUri}&searchFrom=${param.searchFrom}"/>
-					
+
+						<c:set var="pageBaseUri" value="?boardId=${boardId}" />
+						<c:set var="pageBaseUri" value="${pageBaseUri}&searchWord=${param.searchWord}" />
+						<c:set var="pageBaseUri" value="${pageBaseUri}&searchFrom=${param.searchFrom}" />
+
 						<c:if test="${startPage > 1}">
 								<button class="btn btn-sm" onclick="location.href='../article/list${pageBaseUri}&page=1';">1</button>
 						</c:if>
@@ -56,19 +73,6 @@
 								<button class="btn btn-sm" onclick="location.href='../article/list${pageBaseUri}&page=${pageCount}';">${pageCount}</button>
 						</c:if>
 				</div>
-		</div>
-		<div class="mt-4">
-				<form action="../article/list?">
-						<input type="hidden" name="boardId" value="${boardId}" /> 
-						<select name="searchFrom" required>
-								<option disabled selected>검색조건</option>
-								<option value="A.title">제목</option>
-								<option value="A.body">내용</option>
-								<option value="M.name">작성자</option>
-						</select> 
-						<input type="text" placeholder="search?" name="searchWord" class="input input-bordered input-xs w-full max-w-xs" />
-						<button type="submit" class="btn btn-sm">검색</button>
-				</form>
 		</div>
 </div>
 <%@ include file="../common/foot.jspf"%>

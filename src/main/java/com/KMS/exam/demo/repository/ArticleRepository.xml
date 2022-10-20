@@ -11,28 +11,28 @@
 		memberId = #{memberId},
 		title = #{title},
 		`body` = #{body},
-		boardId =  #{boardId}
+		boardId = #{boardId}
 	</insert>
-	
+
 	<select id="getTotalArticle" resultType="int">
 		SELECT COUNT(*)
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId
-		= M.id 
+		= M.id
 		<if test="boardId !=0">
-		AND A.boardId = #{boardId}
+			AND A.boardId = #{boardId}
 		</if>
 		<if test="searchWord !=''">
 			<choose>
 				<when test="searchFrom != ''">
-				AND ${searchFrom} LIKE '%${searchWord}%'
+					AND ${searchFrom} LIKE '%${searchWord}%'
 				</when>
 				<otherwise>
-				AND (
-				A.title LIKE '%${searchWord}%' 
-				OR A.body LIKE '%${searchWord}%'
-				)
+					AND (
+					A.title LIKE '%${searchWord}%'
+					OR A.body LIKE '%${searchWord}%'
+					)
 				</otherwise>
 			</choose>
 		</if>
@@ -42,33 +42,36 @@
 		SELECT A.*, M.nickname AS
 		extra__writerName
 		FROM article AS A
-		INNER JOIN `member` AS M
+		INNER JOIN
+		`member` AS M
 		ON A.memberId
-		= M.id 
+		= M.id
 		<if test="boardId !=0">
-		AND A.boardId = #{boardId}
+			AND A.boardId = #{boardId}
 		</if>
 		<if test="searchWord !=''">
 			<choose>
 				<when test="searchFrom != ''">
-				AND ${searchFrom} LIKE '%${searchWord}%'
+					AND ${searchFrom} LIKE '%${searchWord}%'
 				</when>
 				<otherwise>
-				AND (
-				A.title LIKE '%${searchWord}%' 
-				OR A.body LIKE '%${searchWord}%'
-				)
+					AND (
+					A.title LIKE '%${searchWord}%'
+					OR A.body LIKE '%${searchWord}%'
+					)
 				</otherwise>
 			</choose>
 		</if>
 		ORDER BY A.id DESC
 		LIMIT #{limitFrom} , #{itemsInAPage}
 	</select>
-	
+
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT A.*, M.nickname AS extra__writerName
+		SELECT A.*,
+		M.nickname AS extra__writerName
 		FROM article AS A
-		LEFT JOIN `member` AS M
+		LEFT JOIN `member` AS
+		M
 		ON A.memberId = M.id
 		WHERE A.id
 		= #{id}
@@ -92,11 +95,17 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
-	
+
 	<update id="addHit">
-		UPDATE article 
-		SET hit = ${setHit} 
+		UPDATE article
+		SET hit = hit+1
 		WHERE id = ${id}
 	</update>
-	
+
+	<select id="getArticleHitCount" resultType="int">
+		SELECT hit
+		FROM article
+		WHERE id = #{id}
+	</select>
+
 </mapper>

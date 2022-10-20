@@ -23,6 +23,8 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 	
-	public void addHit(int id ,int setHit);
+	public int addHit(int id);
+	
+	public int getArticleHitCount(int id);
 
 }

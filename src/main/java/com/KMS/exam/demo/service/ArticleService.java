@@ -80,8 +80,15 @@ public class ArticleService {
 
 		return ResultData.from("S-1", "삭제 가능");
 	}
-	public void addHit(int id, int setHit) {
-		articleRepository.addHit(id, setHit);
+	public ResultData<Integer> addHit(int id) {
+		int addHitRd = articleRepository.addHit(id);
+		if (addHitRd == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다", "addHitRd", addHitRd);
+		}
+		return ResultData.from("S-1", "게시물 조회수 증가", "addHitRd", addHitRd);
+	}
+	public int getArticleHitCount(int id) {
+		return articleRepository.getArticleHitCount(id);
 	}
 
 }
