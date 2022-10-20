@@ -25,12 +25,15 @@
 		</if>
 		<if test="searchWord !=''">
 			<choose>
-				<when test="searchFrom == ''">
-				AND (A.title LIKE '%${searchWord}%' OR A.body LIKE '%${searchWord}%'
-				</when>
 				<when test="searchFrom != ''">
 				AND ${searchFrom} LIKE '%${searchWord}%'
 				</when>
+				<otherwise>
+				AND (
+				A.title LIKE '%${searchWord}%' 
+				OR A.body LIKE '%${searchWord}%'
+				)
+				</otherwise>
 			</choose>
 		</if>
 	</select>
@@ -47,12 +50,15 @@
 		</if>
 		<if test="searchWord !=''">
 			<choose>
-				<when test="searchFrom == ''">
-				AND (A.title LIKE '%${searchWord}%' OR A.body LIKE '%${searchWord}%'
-				</when>
 				<when test="searchFrom != ''">
 				AND ${searchFrom} LIKE '%${searchWord}%'
 				</when>
+				<otherwise>
+				AND (
+				A.title LIKE '%${searchWord}%' 
+				OR A.body LIKE '%${searchWord}%'
+				)
+				</otherwise>
 			</choose>
 		</if>
 		ORDER BY A.id DESC
