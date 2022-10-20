@@ -7,7 +7,7 @@
 		<div class="text-base ">게시글 ${getTotalArticle}개</div>
 </div>
 <div class="overflow-x-auto mx-40 mt-11 text-center table-box-type-1">
-		<table class=" w-full ">
+		<table class=" w-full table-fixed">
 				<thead class="bg-black text-white text-xl">
 						<tr>
 								<th class="w-20">번호</th>
@@ -34,21 +34,26 @@
 						<c:set var="pageMenuLen" value="4" />
 						<c:set var="startPage" value="${page-pageMenuLen >=1 ? page-pageMenuLen : 1}" />
 						<c:set var="endPage" value="${page + pageMenuLen <= pageCount ? page + pageMenuLen : pageCount}" />
+						
+						<c:set var="pageBaseUri" value="?boardId=${boardId}"/>
+						<c:set var="pageBaseUri" value="${pageBaseUri}&searchWord=${param.searchWord}"/>
+						<c:set var="pageBaseUri" value="${pageBaseUri}&searchFrom=${param.searchFrom}"/>
+					
 						<c:if test="${startPage > 1}">
-								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=1&searchWord=${searchWord}&searchFrom=${searchFrom}';">1</button>
+								<button class="btn btn-sm" onclick="location.href='../article/list${pageBaseUri}&page=1';">1</button>
 						</c:if>
 						<c:if test="${startPage > 2}">
 								<button class="btn btn-sm">...</button>
 						</c:if>
 						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
 								<button class="btn btn-sm ${page == pageNum ? 'btn-active' : '' }"
-										onclick="location.href='../article/list?boardId=${boardId}&page=${pageNum}&searchWord=${searchWord}&searchFrom=${searchFrom}';">${pageNum}</button>
+										onclick="location.href='../article/list${pageBaseUri}&page=${pageNum}';">${pageNum}</button>
 						</c:forEach>
 						<c:if test="${endPage < pageCount-1}">
 								<button class="btn btn-sm">...</button>
 						</c:if>
 						<c:if test="${endPage < pageCount}">
-								<button class="btn btn-sm" onclick="location.href='../article/list?boardId=${boardId}&page=${pageCount}&searchWord=${searchWord}&searchFrom=${searchFrom}';">${pageCount}</button>
+								<button class="btn btn-sm" onclick="location.href='../article/list${pageBaseUri}&page=${pageCount}';">${pageCount}</button>
 						</c:if>
 				</div>
 		</div>
