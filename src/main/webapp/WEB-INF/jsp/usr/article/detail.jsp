@@ -2,6 +2,36 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="ARTICLE DETAIL" />
 <%@ include file="../common/head.jspf"%>
+
+<script>
+	const params = {};
+	params.id = parseInt('${param.id}');
+</script>
+
+<script>
+console.log(localStorage);
+</script>
+
+<script>
+	if(localStorage.getItem(${param.id}) != ${rq.loginedMemberId}){
+	function ArticleDetail__increaseHit() {
+		$.get('../article/incresedHit', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.article-detail__hit').empty().html(data.data1);
+		}, 'json');
+	}
+	$(function() {
+		// 실전코드
+		//ArticleDetail__increaseHitCount();
+		// 연습코드
+		setTimeout(ArticleDetail__increaseHit, 2000);
+	})
+	localStorage.setItem(${param.id}, ${rq.loginedMemberId});
+	}
+</script>
+
 <section class="mt-8 text-xl">
 		<div class="mx-40">
 				<div class="overflow-x-auto mt-11 text-center table-box-type-1">
@@ -21,7 +51,7 @@
 										</tr>
 										<tr>
 												<th class="w-20">조회수</th>
-												<td>${article.hit}</td>
+												<td><span class="article-detail__hit">${article.hit}</span></td>
 										</tr>
 										<tr>
 												<th class="w-36">작성자</th>

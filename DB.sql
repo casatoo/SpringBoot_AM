@@ -77,11 +77,6 @@ INSERT INTO board(regDate,updateDate,`code`,`name`)VALUES
 SELECT * FROM board;
 
 
-/**
-* 1 조인 으로 해서 값을 주고 가져오는걸로
-* 2 그냥 검색으로 가져와도?
-* 3 전체가져오는거랑은 따로 해도 되지 않을까.
-*/
 SELECT A.* FROM article A INNER JOIN board B ON B.id = A.boardId WHERE A.boardId = 2;
 SELECT * FROM article WHERE boardId = 2;
 
@@ -99,3 +94,13 @@ WHERE loginId = 'id1';
 
 
 SELECT * FROM `member`;
+
+ALTER TABLE article ADD COLUMN hit INT(10) DEFAULT 0;
+
+SELECT * FROM article; 
+
+UPDATE article SET hit = 1 WHERE id = 1;
+
+		UPDATE article 
+		SET hit = hit+1
+		WHERE id = 1;

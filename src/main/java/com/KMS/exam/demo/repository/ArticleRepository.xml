@@ -96,7 +96,7 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 
-	<update id="addHit">
+	<update id="incresedHit">
 		UPDATE article
 		SET hit = hit+1
 		WHERE id = ${id}

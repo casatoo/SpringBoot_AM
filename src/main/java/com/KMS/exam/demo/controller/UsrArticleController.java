@@ -122,18 +122,20 @@ public class UsrArticleController {
 		return "usr/article/detail";
 	}
 	
-	@RequestMapping("/usr/article/doAddHit")
+	@RequestMapping("/usr/article/incresedHit")
 	@ResponseBody
-	public ResultData<Integer> addHitRd(int id) {
-		ResultData<Integer> addHitRd = articleService.addHit(id);
+	public ResultData<Integer> incresedHit(int id) {
+		ResultData<Integer> incresedHitRd = articleService.incresedHit(id);
 
-		if (addHitRd.isFail()) {
-			return addHitRd;
+		if (incresedHitRd.isFail()) {
+			return incresedHitRd;
 		}
-		return ResultData.newData(addHitRd, "hitCount", articleService.getArticleHitCount(id));
-	}
+		ResultData<Integer> rd = ResultData.newData(incresedHitRd, "hitCount", articleService.getArticleHitCount(id));
+		rd.setData2("id", id);
+		
+		return rd;
 
-	
+	}
 
 	
 	@RequestMapping("usr/article/write")
