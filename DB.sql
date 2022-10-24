@@ -74,33 +74,50 @@ INSERT INTO board(regDate,updateDate,`code`,`name`)VALUES
 (NOW(),NOW(),'notice','공지사항'),
 (NOW(),NOW(),'free','자유');
 
-SELECT * FROM board;
+DROP TABLE IF EXISTS reactionPoint;
+CREATE TABLE reactionPoint (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+	relId INT(10) NOT NULL COMMENT '관련 데이터  번호',
+    `point` SMALLINT(2) NOT NULL,
+    FOREIGN KEY (relId) REFERENCES article(id) ON DELETE CASCADE 
+);
+
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 1,
+`point` = -1;
+
+/*테스트데이터*/
 
 
-SELECT A.* FROM article A INNER JOIN board B ON B.id = A.boardId WHERE A.boardId = 2;
-SELECT * FROM article WHERE boardId = 2;
-
-		SELECT A.*, M.nickname AS
-		extra__writerName
-		FROM article AS A
-		INNER JOIN `member` AS M
-		ON A.memberId
-		= M.id AND A.boardId = 2
-		ORDER BY A.id DESC;
+SELECT A.*, M.nickname 
+AS extra__writerName 
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
 
 
-SELECT loginPw FROM `member`
-WHERE loginId = 'id1';
+AND A.boardId = 2
+AND ( A.title LIKE '%%' OR A.body LIKE '%%')
+ORDER BY A.id DESC
+LIMIT 0 , 10;
 
+/*
+리스트에 표현되어야 하는것.
+글 번호
+작성일시
+제목
+작성자
+조회수
+추천
+추천수 테이블을 만든다면
+id , 게시글번호, 맴버번호, 
+*/
 
-SELECT * FROM `member`;
-
-ALTER TABLE article ADD COLUMN hit INT(10) DEFAULT 0;
-
-SELECT * FROM article; 
-
-UPDATE article SET hit = 1 WHERE id = 1;
-
-		UPDATE article 
-		SET hit = hit+1
-		WHERE id = 1;
