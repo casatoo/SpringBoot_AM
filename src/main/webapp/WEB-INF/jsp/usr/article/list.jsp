@@ -43,7 +43,7 @@
 										<td onClick="location.href='../article/detail?id=${article.id}'" style="cursor: pointer;">${article.title}</td>
 										<td>${article.extra__writerName}</td>
 										<td>${article.hit}</td>
-										<td></td>
+										<td>${article.extra__sumReactionPoint}</td>
 								</tr>
 						</c:forEach>
 				</tbody>

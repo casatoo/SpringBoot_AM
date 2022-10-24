@@ -95,19 +95,36 @@ relId = 1,
 `point` = -1;
 
 /*테스트데이터*/
+INSERT INTO reactionPoint (regDate,updateDate,memberId,relTypeCode,relId,`point`)VALUES
+(NOW(),NOW(),1,'article',1,1),
+(NOW(),NOW(),2,'article',2,1),
+(NOW(),NOW(),3,'article',1,-1),
+(NOW(),NOW(),1,'article',2,1),
+(NOW(),NOW(),2,'article',1,-1),
+(NOW(),NOW(),3,'article',2,1),
+(NOW(),NOW(),1,'article',3,-1),
+(NOW(),NOW(),2,'article',3,1);
 
+SELECT * FROM reactionPoint;
 
+SELECT A.*,
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)),0) AS extra__badReactionPoint
+FROM (
 SELECT A.*, M.nickname 
 AS extra__writerName 
 FROM article AS A
 INNER JOIN `member` AS M
 ON A.memberId = M.id
-
-
 AND A.boardId = 2
 AND ( A.title LIKE '%%' OR A.body LIKE '%%')
 ORDER BY A.id DESC
-LIMIT 0 , 10;
+LIMIT 0 , 10) AS A
+LEFT JOIN reactionPoint AS RP
+ON RP.relTypeCode = 'article'
+AND A.id = RP.relId
+GROUP BY A.id;
 
 /*
 리스트에 표현되어야 하는것.
@@ -120,4 +137,42 @@ LIMIT 0 , 10;
 추천수 테이블을 만든다면
 id , 게시글번호, 맴버번호, 
 */
+SELECT A.*,
+			IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+			IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)),0) AS extra__goodReactionPoint,
+			IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)),0) AS extra__badReactionPoint
+			FROM (
+				SELECT A.*, M.nickname AS
+				extra__writerName
+				FROM article AS A
+				LEFT JOIN `member` AS M
+				ON A.memberId = M.id WHERE 1
+				<IF test="boardId != 0">
+					AND A.boardId = #{boardId}
+				</IF>
+				<IF test="searchKeyword != ''">
+					<choose>
+						<WHEN test="searchKeywordTypeCode == 'title'">
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</WHEN>
+						<WHEN test="searchKeywordTypeCode == 'body'">
+							AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						</WHEN>
+						<otherwise>
+							AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+							)
+						</otherwise>
+					</choose>
+				</IF>
+				ORDER BY A.id DESC
+				<IF test="limitTake != -1">
+					LIMIT #{limitStart}, #{limitTake}
+				</IF>
+						) AS A
+			LEFT JOIN reactionPoint AS RP
+			ON RP.relTypeCode = 'article'
+			AND A.id = RP.relId
+			GROUP BY A.id
 
