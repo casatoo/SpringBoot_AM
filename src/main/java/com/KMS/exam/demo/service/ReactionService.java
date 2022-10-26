@@ -11,8 +11,8 @@ public class ReactionService {
 	@Autowired
 	private ReactionRepository reactionRepository;
 	
-	public ResultData<Integer> reactionPoint(int relId, int memberId, int point){
-		int reactionPointRd = reactionRepository.reactionPoint(relId,memberId,point);
+	public ResultData<Integer> doReaction(int relId, int memberId, int point){
+		int reactionPointRd = reactionRepository.doReaction(relId,memberId,point);
 		if (reactionPointRd == 0) {
 			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다", "reactionPointRd", reactionPointRd);
 		}
@@ -28,6 +28,10 @@ public class ReactionService {
 
 	public void cancelReaction(int relId, int memberId) {
 		reactionRepository.cancelReaction(relId, memberId);
+	}
+
+	public void updateReaction() {
+		reactionRepository.updateReaction();
 	}
 
 }

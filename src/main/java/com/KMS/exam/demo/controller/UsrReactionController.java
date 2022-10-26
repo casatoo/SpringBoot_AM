@@ -21,11 +21,12 @@ public class UsrReactionController {
 	private ReactionService reactionService;
 	
 	
-	@RequestMapping("/usr/reaction/reactionPoint")
+	@RequestMapping("/usr/reaction/doReaction")
 	@ResponseBody
 	public String reactionPoint(int relId, int memberId, int point) {
+		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,memberId,point);
 		
-		ResultData<Integer> reactionPointRd = reactionService.reactionPoint(relId,memberId,point);
+		reactionService.updateReaction();
 		
 		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 	}
