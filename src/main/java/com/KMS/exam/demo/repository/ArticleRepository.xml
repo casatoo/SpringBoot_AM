@@ -98,7 +98,7 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 
-	<update id="incresedHit">
+	<update id="increseHit">
 		UPDATE article
 		SET hit = hit+1
 		WHERE id = ${id}
@@ -111,26 +111,4 @@
 		WHERE id = #{id}
 	</select>
 
-	<insert id="reactionPoint">
-		INSERT INTO reactionPoint
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		memberId = #{memberId},
-		relTypeCode = 'article',
-		relId = #{relId},
-		`point` = #{point}
-	</insert>
-	
-	<select id="getReactionResult" resultType="Integer">
-	SELECT `point` FROM 
-	reactionPoint WHERE 
-	relId = #{relId} 
-	AND memberId = #{memberId};
-	</select>
-	
-	<delete id="cancelReaction">
-		DELETE FROM reactionPoint
-		WHERE relId = #{relId}
-		AND memberId = #{memberId};
-	</delete>
 </mapper>

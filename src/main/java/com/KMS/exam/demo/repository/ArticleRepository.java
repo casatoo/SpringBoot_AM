@@ -23,7 +23,7 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 	
-	public int incresedHit(int id);
+	public int increseHit(int id);
 	
 	public int getArticleHitCount(int id);
 

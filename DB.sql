@@ -87,19 +87,6 @@ CREATE TABLE reactionPoint (
     `point` SMALLINT(2) NOT NULL
 );
 
-SELECT `point` FROM reactionPoint WHERE relId = 1 AND memberId = 2;
-
-		DELETE FROM reactionPoint
-		WHERE relId = 1
-		AND memberId = 2;
-INSERT INTO reactionPoint
-SET regDate = NOW(),
-updateDate = NOW(),
-memberId = 1,
-relTypeCode = 'article',
-relId = 1,
-`point` = -1;
-
 /*테스트데이터*/
 INSERT INTO reactionPoint (regDate,updateDate,memberId,relTypeCode,relId,`point`)VALUES
 (NOW(),NOW(),1,'article',1,1),

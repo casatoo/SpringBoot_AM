@@ -121,7 +121,9 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail( Model model, int id, @RequestParam(defaultValue = "0")int memberId) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		
 		Integer reactionRd  = reactionService.getReactionResult(id,memberId);
+		
 		model.addAttribute("article", article);
 		model.addAttribute("reactionRd",reactionRd);
 		return "usr/article/detail";
@@ -130,7 +132,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/incresedHit")
 	@ResponseBody
 	public ResultData<Integer> incresedHit(int id) {
-		ResultData<Integer> incresedHitRd = articleService.incresedHit(id);
+		ResultData<Integer> incresedHitRd = articleService.increseHit(id);
 
 		if (incresedHitRd.isFail()) {
 			return incresedHitRd;

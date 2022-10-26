@@ -33,9 +33,13 @@ console.log(localStorage);
 	}
 </script>
 
+
+
+<c:set var="goodReactionRd" value="${reactionRd == 1 ? '' : 'btn-outline'}"/>
+<c:set var="badReactionRd" value="${reactionRd == -1 ? '' : 'btn-outline'}"/>
+
 <section class="mt-8 text-xl">
 	<div class="mx-40">
-
 		<div class="overflow-x-auto mt-11 text-center table-box-type-1">
 			<table class="w-full ">
 				<tbody>
@@ -58,11 +62,12 @@ console.log(localStorage);
 					<tr>
 						<th>추천</th>
 						<td>
-							<button class="btn btn-outline"
+							<button
+								class="btn ${goodReactionRd}"
 								onclick="location.href='../reaction/doReaction?relId=${article.id }&memberId=${rq.loginedMemberId}&point=1';">
 								좋아요<i class="fa-solid fa-thumbs-up"></i>&nbsp;&nbsp;${article.goodReactionPoint}
 							</button>
-							<button class="btn btn-outline"
+							<button class="btn ${badReactionRd}"
 								onclick="location.href='../reaction/doReaction?relId=${article.id }&memberId=${rq.loginedMemberId}&point=-1';">
 								싫어요<i class="fa-solid fa-thumbs-down"></i>&nbsp;&nbsp;${article.badReactionPoint}
 							</button>
@@ -78,7 +83,7 @@ console.log(localStorage);
 					</tr>
 					<tr>
 						<th class="w-36 h-96">내용</th>
-						<td class="text-left">${article.body}${reactionRd}</td>
+						<td class="text-left">${article.body}</td>
 					</tr>
 				</tbody>
 

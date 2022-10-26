@@ -24,10 +24,21 @@ public class UsrReactionController {
 	@RequestMapping("/usr/reaction/doReaction")
 	@ResponseBody
 	public String reactionPoint(int relId, int memberId, int point) {
-		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,memberId,point);
 		
+		Integer reactionRd  = reactionService.getReactionResult(relId,memberId);
+		
+		if(reactionRd != null && reactionRd == point) {
+			reactionService.cancelReaction(relId, memberId);
+			reactionService.updateReaction();
+			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d&memberId=%d", relId, memberId));
+		}
+		
+		if(reactionRd!=null) {
+			reactionService.cancelReaction(relId, memberId);
+		}
+		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,memberId,point);
 		reactionService.updateReaction();
 		
-		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d&memberId=%d", relId, memberId));
 	}
 }

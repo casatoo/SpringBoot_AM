@@ -21,6 +21,7 @@
 
 <script src="/resource/common.js" defer="defer"></script>
 </head>
+
 <body>
 		<c:set var="rq" value="${rq}" />
 		<header class="bg-black text-white">
@@ -42,7 +43,6 @@
 											<a href="../article/write" class="hover:underline">글작성</a>
 										</c:if>
 								</div>
-						</div>
 						</div>
 						<c:set var="loginMember" value="${loginMember}" />
 
