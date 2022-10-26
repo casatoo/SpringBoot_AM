@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.service.BoardService;
-import com.KMS.exam.demo.service.ReactionPointService;
+import com.KMS.exam.demo.service.ReactionService;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Article;
 import com.KMS.exam.demo.vo.Board;
@@ -32,7 +32,7 @@ public class UsrArticleController {
 	@Autowired
 	private Rq rq;
 	@Autowired
-	private ReactionPointService reactionService;
+	private ReactionService reactionService;
 	
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
@@ -138,22 +138,6 @@ public class UsrArticleController {
 		
 		return rd;
 
-	}
-	
-	@RequestMapping("/usr/article/reactionPoint")
-	@ResponseBody
-	public String reactionPoint(int relId, int memberId, int point) {
-		
-		Integer ReactionResult = articleService.getReactionResult(relId, memberId);
-		
-		if(ReactionResult == null) {
-			
-			return Ut.jsReplace(Ut.f("널값"), Ut.f("../article/detail?id=%d", relId));
-		}
-		
-		ResultData<Integer> reactionPointRd = articleService.reactionPoint(relId,memberId,point);
-		
-		return Ut.jsReplace(Ut.f("%d",ReactionResult), Ut.f("../article/detail?id=%d", relId));
 	}
 	
 	@RequestMapping("usr/article/write")
