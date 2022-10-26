@@ -90,5 +90,16 @@ public class ArticleService {
 	public int getArticleHitCount(int id) {
 		return articleRepository.getArticleHitCount(id);
 	}
+	
+	public ResultData<Integer> reactionPoint(int relId, int memberId, int point){
+		int reactionPointRd = articleRepository.reactionPoint(relId,memberId,point);
+		if (reactionPointRd == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다", "reactionPointRd", reactionPointRd);
+		}
+		if(point == -1) {
+			return ResultData.from("S-1", "싫어요", "reactionPointRd", reactionPointRd);
+		}
+		return ResultData.from("S-2", "좋아요", "reactionPointRd", reactionPointRd);
+	}
 
 }

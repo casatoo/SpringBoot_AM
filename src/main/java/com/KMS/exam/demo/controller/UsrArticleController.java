@@ -136,7 +136,14 @@ public class UsrArticleController {
 		return rd;
 
 	}
-
+	
+	@RequestMapping("/usr/article/reactionPoint")
+	@ResponseBody
+	public String reactionPoint(int relId, int memberId, int point) {
+		ResultData<Integer> reactionPointRd = articleService.reactionPoint(relId,memberId,point);
+		
+		return Ut.jsHistoryBack(Ut.f("게시물 추천이 완료되었습니다."));
+	}
 	
 	@RequestMapping("usr/article/write")
 	public String articleWriteForm(HttpServletRequest req, Model model) {

@@ -26,5 +26,6 @@ public interface ArticleRepository {
 	public int incresedHit(int id);
 	
 	public int getArticleHitCount(int id);
-
+	
+	public int reactionPoint(int relId, int memberId, int point);
 }
