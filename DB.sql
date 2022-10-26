@@ -86,6 +86,11 @@ CREATE TABLE reactionPoint (
     FOREIGN KEY (relId) REFERENCES article(id) ON DELETE CASCADE 
 );
 
+SELECT `point` FROM reactionPoint WHERE relId = 1 AND memberId = 2;
+
+		DELETE FROM reactionPoint
+		WHERE relId = 1
+		AND memberId = 2;
 INSERT INTO reactionPoint
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -97,13 +102,8 @@ relId = 1,
 /*테스트데이터*/
 INSERT INTO reactionPoint (regDate,updateDate,memberId,relTypeCode,relId,`point`)VALUES
 (NOW(),NOW(),1,'article',1,1),
-(NOW(),NOW(),2,'article',2,1),
-(NOW(),NOW(),3,'article',1,-1),
-(NOW(),NOW(),1,'article',2,1),
-(NOW(),NOW(),2,'article',1,-1),
-(NOW(),NOW(),3,'article',2,1),
-(NOW(),NOW(),1,'article',3,-1),
-(NOW(),NOW(),2,'article',3,1);
+(NOW(),NOW(),2,'article',1,1),
+(NOW(),NOW(),3,'article',1,-1);
 
 SELECT * FROM reactionPoint;
 

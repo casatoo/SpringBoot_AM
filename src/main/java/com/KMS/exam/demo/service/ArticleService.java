@@ -101,5 +101,14 @@ public class ArticleService {
 		}
 		return ResultData.from("S-2", "좋아요", "reactionPointRd", reactionPointRd);
 	}
+	
+	public Integer getReactionResult(int relId, int memberId){
+		return articleRepository.getReactionResult(relId, memberId);
+	}
+
+	public void cancelReaction(int relId, int memberId) {
+		articleRepository.cancelReaction(relId, memberId);
+		
+	}
 
 }

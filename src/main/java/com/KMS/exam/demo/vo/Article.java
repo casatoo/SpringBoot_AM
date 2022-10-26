@@ -17,10 +17,8 @@ public class Article {
 	private String body;
 	private int boardId;
 	private int hit;
-	
-	private int extra__sumReactionPoint;
-	private int extra__goodReactionPoint;
-	private int extra__badReactionPoint;
+	private int goodReactionPoint;
+	private int badReactionPoint;
 
 	private String extra__writerName;
 	private boolean extra__actorCanDelete;

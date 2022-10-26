@@ -58,8 +58,8 @@ console.log(localStorage);
 					<tr>
 						<th>추천</th>
 						<td>
-						<span class="badge ">좋아요 수: ${article.extra__goodReactionPoint}</span>
-						<span class="badge ">싫어요 수: ${-article.extra__badReactionPoint}</span>
+						<span class="badge "><i class="fa-solid fa-thumbs-up"></i>&nbsp;&nbsp;${article.goodReactionPoint}</span>
+						<span class="badge "><i class="fa-solid fa-thumbs-down"></i>&nbsp;&nbsp;${article.badReactionPoint}</span>
 						</td>
 					</tr>
 					<tr>
