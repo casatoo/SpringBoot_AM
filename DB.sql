@@ -85,7 +85,8 @@ CREATE TABLE reactionPoint (
     memberId INT(10) UNSIGNED NOT NULL,
     relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
 	relId INT(10) NOT NULL COMMENT '관련 데이터  번호',
-    `point` SMALLINT(2) NOT NULL
+    `point` SMALLINT(2) NOT NULL,
+    FOREIGN KEY (relId) REFERENCES article(id) ON DELETE CASCADE
 );
 
 /*테스트데이터*/
@@ -104,6 +105,28 @@ INSERT INTO reactionPoint (regDate,updateDate,memberId,relTypeCode,relId,`point`
 (NOW(),NOW(),3,'article',4,-1);
 
 SELECT * FROM reactionPoint;
+
+
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment`(
+id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT(10) NOT NULL,
+relId INT(10) NOT NULL,
+`comment` VARCHAR(200) NOT NULL,
+goodReactionPoint INT(10) NOT NULL DEFAULT 0,
+badReactionPoint INT(10) NOT NULL DEFAULT 0,
+FOREIGN KEY (relId) REFERENCES article(id) ON DELETE CASCADE
+);
+
+SELECT * FROM `comment`;
+INSERT INTO `comment`(regDate, updateDate, memberId,relId,`comment`)VALUES
+(NOW(),NOW(),2,1,'댓글1'),
+(NOW(),NOW(),2,1,'댓글2'),
+(NOW(),NOW(),3,1,'댓글3'),
+(NOW(),NOW(),3,1,'댓글4'),
+(NOW(),NOW(),1,1,'댓글5');
 
 SELECT A.*,
 IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,

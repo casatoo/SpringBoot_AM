@@ -34,7 +34,7 @@ public class UsrReactionController {
 			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 		}
 		
-		if(reactionRd!=null) {
+		if(reactionRd != null) {
 			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
 		}
 		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
