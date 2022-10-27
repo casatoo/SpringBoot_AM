@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="MAIN" />
 <%@ include file="../common/head.jspf"%>
+<script type="text/javascript">
+localStorage.clear();
+</script>
 <div class="flex justify-center justify-around mt-12 ">
 	<div class="max-w-sm rounded overflow-hidden shadow-lg">
 		<img class="w-full"

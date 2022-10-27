@@ -23,22 +23,23 @@ public class UsrReactionController {
 	
 	@RequestMapping("/usr/reaction/doReaction")
 	@ResponseBody
-	public String reactionPoint(int relId, int memberId, int point) {
+	public String reactionPoint(int relId, int point) {
 		
-		Integer reactionRd  = reactionService.getReactionResult(relId,memberId);
+		
+		Integer reactionRd  = reactionService.getReactionResult(relId,rq.getLoginedMemberId());
 		
 		if(reactionRd != null && reactionRd == point) {
-			reactionService.cancelReaction(relId, memberId);
+			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
 			reactionService.updateReaction();
-			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d&memberId=%d", relId, memberId));
+			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 		}
 		
 		if(reactionRd!=null) {
-			reactionService.cancelReaction(relId, memberId);
+			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
 		}
-		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,memberId,point);
+		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
 		reactionService.updateReaction();
 		
-		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d&memberId=%d", relId, memberId));
+		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 	}
 }

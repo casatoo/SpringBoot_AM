@@ -119,10 +119,10 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail( Model model, int id, @RequestParam(defaultValue = "0")int memberId) {
+	public String showDetail( Model model, int id) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
-		Integer reactionRd  = reactionService.getReactionResult(id,memberId);
+		Integer reactionRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
 		
 		model.addAttribute("article", article);
 		model.addAttribute("reactionRd",reactionRd);

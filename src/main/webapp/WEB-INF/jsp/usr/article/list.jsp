@@ -29,12 +29,12 @@
 	<table class=" w-full table-fixed">
 		<thead class="bg-black text-white text-xl">
 			<tr>
-				<th class="w-20">번호</th>
+				<th class="w-11">번호</th>
 				<th class="w-40">작성일시</th>
 				<th class="w-64">제목</th>
-				<th class="w-40">작성자</th>
+				<th class="w-20">작성자</th>
 				<th class="w-20">조회수</th>
-				<th class="w-28">추천수</th>
+				<th class="w-40">추천수</th>
 			</tr>
 		</thead>
 		<tbody>

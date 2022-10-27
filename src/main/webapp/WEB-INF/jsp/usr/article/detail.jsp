@@ -10,12 +10,12 @@
 </script>
 
 <script>
-console.log(localStorage);
-</script>
-
-<script>
-	if(localStorage.getItem(${param.id}) != ${rq.loginedMemberId}){
-	function ArticleDetail__increaseHit() {
+	function ArticleDetail__increaseHitCount() {
+		const localStorageKey = 'article__' + params.id + '__alreadyView';
+		if (localStorage.getItem(localStorageKey)) {
+			return;
+		}
+		localStorage.setItem(localStorageKey, true);
 		$.get('../article/incresedHit', {
 			id : params.id,
 			ajaxMode : 'Y'
@@ -27,12 +27,9 @@ console.log(localStorage);
 		// 실전코드
 		//ArticleDetail__increaseHitCount();
 		// 연습코드
-		setTimeout(ArticleDetail__increaseHit, 2000);
+		setTimeout(ArticleDetail__increaseHitCount, 2000);
 	})
-	localStorage.setItem(${param.id}, ${rq.loginedMemberId});
-	}
 </script>
-
 
 
 <c:set var="goodReactionRd" value="${reactionRd == 1 ? '' : 'btn-outline'}"/>
@@ -64,11 +61,11 @@ console.log(localStorage);
 						<td>
 							<button
 								class="btn ${goodReactionRd}"
-								onclick="location.href='../reaction/doReaction?relId=${article.id }&memberId=${rq.loginedMemberId}&point=1';">
+								onclick="location.href='../reaction/doReaction?relId=${article.id }&point=1';">
 								좋아요<i class="fa-solid fa-thumbs-up"></i>&nbsp;&nbsp;${article.goodReactionPoint}
 							</button>
 							<button class="btn ${badReactionRd}"
-								onclick="location.href='../reaction/doReaction?relId=${article.id }&memberId=${rq.loginedMemberId}&point=-1';">
+								onclick="location.href='../reaction/doReaction?relId=${article.id }&point=-1';">
 								싫어요<i class="fa-solid fa-thumbs-down"></i>&nbsp;&nbsp;${article.badReactionPoint}
 							</button>
 						</td>

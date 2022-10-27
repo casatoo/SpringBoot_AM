@@ -110,5 +110,16 @@
 		article
 		WHERE id = #{id}
 	</select>
+	
+	<update id="increseGoodReactionPoint">
+		UPDATE article
+		SET goodReactionPoint = goodReactionPoint+#{point}
+		WHERE id = ${relId}
+	</update>
 
+	<update id="increseBadReactionPoint">
+		UPDATE article
+		SET badReactionPoint = badReactionPoint+#{point}
+		WHERE id = ${relId}
+	</update>
 </mapper>

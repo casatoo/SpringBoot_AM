@@ -11,6 +11,7 @@ memberId INT(10) NOT NULL,
 boardId INT(10) UNSIGNED NOT NULL,
 title VARCHAR(200) NOT NULL,
 `body` TEXT NOT NULL,
+hit INT(10) NOT NULL DEFAULT 0,
 goodReactionPoint INT(10) NOT NULL DEFAULT 0,
 badReactionPoint INT(10) NOT NULL DEFAULT 0
 );
@@ -136,3 +137,7 @@ ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
 
+
+		UPDATE article
+		SET goodReactionPoint = goodReactionPoint+-1
+		WHERE id = 1;
