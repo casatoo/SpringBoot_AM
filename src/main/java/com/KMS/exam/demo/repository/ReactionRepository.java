@@ -30,12 +30,12 @@ public interface ReactionRepository {
 
 	@Delete("""
 			UPDATE reactionPoint SET
-			`point` = 0,
+			`point` = #{point},
 			updateDate = NOW()
 			WHERE relId= #{relId}
 			AND memberId = #{memberId};
 			""")
-	public void cancelReaction(int relId, int memberId);
+	public void cancelReaction(int relId, int memberId, int point);
 
 	@Update("""
 			UPDATE article AS A

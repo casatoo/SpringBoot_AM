@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.service.ReactionService;
 import com.KMS.exam.demo.util.Ut;
+import com.KMS.exam.demo.vo.Article;
 import com.KMS.exam.demo.vo.ResultData;
 import com.KMS.exam.demo.vo.Rq;
 
@@ -25,20 +26,55 @@ public class UsrReactionController {
 	@ResponseBody
 	public String reactionPoint(int relId, int point) {
 		
+		if(Ut.empty(relId)) {
+			return Ut.jsHistoryBack(Ut.f("잘못된 접근입니다."));
+		}
+		if(Ut.empty(point)) {
+			return Ut.jsHistoryBack(Ut.f("잘못된 접근입니다."));
+		}
+		
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), relId);
+		if (article == null) {
+			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", relId));
+		}
+		if(point == 1 || point == -1) {
+			return Ut.jsHistoryBack(Ut.f("잘못된 접근입니다."));
+		}
 		
 		Integer reactionRd  = reactionService.getReactionResult(relId,rq.getLoginedMemberId());
 		
-		if(reactionRd != null && reactionRd == point && reactionRd != 0) {
-			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
+		if(reactionRd == null){
+			reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
 			reactionService.updateReaction(relId);
 			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 		}
-		
-		if(reactionRd != null && reactionRd != point && reactionRd != 0) {
-			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
+		if(reactionRd == 0) {
+			reactionService.cancelReaction(relId, rq.getLoginedMemberId(),point);
+			reactionService.updateReaction(relId);
+			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 		}
-		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
-		reactionService.updateReaction(relId);
+		if(reactionRd == 1) {
+			if(point == 1) {
+				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),0);
+				reactionService.updateReaction(relId);
+			}
+			if(point == -1) {
+				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),point);
+				reactionService.updateReaction(relId);
+			}
+			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+		}
+		if(reactionRd == -1) {
+			if(point == 1) {
+				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),point);
+				reactionService.updateReaction(relId);
+			}
+			if(point == -1) {
+				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),0);
+				reactionService.updateReaction(relId);
+			}
+			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+		}
 		
 		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 	}

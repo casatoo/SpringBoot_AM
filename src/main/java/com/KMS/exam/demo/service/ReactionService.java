@@ -13,9 +13,6 @@ public class ReactionService {
 	
 	public ResultData<Integer> doReaction(int relId, int memberId, int point){
 		int reactionPointRd = reactionRepository.doReaction(relId,memberId,point);
-		if (reactionPointRd == 0) {
-			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다", "reactionPointRd", reactionPointRd);
-		}
 		if(point == -1) {
 			return ResultData.from("S-1", "싫어요", "reactionPointRd", reactionPointRd);
 		}
@@ -26,8 +23,8 @@ public class ReactionService {
 		return reactionRepository.getReactionResult(relId, memberId);
 	}
 
-	public void cancelReaction(int relId, int memberId) {
-		reactionRepository.cancelReaction(relId, memberId);
+	public void cancelReaction(int relId, int memberId, int point) {
+		reactionRepository.cancelReaction(relId, memberId, point);
 	}
 
 	public void updateReaction(int relId) {

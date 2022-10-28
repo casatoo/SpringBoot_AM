@@ -7,13 +7,13 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'RixInooAriDuriR';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/RixInooAriDuriR.woff2') format('woff2');
+    font-family: 'TTCrownMychewR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/TTCrownMychewR.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 html>body {
-	font-family: 'ChosunCentennial';
+	font-family: 'TTCrownMychewR';
 }
 /*라이브러리*/
 .table-box-type-1>table th, .table-box-type-1>table td {
@@ -22,4 +22,7 @@ html>body {
 }
 body{
 	min-width:750px;
+}
+.comment-write-btn{
+	border: 1px solid black;
 }

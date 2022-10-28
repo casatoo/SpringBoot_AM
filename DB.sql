@@ -167,19 +167,12 @@ SELECT RP.relTypeCode, RP.relId,
 	FROM reactionPoint AS RP
 GROUP BY RP.relTypeCode, RP.relId;
 
-/**
-데이터가 없으면 값이 아예 나오지 않음...
-업데이트가 되지않는다는 문제..
-또, 모든 튜플을 업데이트할 필요는 없다..
-하나의 개시글만 지정해서 하면 됨.. 
-먼저 굿포인트 배드포인트 추려야함
-is null 이면 0 으로 하는것도 해야함.
-데이터를 유지하는것. 또 리엑션에 업데이트가 있다는것은
-데이터를 삭제해버리는것이 아니라 update 를 해서 -1,0,1 로 업데이트
-select from where group by 로 해서 특정 relId 만 가져와서 업데이트 하도록 한다.
-*/
-
-UPDATE reactionPoint SET 
-`point` = 0
-WHERE relId= 1
-AND memberId = 2; 
+SELECT C.*, M.nickname AS
+extra__writerName
+FROM `comment` AS C
+INNER
+JOIN
+`member` AS M
+ON C.memberId
+= M.id
+WHERE relId = 1;

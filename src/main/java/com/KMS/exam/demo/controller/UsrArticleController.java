@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.ArticleService;
 import com.KMS.exam.demo.service.BoardService;
+import com.KMS.exam.demo.service.CommentService;
 import com.KMS.exam.demo.service.ReactionService;
 import com.KMS.exam.demo.util.Ut;
 import com.KMS.exam.demo.vo.Article;
 import com.KMS.exam.demo.vo.Board;
+import com.KMS.exam.demo.vo.Comment;
 import com.KMS.exam.demo.vo.ResultData;
 import com.KMS.exam.demo.vo.Rq;
 
@@ -33,6 +35,8 @@ public class UsrArticleController {
 	private Rq rq;
 	@Autowired
 	private ReactionService reactionService;
+	@Autowired
+	private CommentService commentService;
 	
 	// 액션메서드
 	@RequestMapping("/usr/article/doAdd")
@@ -86,7 +90,6 @@ public class UsrArticleController {
 	public String doDelete(int id, int boardId) {
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
 		if (article == null) {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
 		}
@@ -124,6 +127,13 @@ public class UsrArticleController {
 		
 		Integer reactionRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
 		
+		List<Comment> comments = commentService.getForPrintComments(id);
+		
+		if(reactionRd==null) {
+			reactionRd = 0;
+		}
+		
+		model.addAttribute("comments", comments);
 		model.addAttribute("article", article);
 		model.addAttribute("reactionRd",reactionRd);
 		return "usr/article/detail";
