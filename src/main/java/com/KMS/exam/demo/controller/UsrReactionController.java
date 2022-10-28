@@ -28,17 +28,17 @@ public class UsrReactionController {
 		
 		Integer reactionRd  = reactionService.getReactionResult(relId,rq.getLoginedMemberId());
 		
-		if(reactionRd != null && reactionRd == point) {
+		if(reactionRd != null && reactionRd == point && reactionRd != 0) {
 			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
-			reactionService.updateReaction();
+			reactionService.updateReaction(relId);
 			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 		}
 		
-		if(reactionRd != null) {
+		if(reactionRd != null && reactionRd != point && reactionRd != 0) {
 			reactionService.cancelReaction(relId, rq.getLoginedMemberId());
 		}
 		ResultData<Integer> reactionPointRd = reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
-		reactionService.updateReaction();
+		reactionService.updateReaction(relId);
 		
 		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
 	}

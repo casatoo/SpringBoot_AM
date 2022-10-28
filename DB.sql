@@ -22,7 +22,7 @@ INSERT INTO article(regDate,updateDate,memberId,boardId,title,`body`)VALUES
 (NOW(),NOW(),3,2,'제목3','내용3'),
 (NOW(),NOW(),1,2,'제목4','내용4');
 
-SELECT * FROM article WHERE boardId = ;
+SELECT * FROM article;
 
 SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, article.loginedId, `member`.name FROM article INNER JOIN `member` ON article.loginedId = `member`.id ORDER BY id DESC;
 
@@ -154,13 +154,32 @@ INNER JOIN (
 	SUM(IF(RP.point > 0, RP.point, 0)) AS goodReactionPoint,
 	SUM(IF(RP.point < 0, RP.point * -1, 0)) AS badReactionPoint
 	FROM reactionPoint AS RP
+	WHERE RP.relId = 1
 	GROUP BY RP.relTypeCode, RP.relId
 ) AS RP_SUM
 ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
 
+SELECT RP.relTypeCode, RP.relId,
+	SUM(IF(RP.point > 0, RP.point, 0)) AS goodReactionPoint,
+	SUM(IF(RP.point < 0, RP.point * -1, 0)) AS badReactionPoint
+	FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
 
-		UPDATE article
-		SET goodReactionPoint = goodReactionPoint+-1
-		WHERE id = 1;
+/**
+데이터가 없으면 값이 아예 나오지 않음...
+업데이트가 되지않는다는 문제..
+또, 모든 튜플을 업데이트할 필요는 없다..
+하나의 개시글만 지정해서 하면 됨.. 
+먼저 굿포인트 배드포인트 추려야함
+is null 이면 0 으로 하는것도 해야함.
+데이터를 유지하는것. 또 리엑션에 업데이트가 있다는것은
+데이터를 삭제해버리는것이 아니라 update 를 해서 -1,0,1 로 업데이트
+select from where group by 로 해서 특정 relId 만 가져와서 업데이트 하도록 한다.
+*/
+
+UPDATE reactionPoint SET 
+`point` = 0
+WHERE relId= 1
+AND memberId = 2; 

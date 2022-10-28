@@ -25,15 +25,16 @@ public interface ReactionRepository {
 			reactionPoint WHERE
 			relId = #{relId}
 			AND memberId = #{memberId};
-							""")
+			""")
 	public Integer getReactionResult(int relId, int memberId);
 
 	@Delete("""
-			DELETE FROM
-			reactionPoint
-			WHERE relId=#{relId}
+			UPDATE reactionPoint SET
+			`point` = 0,
+			updateDate = NOW()
+			WHERE relId= #{relId}
 			AND memberId = #{memberId};
-							""")
+			""")
 	public void cancelReaction(int relId, int memberId);
 
 	@Update("""
@@ -43,11 +44,12 @@ public interface ReactionRepository {
 				SUM(IF(RP.point > 0, RP.point, 0)) AS goodReactionPoint,
 				SUM(IF(RP.point < 0, RP.point * -1, 0)) AS badReactionPoint
 				FROM reactionPoint AS RP
+				WHERE RP.relId = #{relId}
 				GROUP BY RP.relTypeCode, RP.relId
 			) AS RP_SUM
 			ON A.id = RP_SUM.relId
 			SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 			A.badReactionPoint = RP_SUM.badReactionPoint;
 						""")
-	public void updateReaction();
+	public void updateReaction(int relId);
 }

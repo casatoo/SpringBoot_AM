@@ -30,8 +30,8 @@ public class ReactionService {
 		reactionRepository.cancelReaction(relId, memberId);
 	}
 
-	public void updateReaction() {
-		reactionRepository.updateReaction();
+	public void updateReaction(int relId) {
+		reactionRepository.updateReaction(relId);
 	}
 
 }
