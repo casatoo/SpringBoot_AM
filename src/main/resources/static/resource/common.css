@@ -26,3 +26,9 @@ body{
 .comment-write-btn{
 	border: 1px solid black;
 }
+.comment-modify-btn{
+	border: 1px solid black;
+}
+.comment-delete-btn{
+	border: 1px solid black;
+}

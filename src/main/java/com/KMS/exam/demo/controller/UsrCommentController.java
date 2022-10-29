@@ -25,6 +25,10 @@ public class UsrCommentController {
 	@ResponseBody
 	public String doAdd(int id, String comment) {
 		
+		if(rq.getLoginedMemberId()==0) {
+			return Ut.jsHistoryBack(Ut.f("로그인 후 이용 가능합니다."));
+		}
+		
 		if(Ut.empty(comment)) {
 			return Ut.jsHistoryBack(Ut.f("댓글을 입력해주세요"));
 		}

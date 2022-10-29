@@ -26,19 +26,9 @@ public class UsrReactionController {
 	@ResponseBody
 	public String reactionPoint(int relId, int point) {
 		
-		if(Ut.empty(relId)) {
-			return Ut.jsHistoryBack(Ut.f("잘못된 접근입니다."));
-		}
-		if(Ut.empty(point)) {
-			return Ut.jsHistoryBack(Ut.f("잘못된 접근입니다."));
-		}
-		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), relId);
 		if (article == null) {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", relId));
-		}
-		if(point == 1 || point == -1) {
-			return Ut.jsHistoryBack(Ut.f("잘못된 접근입니다."));
 		}
 		
 		Integer reactionRd  = reactionService.getReactionResult(relId,rq.getLoginedMemberId());
