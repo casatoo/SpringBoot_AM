@@ -21,6 +21,7 @@
 			ajaxMode : 'Y'
 		}, function(data) {
 			$('.article-detail__hit').empty().html(data.data1);
+			console.log(data);
 		}, 'json');
 	}
 	$(function() {
@@ -29,6 +30,23 @@
 		// 연습코드
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 	})
+</script>
+
+<script>
+const ArticleDetail__goodReactionPoint = () =>{
+	$.get('../reaction/doReaction',{
+		relId : ${article.id},
+		point : 1,
+		ajaxMode : 'Y'
+	}, function(data){
+		$('.article-detail__ReactionCount').empty().html(data.data1);
+		console.log(data);
+	}, 'json');
+	})
+}
+$(function() {
+	setTimeout(ArticleDetail__goodReactionPoint, 2000);
+})
 </script>
 
 <c:set var="goodReactionRd"
