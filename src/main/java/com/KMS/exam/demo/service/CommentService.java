@@ -23,9 +23,9 @@ public class CommentService {
 		return comments;
 	}
 
-	public ResultData doWrite(int id, int memberId ,String comment) {
+	public ResultData doWrite(int id, int memberId ,String comment, String relTypeCode) {
 		
-		commentRepository.doWrite(id,memberId,comment);
+		commentRepository.doWrite(id,memberId,comment, relTypeCode);
 		
 		return ResultData.from("S-1", Ut.f("댓글 작성 성공"));
 	}

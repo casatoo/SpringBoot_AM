@@ -113,6 +113,7 @@ id INT(10) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 regDate DATETIME NOT NULL,
 updateDate DATETIME NOT NULL,
 memberId INT(10) NOT NULL,
+relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
 relId INT(10) NOT NULL,
 `comment` VARCHAR(200) NOT NULL,
 goodReactionPoint INT(10) NOT NULL DEFAULT 0,
@@ -121,12 +122,12 @@ FOREIGN KEY (relId) REFERENCES article(id) ON DELETE CASCADE
 );
 
 SELECT * FROM `comment`;
-INSERT INTO `comment`(regDate, updateDate, memberId,relId,`comment`)VALUES
-(NOW(),NOW(),2,1,'댓글1'),
-(NOW(),NOW(),2,1,'댓글2'),
-(NOW(),NOW(),3,1,'댓글3'),
-(NOW(),NOW(),3,1,'댓글4'),
-(NOW(),NOW(),1,1,'댓글5');
+INSERT INTO `comment`(regDate, updateDate, memberId,relTypeCode,relId,`comment`)VALUES
+(NOW(),NOW(),2,'article',1,'댓글1'),
+(NOW(),NOW(),2,'article',1,'댓글2'),
+(NOW(),NOW(),3,'article',1,'댓글3'),
+(NOW(),NOW(),3,'article',1,'댓글4'),
+(NOW(),NOW(),1,'article',1,'댓글5');
 
 SELECT A.*,
 IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,

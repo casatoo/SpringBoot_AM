@@ -101,9 +101,11 @@
 
 	<div class="mx-40 text-sm">
 		<form action="../comment/doAdd?">
-			<input type="hidden" value="${article.id}" name="id" /> <label
+			<input type="hidden" value="${article.id}" name="id" /> 
+			<input type="hidden" value="article" name="relTypeCode" />
+			<label
 				for="comment">댓글작성 :</label> <input type="text" placeholder="댓글"
-				id="comment" name="comment" style="width: 650px; height: 35px;"
+				id="comment" name="comment" style="width: 755px; height: 35px;"
 				required />
 			<button class="h-9 comment-write-btn" type="submit">댓글 작성</button>
 		</form>
@@ -114,12 +116,13 @@
 						<tr>
 						<th class="text-left">${comment.extra__writerName}&nbsp;:
 								&nbsp;&nbsp;${comment.comment}</th>
-							<td class="w-20">
+							<td class="w-36">
 								<c:if
 									test="${rq.loginedMemberId eq comment.memberId}">
 									<button class="comment-modify-btn">수정</button>
 									<button class="comment-delete-btn">삭제</button>
 								</c:if>
+								<button class="comment-comment-btn">댓글</button>
 							</td>
 						</tr>
 					</c:forEach>

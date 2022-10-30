@@ -23,7 +23,7 @@ public class UsrCommentController {
 	
 	@RequestMapping("/usr/comment/doAdd")
 	@ResponseBody
-	public String doAdd(int id, String comment) {
+	public String doAdd(int id, String comment, String relTypeCode) {
 		
 		if(rq.getLoginedMemberId()==0) {
 			return Ut.jsHistoryBack(Ut.f("로그인 후 이용 가능합니다."));
@@ -32,7 +32,7 @@ public class UsrCommentController {
 		if(Ut.empty(comment)) {
 			return Ut.jsHistoryBack(Ut.f("댓글을 입력해주세요"));
 		}
-		ResultData commentRd = commentService.doWrite(id,rq.getLoginedMemberId(),comment);
+		ResultData commentRd = commentService.doWrite(id,rq.getLoginedMemberId(),comment, relTypeCode);
 		
 		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", id));
 	}

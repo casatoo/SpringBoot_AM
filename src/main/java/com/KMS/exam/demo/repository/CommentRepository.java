@@ -31,7 +31,8 @@ public interface CommentRepository {
 			updateDate = NOW(),
 			memberId = #{memberId},
 			relId = #{relId},
+			relTypeCode = #{relTypeCode},
 			`comment` = #{comment}
 				""")
-	public void doWrite(int relId, int memberId, String comment);
+	public void doWrite(int relId, int memberId, String comment, String relTypeCode);
 }

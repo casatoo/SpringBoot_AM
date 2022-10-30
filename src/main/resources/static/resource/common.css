@@ -28,7 +28,13 @@ body{
 }
 .comment-modify-btn{
 	border: 1px solid black;
+	width: 35px;
 }
 .comment-delete-btn{
 	border: 1px solid black;
+	width: 35px;
+}
+.comment-comment-btn{
+	border: 1px solid black;
+	width: 35px;
 }
