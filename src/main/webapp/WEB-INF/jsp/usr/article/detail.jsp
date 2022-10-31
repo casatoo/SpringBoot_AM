@@ -4,6 +4,25 @@
 <c:set var="pageTitle" value="ARTICLE DETAIL" />
 <%@ include file="../common/head.jspf"%>
 
+<script type="text/javascript">
+
+	let CommentWrite__submitFormDone = false;
+	
+	function CommentWrite__submitForm(form){
+		
+		form.body.value=form.body.value.trim();
+		
+		if(form.body.value.length < 2){
+			alert('2글자 이상 입력해주세요');
+			form.body.focus();
+			return;
+		}
+		
+		let CommentWrite__submitFormDone = true;
+		form.submit();
+	}
+</script>
+
 <script>
 	const params = {};
 	params.id = parseInt('${param.id}');
@@ -39,14 +58,26 @@ const ArticleDetail__goodReactionPoint = () =>{
 		point : 1,
 		ajaxMode : 'Y'
 	}, function(data){
-		$('.article-detail__ReactionCount').empty().html(data.data1);
+		$('.article-detail__Reaction').empty().html(data.data1);
+		$('.article-detail__goodReaction').empty().html(data.data2);
+		$('.article-detail__badReaction').empty().html(data.data3);
 		console.log(data);
 	}, 'json');
-	})
 }
-$(function() {
-	setTimeout(ArticleDetail__goodReactionPoint, 2000);
-})
+</script>
+<script>
+const ArticleDetail__badReactionPoint = () =>{
+	$.get('../reaction/doReaction',{
+		relId : ${article.id},
+		point : -1,
+		ajaxMode : 'Y'
+	}, function(data){
+		$('.article-detail__Reaction').empty().html(data.data1);
+		$('.article-detail__goodReaction').empty().html(data.data2);
+		$('.article-detail__badReaction').empty().html(data.data3);
+		console.log(data);
+	}, 'json');
+}
 </script>
 
 <c:set var="goodReactionRd"
@@ -79,12 +110,12 @@ $(function() {
 						<th>추천</th>
 						<td>
 							<button class="btn ${goodReactionRd}"
-								onclick="location.href='../reaction/doReaction?relId=${article.id }&point=1';">
-								좋아요<i class="fa-solid fa-thumbs-up"></i>&nbsp;&nbsp;${article.goodReactionPoint}
+								onclick="ArticleDetail__goodReactionPoint()">
+								좋아요<i class="fa-solid fa-thumbs-up"></i>&nbsp;&nbsp;<span class="article-detail__goodReaction">${article.goodReactionPoint}</span>
 							</button>
 							<button class="btn ${badReactionRd}"
-								onclick="location.href='../reaction/doReaction?relId=${article.id }&point=-1';">
-								싫어요<i class="fa-solid fa-thumbs-down"></i>&nbsp;&nbsp;${article.badReactionPoint}
+								onclick="ArticleDetail__badReactionPoint()">
+								싫어요<i class="fa-solid fa-thumbs-down"></i>&nbsp;&nbsp;<span class="article-detail__badReaction">${article.badReactionPoint}</span>
 							</button>
 						</td>
 					</tr>
@@ -116,14 +147,14 @@ $(function() {
 			</c:if>
 		</div>
 	</div>
-
+<c:if test="${rq.isLogined()}">
 	<div class="mx-40 text-sm">
-		<form action="../comment/doAdd?">
+		<form action="../comment/doAdd?" method="post" onsubmit="return CommentWrite__submitForm()">
 			<input type="hidden" value="${article.id}" name="id" /> 
 			<input type="hidden" value="article" name="relTypeCode" />
 			<label
 				for="comment">댓글작성 :</label> <input type="text" placeholder="댓글"
-				id="comment" name="comment" style="width: 755px; height: 35px;"
+				id="comment" name="comment" class="h-11 w-auto"
 				required />
 			<button class="h-9 comment-write-btn" type="submit">댓글 작성</button>
 		</form>
@@ -148,5 +179,6 @@ $(function() {
 			</table>
 		</div>
 	</div>
+	</c:if>
 </section>
 <%@ include file="../common/foot.jspf"%>

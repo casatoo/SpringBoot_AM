@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.KMS.exam.demo.vo.Article;
+
 @Mapper
 public interface ReactionRepository {
 
@@ -35,7 +37,7 @@ public interface ReactionRepository {
 			WHERE relId= #{relId}
 			AND memberId = #{memberId};
 			""")
-	public void cancelReaction(int relId, int memberId, int point);
+	public Integer changeReaction(int relId, int memberId, int point);
 
 	@Update("""
 			UPDATE article AS A
@@ -52,4 +54,11 @@ public interface ReactionRepository {
 			A.badReactionPoint = RP_SUM.badReactionPoint;
 						""")
 	public void updateReaction(int relId);
+	
+	@Select("""
+			SELECT goodReactionPoint, badReactionPoint FROM
+			article WHERE
+			id = #{relId}
+			""")
+	public Article getReactionPoint(int relId);
 }

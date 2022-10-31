@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KMS.exam.demo.repository.ReactionRepository;
+import com.KMS.exam.demo.vo.Article;
 import com.KMS.exam.demo.vo.ResultData;
 
 @Service
@@ -19,16 +20,20 @@ public class ReactionService {
 		return ResultData.from("S-2", "좋아요", "reactionPointRd", reactionPointRd);
 	}
 	
-	public Integer getReactionResult(int relId, int memberId){
-		return reactionRepository.getReactionResult(relId, memberId);
+	public ResultData<Integer> getReactionResult(int relId, int memberId){
+		return ResultData.from("S-1", "싫어요", "reactionPointRd", reactionRepository.getReactionResult(relId, memberId));
 	}
 
-	public void cancelReaction(int relId, int memberId, int point) {
-		reactionRepository.cancelReaction(relId, memberId, point);
+	public ResultData<Integer> changeReaction(int relId, int memberId, int point) {
+		return ResultData.from("S-1", "싫어요", "reactionPointRd",reactionRepository.changeReaction(relId, memberId, point));
 	}
 
 	public void updateReaction(int relId) {
 		reactionRepository.updateReaction(relId);
+	}
+	
+	public Article getReactionPoint(int relId) {
+		return reactionRepository.getReactionPoint(relId);
 	}
 
 }

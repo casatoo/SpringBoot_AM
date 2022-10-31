@@ -125,12 +125,12 @@ public class UsrArticleController {
 	public String showDetail( Model model, int id) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
-		Integer reactionRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
+		ResultData<Integer> getReactionResultRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
 		
 		List<Comment> comments = commentService.getForPrintComments(id);
-		
-		if(reactionRd==null) {
-			reactionRd = 0;
+		Integer reactionRd = 0;
+		if(getReactionResultRd.getData1()!=null) {
+			reactionRd = getReactionResultRd.getData1();
 		}
 		
 		model.addAttribute("comments", comments);

@@ -23,10 +23,12 @@ public class ResultData<DT> {
 	private Object data2;
 	@Getter
 	private String data2Name;
+	@Getter
+	private Object data3;
+	@Getter
+	private String data3Name;
 
-	private ResultData() {
 
-	}
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
 	}
@@ -56,6 +58,11 @@ public class ResultData<DT> {
 	public void setData2(String dataName, Object data) {
 		data2Name = dataName;
 		data2 = data;
+	}
+	public void setData3(String dataName, Object data) {
+		data3Name = dataName;
+		data3 = data;
+		
 	}
 }
 

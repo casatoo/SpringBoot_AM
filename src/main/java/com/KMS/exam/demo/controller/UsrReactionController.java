@@ -24,48 +24,64 @@ public class UsrReactionController {
 	
 	@RequestMapping("/usr/reaction/doReaction")
 	@ResponseBody
-	public String reactionPoint(int relId, int point) {
+	public ResultData<Integer> reactionPoint(int relId, int point) {
 		
-		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), relId);
-		if (article == null) {
-			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", relId));
-		}
+		ResultData<Integer> getReactionResult  = reactionService.getReactionResult(relId,rq.getLoginedMemberId());
 		
-		Integer reactionRd  = reactionService.getReactionResult(relId,rq.getLoginedMemberId());
-		
-		if(reactionRd == null){
-			reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
+		if(getReactionResult.getData1() == null){
+			ResultData<Integer> doReactionRd = reactionService.doReaction(relId,rq.getLoginedMemberId(),point);
 			reactionService.updateReaction(relId);
-			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+			ResultData<Integer> rd = ResultData.newData(doReactionRd, "Reaction", point);
+			Article article = reactionService.getReactionPoint(relId);
+			rd.setData2("goodReaction", article.getGoodReactionPoint());
+			rd.setData3("badReaction", article.getBadReactionPoint());
+			return rd;
 		}
-		if(reactionRd == 0) {
-			reactionService.cancelReaction(relId, rq.getLoginedMemberId(),point);
+		if(getReactionResult.getData1() == 0) {
+			ResultData<Integer> doReactionRd = reactionService.changeReaction(relId, rq.getLoginedMemberId(),point);
 			reactionService.updateReaction(relId);
-			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+			ResultData<Integer> rd = ResultData.newData(doReactionRd, "Reaction", point);
+			Article article = reactionService.getReactionPoint(relId);
+			rd.setData2("goodReaction", article.getGoodReactionPoint());
+			rd.setData3("badReaction", article.getBadReactionPoint());
+			return rd;
 		}
-		if(reactionRd == 1) {
+		
+		if(getReactionResult.getData1() == 1) {
+			ResultData<Integer> doReactionRd = new ResultData<Integer>();
+			
 			if(point == 1) {
-				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),0);
+				doReactionRd = reactionService.changeReaction(relId, rq.getLoginedMemberId(),0);
 				reactionService.updateReaction(relId);
 			}
 			if(point == -1) {
-				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),point);
+				doReactionRd = reactionService.changeReaction(relId, rq.getLoginedMemberId(),point);
 				reactionService.updateReaction(relId);
 			}
-			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+			ResultData<Integer> rd = ResultData.newData(doReactionRd, "Reaction", point);
+			Article article = reactionService.getReactionPoint(relId);
+			rd.setData2("goodReaction", article.getGoodReactionPoint());
+			rd.setData3("badReaction", article.getBadReactionPoint());
+			return rd;
 		}
-		if(reactionRd == -1) {
+		if(getReactionResult.getData1() == -1) {
+			ResultData<Integer> doReactionRd = new ResultData<Integer>();
 			if(point == 1) {
-				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),point);
+				doReactionRd = reactionService.changeReaction(relId, rq.getLoginedMemberId(),point);
 				reactionService.updateReaction(relId);
 			}
 			if(point == -1) {
-				reactionService.cancelReaction(relId, rq.getLoginedMemberId(),0);
+				doReactionRd = reactionService.changeReaction(relId, rq.getLoginedMemberId(),0);
 				reactionService.updateReaction(relId);
 			}
-			return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+			ResultData<Integer> rd = ResultData.newData(doReactionRd, "Reaction", point);
+			Article article = reactionService.getReactionPoint(relId);
+			rd.setData2("goodReaction", article.getGoodReactionPoint());
+			rd.setData3("badReaction", article.getBadReactionPoint());
+			return rd;
+			
 		}
 		
-		return Ut.jsReplace(Ut.f(""), Ut.f("../article/detail?id=%d", relId));
+		return getReactionResult;
 	}
 }
