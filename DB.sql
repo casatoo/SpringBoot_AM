@@ -191,3 +191,13 @@ SELECT `point` FROM
 reactionPoint WHERE
 relId = 1
 AND memberId = 2;
+
+			SELECT C.*, M.nickname AS
+			extra__writerName
+			FROM `comment` AS C
+			INNER JOIN
+			`member` AS M
+			ON C.memberId
+			= M.id
+			WHERE relId = 1
+			ORDER BY C.id DESC;

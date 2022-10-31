@@ -21,7 +21,8 @@ public interface CommentRepository {
 			`member` AS M
 			ON C.memberId
 			= M.id
-			WHERE relId = #{relId};
+			WHERE relId = #{relId}
+			ORDER BY C.id DESC;
 						""")
 	public List<Comment> getComments(int relId);
 
