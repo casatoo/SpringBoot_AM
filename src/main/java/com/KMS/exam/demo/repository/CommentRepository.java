@@ -22,7 +22,7 @@ public interface CommentRepository {
 			ON C.memberId
 			= M.id
 			WHERE relId = #{relId}
-			ORDER BY C.id DESC;
+			ORDER BY C.id ASC;
 						""")
 	public List<Comment> getComments(int relId);
 

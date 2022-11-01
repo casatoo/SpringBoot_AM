@@ -123,8 +123,20 @@ const loginAlert = () =>{
 }
 </script>
 
-
-
+<script>
+const btnInputTest = () => {
+	var newForm = $('<form></form>');
+	
+	newForm.attr("action","../comment/doModify");
+	newForm.attr("method","post");
+	newForm.append($('<input/>', {type: 'hidden', name: 'data1', value:'value1' }));
+	newForm.append($('<input/>', {type: 'hidden', name: 'data2', value:'value2' }));
+	
+	newForm.appendTo('body');
+	
+	newForm.submit();
+}
+</script>
 
 <section class="mt-8 text-xl">
 		<div class="mx-40">
@@ -196,9 +208,10 @@ const loginAlert = () =>{
 				<div class="overflow-x-auto mt-4 mb-4 text-center table-box-type-1">
 						<table class="w-full">
 								<tbody>
-										<c:forEach var="comment" items="${comments}">
+										<c:forEach var="comment" items="${comments}" varStatus="status">
 												<tr>
-														<th class="text-left">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</th>
+														<th>${status.count}</th>
+														<td class="text-left">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</td>
 														<td class="w-36"><c:if test="${rq.loginedMemberId eq comment.memberId}">
 																		<button class="comment-modify-btn" onclick="#">수정</button>
 																		<button class="comment-delete-btn"

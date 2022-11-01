@@ -52,4 +52,19 @@ public class UsrCommentController {
 		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", relId));
 	}
 	
+	@RequestMapping("/usr/comment/doModify")
+	@ResponseBody
+	public String doModify(int id, String comment, int relId) {
+		
+		if(rq.getLoginedMemberId()==0) {
+			return Ut.jsHistoryBack(Ut.f("로그인 후 이용 가능합니다."));
+		}
+		
+		ResultData commentRd = commentService.doDelete(id);
+		ResultData<Integer> rd = ResultData.newData(commentRd, "Reaction", id);
+		
+		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", relId));
+	}
+	
+	
 }
