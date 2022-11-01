@@ -128,6 +128,7 @@ public class UsrArticleController {
 		ResultData<Integer> getReactionResultRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
 		
 		List<Comment> comments = commentService.getForPrintComments(id);
+		
 		Integer reactionRd = 0;
 		if(getReactionResultRd.getData1()!=null) {
 			reactionRd = getReactionResultRd.getData1();

@@ -29,5 +29,12 @@ public class CommentService {
 		
 		return ResultData.from("S-1", Ut.f("댓글 작성 성공"));
 	}
+
+	public ResultData doDelete(int id) {
+		
+		int deleteRd = commentRepository.doDelete(id);
+		
+		return ResultData.from("S-1", "삭제성공", "deleteRd", deleteRd);
+	}
 	
 }

@@ -35,5 +35,11 @@ public interface CommentRepository {
 			relTypeCode = #{relTypeCode},
 			`comment` = #{comment}
 				""")
-	public void doWrite(int relId, int memberId, String comment, String relTypeCode);
+	public int doWrite(int relId, int memberId, String comment, String relTypeCode);
+
+	@Delete("""
+			DELETE FROM `comment`
+			WHERE id = #{id}
+			""")
+	public int doDelete(int id);
 }

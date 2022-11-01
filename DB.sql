@@ -200,4 +200,7 @@ AND memberId = 2;
 			ON C.memberId
 			= M.id
 			WHERE relId = 1
-			ORDER BY C.id DESC;
+			ORDER BY C.id DESC;	
+				
+			DELETE FROM `comment`
+			WHERE id = 1;

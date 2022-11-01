@@ -37,4 +37,17 @@ public class UsrCommentController {
 		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", id));
 	}
 	
+	@RequestMapping("/usr/comment/doDelete")
+	@ResponseBody
+	public String doDelete(int id, int relId) {
+		
+		if(rq.getLoginedMemberId()==0) {
+			return Ut.jsHistoryBack(Ut.f("로그인 후 이용 가능합니다."));
+		}
+		ResultData commentRd = commentService.doDelete(id);
+		ResultData<Integer> rd = ResultData.newData(commentRd, "Reaction", id);
+		
+		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", relId));
+	}
+	
 }
