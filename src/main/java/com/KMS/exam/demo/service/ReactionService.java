@@ -21,11 +21,15 @@ public class ReactionService {
 	}
 	
 	public ResultData<Integer> getReactionResult(int relId, int memberId){
-		return ResultData.from("S-1", "싫어요", "reactionPointRd", reactionRepository.getReactionResult(relId, memberId));
+		return ResultData.from("S-1", "리엑션조회성공", "reactionPointRd", reactionRepository.getReactionResult(relId, memberId));
 	}
 
 	public ResultData<Integer> changeReaction(int relId, int memberId, int point) {
-		return ResultData.from("S-1", "싫어요", "reactionPointRd",reactionRepository.changeReaction(relId, memberId, point));
+		
+		if(point == -1) {
+			return ResultData.from("S-1", "싫어요", "reactionPointRd",reactionRepository.changeReaction(relId, memberId, point));
+		}
+		return ResultData.from("S-2", "좋아요", "reactionPointRd",reactionRepository.changeReaction(relId, memberId, point));
 	}
 
 	public void updateReaction(int relId) {

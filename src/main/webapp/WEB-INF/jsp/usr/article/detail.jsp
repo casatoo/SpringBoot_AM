@@ -24,6 +24,7 @@
 </script>
 
 <script>
+	var reaction = ${reactionRd};
 	const params = {};
 	params.id = parseInt('${param.id}');
 </script>
@@ -61,7 +62,16 @@ const ArticleDetail__goodReactionPoint = () =>{
 		$('.article-detail__Reaction').empty().html(data.data1);
 		$('.article-detail__goodReaction').empty().html(data.data2);
 		$('.article-detail__badReaction').empty().html(data.data3);
+		if(data.data1 == -1){
+			$(".badReaction").html().removeClass("btn-outline");
+		}
+		if(reaction == -1 || reaction == 0){
+			reaction = 1;
+		}else if(reaction == 1 ){
+			reaction = 0;
+		}
 		console.log(data);
+		console.log(reaction);
 	}, 'json');
 }
 </script>
@@ -75,15 +85,17 @@ const ArticleDetail__badReactionPoint = () =>{
 		$('.article-detail__Reaction').empty().html(data.data1);
 		$('.article-detail__goodReaction').empty().html(data.data2);
 		$('.article-detail__badReaction').empty().html(data.data3);
+		if(reaction == 1 || reaction == 0){
+			reaction = -1;
+		}else if(reaction == -1 ){
+			reaction = 0;
+		}
 		console.log(data);
+		console.log(reaction);
 	}, 'json');
 }
 </script>
 
-<c:set var="goodReactionRd"
-	value="${reactionRd == 1 ? '' : 'btn-outline'}" />
-<c:set var="badReactionRd"
-	value="${reactionRd == -1 ? '' : 'btn-outline'}" />
 
 <section class="mt-8 text-xl">
 	<div class="mx-40">
@@ -109,11 +121,11 @@ const ArticleDetail__badReactionPoint = () =>{
 					<tr>
 						<th>추천</th>
 						<td>
-							<button class="btn ${goodReactionRd}"
+							<button class="btn btn-outline goodReaction"
 								onclick="ArticleDetail__goodReactionPoint()">
 								좋아요<i class="fa-solid fa-thumbs-up"></i>&nbsp;&nbsp;<span class="article-detail__goodReaction">${article.goodReactionPoint}</span>
 							</button>
-							<button class="btn ${badReactionRd}"
+							<button class="btn btn-outline badReaction"
 								onclick="ArticleDetail__badReactionPoint()">
 								싫어요<i class="fa-solid fa-thumbs-down"></i>&nbsp;&nbsp;<span class="article-detail__badReaction">${article.badReactionPoint}</span>
 							</button>
