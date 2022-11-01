@@ -121,6 +121,8 @@ badReactionPoint INT(10) NOT NULL DEFAULT 0,
 FOREIGN KEY (relId) REFERENCES article(id) ON DELETE CASCADE
 );
 
+ALTER TABLE `SB_AM`.`comment` ADD INDEX (`relTypeCode` , `relId`); 
+
 SELECT * FROM `comment`;
 INSERT INTO `comment`(regDate, updateDate, memberId,relTypeCode,relId,`comment`)VALUES
 (NOW(),NOW(),2,'article',1,'댓글1'),

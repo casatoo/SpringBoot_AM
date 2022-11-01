@@ -51,7 +51,9 @@ public class UsrArticleController {
 		if(Ut.empty(body)) {
 			return Ut.jsHistoryBack(Ut.f("내용을 입력해주세요"));
 		}
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body, boardId);
+		String setBody = body.replaceAll("\r\n", "<br>");
+		
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, setBody, boardId);
 		
 		int id = (int) writeArticleRd.getData1();
 		

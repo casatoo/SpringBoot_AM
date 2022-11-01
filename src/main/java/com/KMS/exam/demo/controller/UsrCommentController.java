@@ -32,7 +32,9 @@ public class UsrCommentController {
 		if(Ut.empty(comment)) {
 			return Ut.jsHistoryBack(Ut.f("댓글을 입력해주세요"));
 		}
-		ResultData commentRd = commentService.doWrite(id,rq.getLoginedMemberId(),comment, relTypeCode);
+		String setComment = comment.replaceAll("\r\n", "<br>");
+		
+		ResultData commentRd = commentService.doWrite(id,rq.getLoginedMemberId(),setComment, relTypeCode);
 		
 		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", id));
 	}
