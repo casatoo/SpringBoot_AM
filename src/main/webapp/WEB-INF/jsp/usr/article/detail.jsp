@@ -62,9 +62,6 @@ const ArticleDetail__goodReactionPoint = () =>{
 		$('.article-detail__Reaction').empty().html(data.data1);
 		$('.article-detail__goodReaction').empty().html(data.data2);
 		$('.article-detail__badReaction').empty().html(data.data3);
-		if(data.data1 == -1){
-			$(".badReaction").html().removeClass("btn-outline");
-		}
 		if(reaction == -1 || reaction == 0){
 			reaction = 1;
 		}else if(reaction == 1 ){
@@ -72,6 +69,7 @@ const ArticleDetail__goodReactionPoint = () =>{
 		}
 		console.log(data);
 		console.log(reaction);
+		reactionPick();
 	}, 'json');
 }
 </script>
@@ -92,10 +90,27 @@ const ArticleDetail__badReactionPoint = () =>{
 		}
 		console.log(data);
 		console.log(reaction);
+		reactionPick();
 	}, 'json');
 }
 </script>
-
+<script>
+	const reactionPick = () =>{
+		if(reaction == 1){
+			$(".goodReaction").css("color","red");
+			$(".badReaction").css("color","black");
+		}else if(reaction == -1){
+			$(".goodReaction").css("color","black");
+			$(".badReaction").css("color","red");
+		}else if(reaction == 0){
+			$(".goodReaction").css("color","black");
+			$(".badReaction").css("color","black");
+		}
+	}
+	$(function() {
+	reactionPick();
+	})
+</script>
 
 <section class="mt-8 text-xl">
 	<div class="mx-40">
