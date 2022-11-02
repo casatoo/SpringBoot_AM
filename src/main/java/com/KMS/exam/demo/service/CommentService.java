@@ -36,5 +36,12 @@ public class CommentService {
 		
 		return ResultData.from("S-1", "삭제성공", "deleteRd", deleteRd);
 	}
+
+	public ResultData doModify(int id, String comment) {
+		
+		int modifyRd = commentRepository.doModify(id,comment);
+		
+		return ResultData.from("S-1", "수정성공", "modifyRd", modifyRd);
+	}
 	
 }

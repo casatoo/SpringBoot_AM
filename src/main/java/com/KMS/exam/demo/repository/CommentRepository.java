@@ -42,4 +42,7 @@ public interface CommentRepository {
 			WHERE id = #{id}
 			""")
 	public int doDelete(int id);
+
+
+	public int doModify(int id, String comment);
 }

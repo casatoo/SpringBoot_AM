@@ -3,6 +3,7 @@
 <c:set var="pageTitle" value="ARTICLE DETAIL" />
 <%@ include file="../common/head.jspf"%>
 
+<%-- 전역변수 설정 --%>
 <script>
 	var reaction = ${reactionRd};
 	const params = {};
@@ -10,6 +11,11 @@
 	const isLogined = ${rq.isLogined()};
 </script>
 
+
+<%-- 
+댓글작성 제한사항 설정 스크립트 
+작성된 벨류값을 가져와서 조건에 맞는지 확인하는 함수
+--%>
 <script>
 	let CommentWrite__submitFormDone = false;
 	
@@ -31,6 +37,13 @@
 	}
 </script>
 
+<%-- 
+조회수 증가 비동기 통신 스크립트
+get함수를 사용해서 컨트롤러와 맵핑된 주소로 연결
+id 값을 파라미터로 값을 주고
+받아온 데이터값(data)를 제이쿼리로 찾은 클래스요소 안에 empty로 비우고 html로 데이터를 넣는다.
+실행은 2000ms 뒤에 실행
+--%>
 <script>
 	function ArticleDetail__increaseHitCount() {
 		const localStorageKey = 'article__' + params.id + '__alreadyView';
@@ -53,6 +66,16 @@
 	})
 </script>
 
+<%-- 
+좋아요 버튼 클릭 작동 스크립트 
+로그인했을때만 작동할 수있도록 경고창을 설정
+파라미터값으로 게시물 id와 추천의 경우 point 를 1로 설정
+받아온 데이터는 총 3가지로 로그인한 사람의 리엑션 결과, 좋아요 총 갯수, 싫어요 총 갯수 이다.
+최초 상태에서 로그인한 사람의 리엑션 결과가 전역변수로 설정되어 좋아요 버튼을 눌렀을때
+싫어요, 또는 아무리엑션이 없을 경우 좋아요가 될수 있도록 전역변수 변경
+좋아요 상태에서 다시 좋아요 버튼을 눌렀을 때는 취소이기 때문에 전역변수를 0으로 설정
+리엑션 상태에 따른 표시를 위해 설정한 함수를 실행시키는것으로 끝
+--%>
 <script>
 const ArticleDetail__goodReactionPoint = () =>{
 	if(!isLogined){
@@ -76,6 +99,12 @@ const ArticleDetail__goodReactionPoint = () =>{
 	}, 'json');
 }
 </script>
+
+<%-- 
+싫어요 버튼 클릭 작동 스크립트 
+좋아요 버튼 클릭과 동일한 작동 방법
+세부 조건만 조금 변경하였다.
+--%>
 <script>
 const ArticleDetail__badReactionPoint = () =>{
 	if(!isLogined){
@@ -99,6 +128,8 @@ const ArticleDetail__badReactionPoint = () =>{
 	}, 'json');
 }
 </script>
+
+<%-- 리엑션 결과에 따른 버튼 모양 변화 --%>
 <script>
 	const reactionPick = () =>{
 		if(reaction == 1){
@@ -117,6 +148,8 @@ const ArticleDetail__badReactionPoint = () =>{
 	})
 </script>
 
+<%-- 로그인 경고 --%>
+
 <script>
 const loginAlert = () =>{
 	alert("로그인해주세요");
@@ -124,18 +157,7 @@ const loginAlert = () =>{
 </script>
 
 <script>
-const btnInputTest = () => {
-	var newForm = $('<form></form>');
-	
-	newForm.attr("action","../comment/doModify");
-	newForm.attr("method","post");
-	newForm.append($('<input/>', {type: 'hidden', name: 'data1', value:'value1' }));
-	newForm.append($('<input/>', {type: 'hidden', name: 'data2', value:'value2' }));
-	
-	newForm.appendTo('body');
-	
-	newForm.submit();
-}
+
 </script>
 
 <section class="mt-8 text-xl">
@@ -212,7 +234,8 @@ const btnInputTest = () => {
 												<tr>
 														<th>${status.count}</th>
 														<td class="text-left">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</td>
-														<td class="w-36"><c:if test="${rq.loginedMemberId eq comment.memberId}">
+														<td class="w-36">
+																<c:if test="${rq.loginedMemberId eq comment.memberId}">
 																		<button class="comment-modify-btn" onclick="#">수정</button>
 																		<button class="comment-delete-btn"
 																				onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}';">삭제</button>
