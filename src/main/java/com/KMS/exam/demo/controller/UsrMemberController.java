@@ -129,4 +129,11 @@ public class UsrMemberController {
 	public String joinForm(HttpServletRequest req, Model model) {
 		return "usr/member/join";
 	}
+	
+	@RequestMapping("usr/member/info")
+	public String memberInfo(HttpServletRequest req, Model model) {
+		Member member = memberService.getMember(rq.getLoginedMemberId());
+		model.addAttribute("member",member);
+		return "usr/member/info";
+	}
 }
