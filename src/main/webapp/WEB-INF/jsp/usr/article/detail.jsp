@@ -151,13 +151,22 @@ const ArticleDetail__badReactionPoint = () =>{
 <%-- 로그인 경고 --%>
 
 <script>
-const loginAlert = () =>{
+const loginAlert = () => {
 	alert("로그인해주세요");
 }
 </script>
 
+<%-- 수정 폼 구현 --%>
 <script>
-
+const testBtn = (count,id,relId,comment) => {
+	const str = ".comment" + count;
+	var ModifyForm = "<form action='../comment/doModify?' method='post'>";
+		ModifyForm +=	"<input type='hidden' value='"+ id +"' name='id'/>";
+		ModifyForm += "<input type='hidden' value='" + relId + "' name='relId'/>";
+		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"'required/>";
+		ModifyForm += "<button class='comment-modify-btn' type='submit'>수정</button></form>";
+		$(str).html(ModifyForm);
+}
 </script>
 
 <section class="mt-8 text-xl">
@@ -233,10 +242,10 @@ const loginAlert = () =>{
 										<c:forEach var="comment" items="${comments}" varStatus="status">
 												<tr>
 														<th>${status.count}</th>
-														<td class="text-left">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</td>
+														<td class="text-left comment${status.count}">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</td>
 														<td class="w-36">
 																<c:if test="${rq.loginedMemberId eq comment.memberId}">
-																		<button class="comment-modify-btn" onclick="#">수정</button>
+																		<button class="comment-modify-btn" onclick="testBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}')">수정</button>
 																		<button class="comment-delete-btn"
 																				onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}';">삭제</button>
 																</c:if>
