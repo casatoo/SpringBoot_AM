@@ -158,14 +158,16 @@ const loginAlert = () => {
 
 <%-- 수정 폼 구현 --%>
 <script>
-const testBtn = (count,id,relId,comment) => {
-	const str = ".comment" + count;
+const modifyBtn = (count,id,relId,comment) => {
+	const commentBox = ".comment" + count;
+	const commentControllBox = ".comment-controll-box"+ count;
 	var ModifyForm = "<form action='../comment/doModify?' method='post'>";
 		ModifyForm +=	"<input type='hidden' value='"+ id +"' name='id'/>";
 		ModifyForm += "<input type='hidden' value='" + relId + "' name='relId'/>";
 		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"'required/>";
 		ModifyForm += "<button class='comment-modify-btn' type='submit'>수정</button></form>";
-		$(str).html(ModifyForm);
+		$(commentBox).html(ModifyForm);
+		$(commentControllBox).empty();
 }
 </script>
 
@@ -243,9 +245,9 @@ const testBtn = (count,id,relId,comment) => {
 												<tr>
 														<th>${status.count}</th>
 														<td class="text-left comment${status.count}">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</td>
-														<td class="w-36">
+														<td class="comment-controll-box${status.count} w-36">
 																<c:if test="${rq.loginedMemberId eq comment.memberId}">
-																		<button class="comment-modify-btn" onclick="testBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}')">수정</button>
+																		<button class="comment-modify-btn" onclick="modifyBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}')">수정</button>
 																		<button class="comment-delete-btn"
 																				onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}';">삭제</button>
 																</c:if>
