@@ -157,7 +157,14 @@ const loginAlert = () => {
 }
 </script>
 
-<%-- 수정 폼 구현 --%>
+<%-- 
+수정 폼 구현 
+1. 댓글 부분을 폼 형식을 변환
+2. 수정, 삭제 버튼 부분 삭제
+취소했을 경우
+1. 댓글부분을 다시 comment 로 채움
+2. 수정, 삭제 버튼 삽입
+--%>
 <script>
 const modifyBtn = (count,id,relId,comment) => {
 	const commentBox = ".comment" + count;
@@ -165,7 +172,7 @@ const modifyBtn = (count,id,relId,comment) => {
 	var ModifyForm = "<form action='../comment/doModify?' method='post'>";
 		ModifyForm +=	"<input type='hidden' value='"+ id +"' name='id'/>";
 		ModifyForm += "<input type='hidden' value='" + relId + "' name='relId'/>";
-		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"'required/>";
+		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"' size='50%' required/>";
 		ModifyForm += "<button class='comment-modify-btn' type='submit'>수정</button></form>";
 		$(commentBox).html(ModifyForm);
 		$(commentControllBox).empty();
@@ -243,7 +250,7 @@ const modifyBtn = (count,id,relId,comment) => {
 				<input type="hidden" value="${article.id}" name="id" /> <input
 					type="hidden" value="article" name="relTypeCode" /> <label
 					for="comment">댓글작성 :</label> <input type="text" placeholder="댓글"
-					id="comment" name="comment" class="h-11 w-auto" required />
+					id="comment" name="comment" class="h-9 w-auto" size="70" required />
 				<button class="h-9 comment-write-btn" type="submit">댓글 작성</button>
 			</form>
 		</c:if>

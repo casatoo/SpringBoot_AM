@@ -13,16 +13,10 @@
 		if(memberInfoModify__submitFormDone){
 			return;
 		}
-		form.loginPw.value = form.loginPw.value.trim();
 		form.nickname.value = form.nickname.value.trim();
 		form.cellphoneNum.value = form.cellphoneNum.value.trim();
 		form.email.value = form.email.value.trim();
 		
-		if (form.loginPw.value.length < 2) {
-			alert('2글자 이상 입력해주세요');
-			form.comment.focus();
-			return;
-		}
 		if (form.nickname.value.length < 2) {
 			alert('2글자 이상 입력해주세요');
 			form.comment.focus();
@@ -48,7 +42,6 @@
 
 <script>
 const memberInfoModify =()=>{
-	$('#loginPw').removeAttr('disabled').removeClass('bg-gray-300');
 	$('#nickname').removeAttr('disabled').removeClass('bg-gray-300');
 	$('#cellphoneNum').removeAttr('disabled').removeClass('bg-gray-300');
 	$('#email').removeAttr('disabled').removeClass('bg-gray-300');
@@ -57,12 +50,37 @@ const memberInfoModify =()=>{
 	$('#cancleModify').removeClass('hidden');
 }
 </script>
+<%-- 비밀번호 변경 --%>
+
+<script>
+const passwordChange = () =>{
+	$('#password-check-label').removeClass('hidden');
+	$('#new-password-label').removeClass('hidden');
+	$('#loginPwCheck').attr("type","password").removeAttr('disabled').val("");
+	$('#loginPw').attr("type","password").removeAttr('disabled').val("");
+	$('#changePasswordBtn').addClass('hidden');
+	$('#changePasswordConfirm').removeClass('hidden');
+	$('#changePasswordCancle').removeClass('hidden');	
+}
+</script>
+<%-- 비밀번호 변경 취소--%>
+
+<script>
+const passwordChangeCancle = () =>{
+	$('#password-check-label').addClass('hidden');
+	$('#new-password-label').addClass('hidden');
+	$('#loginPwCheck').attr("type","hidden").attr("disabled", true);
+	$('#loginPw').attr("type","hidden").attr("disabled", true);
+	$('#changePasswordBtn').removeClass('hidden');
+	$('#changePasswordConfirm').addClass('hidden');
+	$('#changePasswordCancle').addClass('hidden');
+}
+</script>
 
 <%-- 회원정보 수정 취소 --%>
 
 <script>
 const memberCancleModify =()=>{
-	$('#loginPw').attr("disabled", true).addClass('bg-gray-300').val('${member.loginPw}');
 	$('#nickname').attr("disabled", true).addClass('bg-gray-300').val('${member.nickname}');
 	$('#cellphoneNum').attr("disabled", true).addClass('bg-gray-300').val('${member.cellphoneNum}');
 	$('#email').attr("disabled", true).addClass('bg-gray-300').val('${member.email}');
@@ -72,8 +90,7 @@ const memberCancleModify =()=>{
 }
 </script>
 <section class="flex justify-center mt-14">		
-	<form action="../member/doModify?" class="w-full max-w-lg"
-		onsubmit="memberInfoModify__submitForm(this); return false;">
+	<div class="w-full max-w-lg">
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
@@ -95,7 +112,7 @@ const memberCancleModify =()=>{
 			</div>
 		</div>
 		<div class="flex flex-wrap -mx-3">
-			<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+			<div class="w-full px-3">
 				<label
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 					for="grid-first-name"> ID </label> <input disabled
@@ -103,15 +120,41 @@ const memberCancleModify =()=>{
 					type="text" name="loginId" id="loginId" autocomplete="off"
 					value="${member.loginId}" required>
 			</div>
-			<div class="w-full md:w-1/2 px-3">
+		</div>
+		<form action="../member/doChangePassword">
+		<div class="flex flex-wrap -mx-3">
+			<div class="w-full px-3">
 				<label
-					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-					for="grid-last-name"> PASSWORD </label> <input disabled
-					class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-					type="password" name="loginPw" id="loginPw" value="${member.loginPw}"
+					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 hidden" id="password-check-label"
+					for="grid-last-name"> 현재 비밀번호 </label> <input disabled
+					class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+					type="hidden" name="loginPwCheck" id="loginPwCheck"
 					autocomplete="off" required>
 			</div>
 		</div>
+		<div class="flex flex-wrap -mx-3">
+			<div class="w-full px-3">
+				<label
+					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 hidden" id="new-password-label"
+					for="grid-last-name"> 새 비밀번호 </label> <input disabled
+					class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+					type="hidden" name="loginPw" id="loginPw" value="${member.loginPw}"
+					autocomplete="off" required>
+			</div>
+		</div>
+		<button
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+			type="button" id="changePasswordBtn" onclick="passwordChange()">비밀번호 변경
+			</button>
+		<button
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+			type="submit" id="changePasswordConfirm">비밀번호 변경
+			</button>
+		<button
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+			type="button" id="changePasswordCancle" onclick="passwordChangeCancle()">취소
+			</button>
+		</form>
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
@@ -122,6 +165,8 @@ const memberCancleModify =()=>{
 					value="${member.name}" required disabled>
 			</div>
 		</div>
+		<form action="../member/doModify?"
+		onsubmit="memberInfoModify__submitForm(this); return false;">
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
@@ -164,5 +209,6 @@ const memberCancleModify =()=>{
 			type="button" id="modifyBtn" onclick="memberInfoModify()">회원정보
 			수정</button>
 	</form>
+	</div>
 </section>
 <%@ include file="../common/foot.jspf"%>

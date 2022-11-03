@@ -57,14 +57,20 @@
 		= #{email}
 	</select>
 
-	<select id="doModify">
+	<update id="doModify">
 		UPDATE `member` SET
 		updateDate = NOW(),
-		loginPw = #{loginPw},
 		nickname = #{nickname},
 		cellphoneNum = #{cellphoneNum},
 		email = #{email}
 		WHERE id = #{memberId}
-	</select>
+	</update>
+	
+	<update id="doChangePassword">
+		UPDATE `member` SET
+		updateDate = NOW(),
+		loginPw = #{loginPw}
+		WHERE id = #{memberId}
+	</update>
 
 </mapper>

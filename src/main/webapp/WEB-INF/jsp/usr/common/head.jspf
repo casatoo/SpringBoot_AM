@@ -58,7 +58,7 @@
 										<ul class="flex items-center px-3">
 												<li><a href="../member/doLogout" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
 												</a></li>
-												<li><a href="../member/info" class="h-full px-3 flex items-center px-3"> <span>회원정보</span>
+												<li><a href="../member/info" class="h-full px-3 flex items-center px-3"> <span>내 정보</span>
 												</a></li>
 										</ul>
 								</c:otherwise>

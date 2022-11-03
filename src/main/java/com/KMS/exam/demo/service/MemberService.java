@@ -70,15 +70,21 @@ public class MemberService {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 
-	public ResultData doModify(String loginPw, String name, String nickname, String cellphoneNum, String email, int memberId) {
+	public ResultData doModify(String name, String nickname, String cellphoneNum, String email, int memberId) {
 
 		int matchMember = memberRepository.matchMember(name, email);
 		if(matchMember == 1) {
 			return ResultData.from("F-1",Ut.f("중복된 회원 정보입니다. %s, %s",name, email));
 		}
-		memberRepository.doModify(loginPw, nickname, cellphoneNum, email, memberId);
-		int id = memberRepository.getLastInsertId();
-		return ResultData.from("S-1","회원정보 수정 성공","id",id);
+		memberRepository.doModify(nickname, cellphoneNum, email, memberId);
+		return ResultData.from("S-1","회원정보 수정 성공");
+	}
+
+	public ResultData doChangePassword(int memberId ,String loginPw) {
+		
+		memberRepository.doChangePassword(memberId,loginPw);
+		
+		return ResultData.from("S-1","비밀번호 수정 성공");
 	}
 	
 }

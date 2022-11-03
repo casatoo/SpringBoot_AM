@@ -134,10 +134,6 @@ public class UsrMemberController {
 		
 		ResultData resultRd;
 
-		if(Ut.empty(loginPw)) {
-			return Ut.jsHistoryBack(Ut.f("비밀번호를 입력해주세요"));
-		}
-
 		if(Ut.empty(nickname)) {
 			return Ut.jsHistoryBack(Ut.f("닉네임을 입력해주세요"));
 		}
@@ -148,7 +144,7 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack(Ut.f("이메일을 입력해주세요"));
 		}
 		
-		ResultData doModifyRd = memberService.doModify(loginPw, name, nickname, cellphoneNum, email, rq.getLoginedMemberId());
+		ResultData doModifyRd = memberService.doModify(name, nickname, cellphoneNum, email, rq.getLoginedMemberId());
 
 		if(doModifyRd.isFail()) {
 			if(doModifyRd.getResultCode().equals("F-1")) {
@@ -160,4 +156,21 @@ public class UsrMemberController {
 		resultRd = ResultData.newData(doModifyRd,"member",member);
 		return Ut.jsReplace(Ut.f("회원정보 수정!"), "/usr/member/info");
 	}
+	@RequestMapping("/usr/member/doChangePassword")
+	@ResponseBody
+	public String doChangePassword(String loginPwCheck, String loginPw) {
+		
+		Member member = memberService.getMember(rq.getLoginedMemberId());
+		if(!member.getLoginPw().equals(loginPwCheck)) {
+			return Ut.jsHistoryBack(Ut.f("비밀번호가 틀렸습니다."));
+		}
+		if(loginPwCheck.equals(loginPw)) {
+			return Ut.jsHistoryBack(Ut.f("기존비밀번호와 동일한 비밀번호 입니다."));
+		}
+		ResultData doChangePasswordRd = memberService.doChangePassword(member.getId() , loginPw);
+		
+		return Ut.jsReplace(Ut.f("비밀번호가 수정되었습니다!"), "/usr/member/info");
+	}
+	
+	
 }
