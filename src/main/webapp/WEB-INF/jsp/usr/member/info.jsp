@@ -71,11 +71,30 @@ const memberCancleModify =()=>{
 	$('#cancleModify').addClass('hidden');
 }
 </script>
-
-<section class="flex justify-center mt-14">
+<section class="flex justify-center mt-14">		
 	<form action="../member/doModify?" class="w-full max-w-lg"
 		onsubmit="memberInfoModify__submitForm(this); return false;">
-		<div class="flex flex-wrap -mx-3 mb-6">
+		<div class="flex flex-wrap -mx-3">
+			<div class="w-full px-3">
+				<label
+					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+					for="grid-password"> 회원 등급 </label> 
+					<div
+					class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+					${level} 회원
+					</div>
+			</div>
+		</div>
+		<div class="flex flex-wrap -mx-3">
+			<div class="w-full px-3">
+				<label
+					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+					for="grid-password"> 가입일자 </label> <div
+					class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+					>${member.regDate.substring(0,16)}</div>
+			</div>
+		</div>
+		<div class="flex flex-wrap -mx-3">
 			<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 				<label
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -89,11 +108,11 @@ const memberCancleModify =()=>{
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 					for="grid-last-name"> PASSWORD </label> <input disabled
 					class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-					type="text" name="loginPw" id="loginPw" value="${member.loginPw}"
+					type="password" name="loginPw" id="loginPw" value="${member.loginPw}"
 					autocomplete="off" required>
 			</div>
 		</div>
-		<div class="flex flex-wrap -mx-3 mb-6">
+		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -101,11 +120,9 @@ const memberCancleModify =()=>{
 					class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 					type="text" name="name" id="name" autocomplete="off"
 					value="${member.name}" required disabled>
-				<p class="text-gray-600 text-xs italic">Make it as long and as
-					crazy as you'd like</p>
 			</div>
 		</div>
-		<div class="flex flex-wrap -mx-3 mb-6">
+		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -115,7 +132,7 @@ const memberCancleModify =()=>{
 					value="${member.nickname}" required disabled>
 			</div>
 		</div>
-		<div class="flex flex-wrap -mx-3 mb-6">
+		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -126,7 +143,7 @@ const memberCancleModify =()=>{
 					autocomplete="off" required disabled>
 			</div>
 		</div>
-		<div class="flex flex-wrap -mx-3 mb-6">
+		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
 					class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"

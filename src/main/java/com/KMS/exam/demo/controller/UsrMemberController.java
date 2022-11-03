@@ -116,7 +116,15 @@ public class UsrMemberController {
 	@RequestMapping("usr/member/info")
 	public String memberInfo(HttpServletRequest req, Model model) {
 		Member member = memberService.getMember(rq.getLoginedMemberId());
+		String level = "";
+		if(member.getAuthLevel() == 3) {
+			level = "일반";
+		}else if(member.getAuthLevel() == 7) {
+			level = "관리자";
+		}
+		
 		model.addAttribute("member",member);
+		model.addAttribute("level",level);
 		return "/usr/member/info";
 	}
 	

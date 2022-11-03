@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.KMS.exam.demo.service.MemberService;
 import com.KMS.exam.demo.util.Ut;
 
 import lombok.Getter;
@@ -24,6 +26,9 @@ public class Rq {
 	private HttpServletResponse resp;
 	private HttpSession session;
 	
+	@Autowired
+	public MemberService memberservice;
+	
 	
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
@@ -35,6 +40,7 @@ public class Rq {
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+
 		}
 
 		this.isLogined = isLogined;

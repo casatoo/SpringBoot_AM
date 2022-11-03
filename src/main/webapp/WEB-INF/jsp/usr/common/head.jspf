@@ -24,7 +24,8 @@
 		<c:set var="rq" value="${rq}" />
 		<header class="bg-black text-white">
 				<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 ">
-						<a href="#" class="flex items-center px-3"> <i class="fa-solid fa-pen-to-square" style="font-size: 30px;"></i>
+						<a href="#" class="flex items-center px-3">
+						<i class="fa-sharp fa-solid fa-dove" style="font-size: 30px;"></i>
 						</a>
 						<div class="flex justify-end flex-grow">
 								<h1 class="flex items-center px-3">
