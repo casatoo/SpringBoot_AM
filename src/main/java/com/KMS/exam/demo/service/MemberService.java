@@ -69,5 +69,16 @@ public class MemberService {
 	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
+
+	public ResultData doModify(String loginPw, String name, String nickname, String cellphoneNum, String email, int memberId) {
+
+		int matchMember = memberRepository.matchMember(name, email);
+		if(matchMember == 1) {
+			return ResultData.from("F-1",Ut.f("중복된 회원 정보입니다. %s, %s",name, email));
+		}
+		memberRepository.doModify(loginPw, nickname, cellphoneNum, email, memberId);
+		int id = memberRepository.getLastInsertId();
+		return ResultData.from("S-1","회원정보 수정 성공","id",id);
+	}
 	
 }

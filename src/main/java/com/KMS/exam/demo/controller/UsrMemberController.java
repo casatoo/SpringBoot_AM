@@ -74,18 +74,7 @@ public class UsrMemberController {
 		resultRd = ResultData.newData(doJoinRd,"member",member);
 		return Ut.jsReplace(Ut.f("회원가입 성공!"), "/");
 	}
-	/**
-	 * 로그인 기능 구현
-	 * 맵핑
-	 * 받아야되는 파라미터 아이디 비밀번호
-	 * 아이디 유효 여부 판단. 잘못된 아이디일 경우 메세지
-	 * 비밀번호 유효 여부 판단. 잘못된 비밀번호일 경우 메세지
-	 * 모두 일치 확인하면 로그인 성공 메세지
-	 * 이것도 서비스에서 int 로 받아오자.
-	 * -1 이면 아이디 잘못 -2 이면 비밀번호 잘못 1 이상은 참이니까
-	 * 세션에 정보를 저장 리퀘스트를 받아서 세션을 생성
-	 * loginedId 저장
-	 */
+	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, HttpSession httpSession, Model model) {
@@ -108,32 +97,59 @@ public class UsrMemberController {
 		rq.login(member);
 		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),"../home/main");
 	}
-	/**
-	 * 로그아웃 기능
-	 * 팹핑
-	 * 로그인 하지 않으면 세션자체가 null 상태이기 때문에 오류가 발생한다.
-	 * 조건식으로 세션이 null 이거나 loginedId 가 0 일경우 로그인 하지 않은걸로 한다.
-	 * 
-	 */
-	@RequestMapping("usr/member/doLogout")
+	
+	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public String doLogout( Model model, HttpSession httpSession) {
 		rq.logout();
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),"../home/main");
 	}
-	@RequestMapping("usr/member/login")
+	@RequestMapping("/usr/member/login")
 	public String loginForm(HttpServletRequest req, Model model) {
-		return "usr/member/login";
+		return "/usr/member/login";
 	}
-	@RequestMapping("usr/member/join")
+	@RequestMapping("/usr/member/join")
 	public String joinForm(HttpServletRequest req, Model model) {
-		return "usr/member/join";
+		return "/usr/member/join";
 	}
 	
 	@RequestMapping("usr/member/info")
 	public String memberInfo(HttpServletRequest req, Model model) {
 		Member member = memberService.getMember(rq.getLoginedMemberId());
 		model.addAttribute("member",member);
-		return "usr/member/info";
+		return "/usr/member/info";
+	}
+	
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(String loginPw, String name, String nickname, String cellphoneNum, String email, Model model) {
+		
+		ResultData resultRd;
+
+		if(Ut.empty(loginPw)) {
+			return Ut.jsHistoryBack(Ut.f("비밀번호를 입력해주세요"));
+		}
+
+		if(Ut.empty(nickname)) {
+			return Ut.jsHistoryBack(Ut.f("닉네임을 입력해주세요"));
+		}
+		if(Ut.empty(cellphoneNum)) {
+			return Ut.jsHistoryBack(Ut.f("전화번호를 입력해주세요"));
+		}
+		if(Ut.empty(email)) {
+			return Ut.jsHistoryBack(Ut.f("이메일을 입력해주세요"));
+		}
+		
+		ResultData doModifyRd = memberService.doModify(loginPw, name, nickname, cellphoneNum, email, rq.getLoginedMemberId());
+
+		if(doModifyRd.isFail()) {
+			if(doModifyRd.getResultCode().equals("F-1")) {
+				return Ut.jsHistoryBack(Ut.f("중복된 회원 정보입니다."));
+			}
+		}
+		
+		Member member = memberService.getMember((int) doModifyRd.getData1());
+		resultRd = ResultData.newData(doModifyRd,"member",member);
+		return Ut.jsReplace(Ut.f("회원정보 수정!"), "/usr/member/info");
 	}
 }

@@ -21,4 +21,6 @@ public interface MemberRepository {
 	
 	public int matchMember(String name, String email);
 
+	public void doModify(String loginPw, String nickname, String cellphoneNum, String email, int memberId);
+
 }
