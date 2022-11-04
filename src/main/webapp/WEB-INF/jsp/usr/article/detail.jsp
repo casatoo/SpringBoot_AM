@@ -178,7 +178,9 @@ const modifyBtn = (count,id,relId,comment) => {
 		$(commentControllBox).empty();
 }
 </script>
-
+<div class="text-center text-3xl mt-11">
+	<h1>${article.id}번 게시글</h1>
+</div>
 <section class="mt-8 text-xl">
 	<div class="mx-40">
 		<div class="overflow-x-auto mt-11 text-center table-box-type-1">

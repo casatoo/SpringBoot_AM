@@ -161,6 +161,12 @@ public class UsrMemberController {
 	public String doChangePassword(String loginPwCheck, String loginPw) {
 		
 		Member member = memberService.getMember(rq.getLoginedMemberId());
+		if(Ut.empty(loginPwCheck)) {
+			return Ut.jsHistoryBack(Ut.f("기존비밀번호를 입력해주세요"));
+		}
+		if(Ut.empty(loginPw)) {
+			return Ut.jsHistoryBack(Ut.f("새로운 비밀번호를 입력해주세요"));
+		}
 		if(!member.getLoginPw().equals(loginPwCheck)) {
 			return Ut.jsHistoryBack(Ut.f("비밀번호가 틀렸습니다."));
 		}

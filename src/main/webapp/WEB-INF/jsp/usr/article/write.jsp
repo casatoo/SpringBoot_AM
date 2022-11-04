@@ -2,6 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="WRITE ARTICLE" />
 <%@ include file="../common/head.jspf"%>
+<div class="text-center text-3xl mt-11">
+	<h1>새로운 글 작성</h1>
+</div>
 <div class="m-11">
 		<form action="../article/doAdd?">
 				<select class="select select-bordered w-full max-w-xs block ml-12 mb-11" name="boardId" required>

@@ -6,7 +6,7 @@
 
 <%-- 입력 제한사항 --%>
 <script>
-	let CommentWrite__submitFormDone = false;
+	let memberInfoModify__submitFormDone = false;
 	
 	function memberInfoModify__submitForm(form){
 		
@@ -19,21 +19,48 @@
 		
 		if (form.nickname.value.length < 2) {
 			alert('2글자 이상 입력해주세요');
-			form.comment.focus();
+			form.nickname.focus();
 			return;
 		}
-		if (form.loginPw.value.length < 2) {
+		if (form.cellphoneNum.value.length < 2) {
 			alert('전화번호를 입력해주세요');
-			form.comment.focus();
+			form.cellphoneNum.focus();
 			return;
 		}
-		if (form.loginPw.value.length < 2) {
+		if (form.email.value.length < 2) {
 			alert('이메일형식이 아닙니다.');
-			form.comment.focus();
+			form.email.focus();
 			return;
 		}
 		
-		CommentWrite__submitFormDone = true;
+		memberInfoModify__submitFormDone = true;
+		form.submit();
+	}
+</script>
+
+<script>
+	let changePassword__submitFormDone = false;
+	
+	function changePassword__submitForm(form){
+		
+		if(changePassword__submitFormDone){
+			return;
+		}
+		form.loginPwCheck.value = form.loginPwCheck.value.trim();
+		form.loginPw.value = form.loginPw.value.trim();
+		
+		if (form.loginPwCheck.value.length < 1) {
+			alert('기존의 패스워드를 입력해주세요');
+			form.loginPwCheck.focus();
+			return;
+		}
+		if (form.loginPw.value.length < 2) {
+			alert('새로운 패스워드를 입력해주세요');
+			form.loginPw.focus();
+			return;
+		}
+		
+		changePassword__submitFormDone = true;
 		form.submit();
 	}
 </script>
@@ -88,8 +115,12 @@ const memberCancleModify =()=>{
 	$('#doModify').addClass('hidden');
 	$('#cancleModify').addClass('hidden');
 }
+
 </script>
-<section class="flex justify-center mt-14">		
+<div class="text-center text-3xl mt-11">
+	<h1>회원 정보</h1>
+</div>
+<section class="flex justify-center mt-14">
 	<div class="w-full max-w-lg">
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
@@ -121,7 +152,7 @@ const memberCancleModify =()=>{
 					value="${member.loginId}" required>
 			</div>
 		</div>
-		<form action="../member/doChangePassword">
+		<form action="../member/doChangePassword" onsubmit="changePassword__submitForm(this); return false;">
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
@@ -143,15 +174,15 @@ const memberCancleModify =()=>{
 			</div>
 		</div>
 		<button
-			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline"
 			type="button" id="changePasswordBtn" onclick="passwordChange()">비밀번호 변경
 			</button>
 		<button
-			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline hidden"
 			type="submit" id="changePasswordConfirm">비밀번호 변경
 			</button>
 		<button
-			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline hidden"
 			type="button" id="changePasswordCancle" onclick="passwordChangeCancle()">취소
 			</button>
 		</form>
