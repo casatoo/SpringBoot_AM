@@ -21,7 +21,13 @@ public class MemberService {
  */
 	@Autowired
 	public MemberRepository memberRepository;
+	@Autowired
+	private AttrService attrService;
 	
+	public MemberService(AttrService attrService, MemberRepository memberRepository) {
+		this.attrService = attrService;
+		this.memberRepository = memberRepository;
+	}
 	/**
 	 * dojoin 메서드 생성
 	 * 리턴타입은 member 로 하고
@@ -85,6 +91,14 @@ public class MemberService {
 		memberRepository.doChangePassword(memberId,loginPw);
 		
 		return ResultData.from("S-1","비밀번호 수정 성공");
+	}
+	public String genMemberModifyAuthKey(int loginMemberId) {
+		String memberModifyAuthKey = Ut.getTempPassword(10);
+
+		attrService.setValue("member", loginMemberId, "extra", "memberModifyAuthKey", memberModifyAuthKey,
+				Ut.getDateStrLater(60 * 5));
+
+		return memberModifyAuthKey;
 	}
 	
 }
