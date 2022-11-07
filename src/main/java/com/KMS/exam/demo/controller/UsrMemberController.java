@@ -151,10 +151,10 @@ public class UsrMemberController {
 				return Ut.jsHistoryBack(Ut.f("중복된 회원 정보입니다."));
 			}
 		}
-		
+		String memberModifyAuthKey = memberService.genMemberModifyAuthKey(rq.getLoginedMemberId());
 		Member member = memberService.getMember((int) doModifyRd.getData1());
 		resultRd = ResultData.newData(doModifyRd,"member",member);
-		return Ut.jsReplace(Ut.f("회원정보 수정!"), "/usr/member/info");
+		return Ut.jsReplace("회원정보 수정!",Ut.f("../member/info?AuthKey=%s", memberModifyAuthKey));
 	}
 	@RequestMapping("/usr/member/doChangePassword")
 	@ResponseBody

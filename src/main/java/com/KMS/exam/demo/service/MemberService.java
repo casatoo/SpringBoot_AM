@@ -83,7 +83,7 @@ public class MemberService {
 			return ResultData.from("F-1",Ut.f("중복된 회원 정보입니다. %s, %s",name, email));
 		}
 		memberRepository.doModify(nickname, cellphoneNum, email, memberId);
-		return ResultData.from("S-1","회원정보 수정 성공");
+		return ResultData.from("S-1","회원정보 수정 성공","memberId",memberId);
 	}
 
 	public ResultData doChangePassword(int memberId ,String loginPw) {
