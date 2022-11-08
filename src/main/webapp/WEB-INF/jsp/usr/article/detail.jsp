@@ -4,6 +4,9 @@
 <c:set var="pageTitle" value="ARTICLE DETAIL" />
 <%@ include file="../common/head.jspf"%>
 
+<%-- toastUi --%>
+<%@ include file="../common/toastUi.jspf"%>
+
 <%-- 전역변수 설정 --%>
 <script>
 	var reaction = ${reactionRd};
@@ -227,7 +230,10 @@ const modifyBtn = (count,id,relId,comment) => {
 					</tr>
 					<tr>
 						<th class="w-36 h-96">내용</th>
-						<td class="text-left">${article.body}</td>
+						<td><div class="toast-ui-viewer">
+  <script type="text/x-template">${article.body}
+  </script>
+</div></td>
 					</tr>
 				</tbody>
 			</table>
