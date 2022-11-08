@@ -15,6 +15,7 @@ import com.KMS.exam.demo.service.MemberService;
 import com.KMS.exam.demo.util.Ut;
 
 import lombok.Getter;
+
 @Component
 @Scope(value = "request", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class Rq {
@@ -22,29 +23,30 @@ public class Rq {
 	private boolean isLogined;
 	@Getter
 	private int loginedMemberId;
+	@Getter
+	private Member loginedMember;
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
+
 	
-	@Autowired
-	public MemberService memberservice;
-	
-	
-	public Rq(HttpServletRequest req, HttpServletResponse resp) {
+	public Rq(HttpServletRequest req, HttpServletResponse resp,MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
 		this.session = req.getSession();
 		boolean isLogined = false;
 		int loginedMemberId = 0;
+		Member loginedMember = null;
 
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
-
+			loginedMember = memberService.getMember(loginedMemberId);
 		}
 
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
+		this.loginedMember = loginedMember;
 		
 		this.req.setAttribute("rq", this);
 	}
@@ -83,11 +85,13 @@ public class Rq {
 		req.setAttribute("historyBack", true);
 		return "usr/common/js";
 	}
+	public void runA() {
+		System.out.println("A 호출됨");
+		runB();
+	}
 
-
-
-	public void initOnBeforeActionInterceptor() {
-		
+	public void runB() {
+		System.out.println("B 호출됨");
 	}
 
 }

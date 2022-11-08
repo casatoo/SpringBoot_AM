@@ -170,7 +170,7 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMember((int) doModifyRd.getData1());
 		ResultData resultRd = ResultData.newData(doModifyRd,"member",member);
-		return Ut.jsReplace("개인정보 수정완료","../home/main");
+		return Ut.jsReplace("개인정보 수정완료","../member/info");
 	}
 	@RequestMapping("/usr/member/doChangePassword")
 	@ResponseBody
@@ -205,7 +205,7 @@ public class UsrMemberController {
 		}
 		ResultData doChangePasswordRd = memberService.doChangePassword(member.getId() , loginPw);
 		
-		return Ut.jsReplace(Ut.f("비밀번호가 수정되었습니다!"), "/usr/member/info");
+		return Ut.jsReplace(Ut.f("비밀번호가 수정되었습니다!"), "../member/info");
 	}
 	@RequestMapping("/usr/member/createAuthKey")
 	@ResponseBody

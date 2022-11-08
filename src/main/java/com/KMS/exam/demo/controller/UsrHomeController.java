@@ -1,17 +1,22 @@
 package com.KMS.exam.demo.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.KMS.exam.demo.vo.Member;
+import com.KMS.exam.demo.vo.Rq;
 
 @Controller
 public class UsrHomeController {
+	private Rq rq;
+
+	public UsrHomeController(Rq rq) {
+		this.rq = rq;
+	}
+
 	@RequestMapping("/usr/home/main")
 	public String showMain() {
+		rq.runA();
+
 		return "usr/home/main";
 	}
 
