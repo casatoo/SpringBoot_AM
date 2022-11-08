@@ -115,8 +115,20 @@ const memberCancleModify =()=>{
 	$('#doModify').addClass('hidden');
 	$('#cancleModify').addClass('hidden');
 }
-
 </script>
+
+<script>
+const createAuthKey = () => {
+$.get('../member/createAuthKey',{
+	ajaxMode : 'Y'
+}, function(AuthKey){
+	$('#memberModifyAuthKey').val(AuthKey);
+	$('#memberPasswordAuthKey').val(AuthKey);
+});
+}
+</script>
+
+
 <div class="text-center text-3xl mt-11">
 	<h1>회원 정보</h1>
 </div>
@@ -153,6 +165,7 @@ const memberCancleModify =()=>{
 			</div>
 		</div>
 		<form action="../member/doChangePassword" onsubmit="changePassword__submitForm(this); return false;">
+		<input type="hidden" name="memberPasswordAuthKey" id="memberPasswordAuthKey"/>
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
@@ -175,7 +188,7 @@ const memberCancleModify =()=>{
 		</div>
 		<button
 			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline"
-			type="button" id="changePasswordBtn" onclick="passwordChange()">비밀번호 변경
+			type="button" id="changePasswordBtn" onclick="passwordChange(); createAuthKey();">비밀번호 변경
 			</button>
 		<button
 			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline hidden"
@@ -198,6 +211,7 @@ const memberCancleModify =()=>{
 		</div>
 		<form action="../member/doModify?"
 		onsubmit="memberInfoModify__submitForm(this); return false;">
+		<input type="hidden" name="memberModifyAuthKey" id="memberModifyAuthKey"/>
 		<div class="flex flex-wrap -mx-3">
 			<div class="w-full px-3">
 				<label
@@ -237,7 +251,7 @@ const memberCancleModify =()=>{
 			type="button" id="cancleModify" onclick="memberCancleModify()">취소</button>
 		<button
 			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-			type="button" id="modifyBtn" onclick="memberInfoModify()">회원정보
+			type="button" id="modifyBtn" onclick="memberInfoModify(); createAuthKey();">회원정보
 			수정</button>
 	</form>
 	</div>

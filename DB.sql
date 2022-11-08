@@ -154,6 +154,8 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
 
+
+
 SELECT A.*,
 IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
 IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)),0) AS extra__goodReactionPoint,
@@ -192,3 +194,12 @@ SELECT RP.relTypeCode, RP.relId,
 	SUM(IF(RP.point < 0, RP.point * -1, 0)) AS badReactionPoint
 	FROM reactionPoint AS RP
 GROUP BY RP.relTypeCode, RP.relId;
+
+SELECT * FROM attr;
+			SELECT *
+			FROM attr
+			WHERE relId = 3
+			AND relTypeCode = 'member'
+			AND typeCode = 'extra'
+			AND type2Code = 'memberModifyAuthKey'
+			AND (expireDate >= NOW() OR expireDate IS NULL);

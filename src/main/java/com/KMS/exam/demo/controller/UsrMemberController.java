@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KMS.exam.demo.service.AttrService;
 import com.KMS.exam.demo.service.MemberService;
 import com.KMS.exam.demo.util.Ut;
+import com.KMS.exam.demo.vo.Attr;
 import com.KMS.exam.demo.vo.Member;
 import com.KMS.exam.demo.vo.ResultData;
 import com.KMS.exam.demo.vo.Rq;
@@ -29,6 +31,8 @@ public class UsrMemberController {
 	private MemberService memberService;
 	@Autowired
 	private Rq rq;
+	@Autowired
+	private AttrService attrService;
 	/**
 	 * dojoin 맵핑하기 return 값은 회원가입 메시지를 주기 위해 가입시키고 member 값을 받아온다. 인자값은
 	 * id,pw,이름,닉네임,전화번호,이메일 vo에 member 만들어야 함 Service에 doJoin 메서드 생성 가입절차 시작 전에 아이디
@@ -128,12 +132,25 @@ public class UsrMemberController {
 		return "/usr/member/info";
 	}
 	
+	
+	
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(String loginPw, String name, String nickname, String cellphoneNum, String email, Model model) {
+	public String doModify(String name, String nickname, String cellphoneNum, String email,String memberModifyAuthKey, Model model) {
 		
-		ResultData resultRd;
-
+		if(memberModifyAuthKey == null) {
+			return Ut.jsHistoryBack(Ut.f("인증코드가 생성되지 않았습니다."));
+		}
+		
+		Attr getAttr = attrService.get("member", rq.getLoginedMemberId(), "extra", "memberModifyAuthKey");
+		
+		if(getAttr==null) {
+			return Ut.jsHistoryBack(Ut.f("인증코드가 만료되었습니다. 다시 시도해주세요"));
+		}
+		if(!getAttr.getValue().equals(memberModifyAuthKey)) {
+			return Ut.jsHistoryBack(Ut.f("인증코드가 일치하지 않습니다. 다시 시도해주세요"));
+		}
+		
 		if(Ut.empty(nickname)) {
 			return Ut.jsHistoryBack(Ut.f("닉네임을 입력해주세요"));
 		}
@@ -151,14 +168,27 @@ public class UsrMemberController {
 				return Ut.jsHistoryBack(Ut.f("중복된 회원 정보입니다."));
 			}
 		}
-		String memberModifyAuthKey = memberService.genMemberModifyAuthKey(rq.getLoginedMemberId());
 		Member member = memberService.getMember((int) doModifyRd.getData1());
-		resultRd = ResultData.newData(doModifyRd,"member",member);
-		return Ut.jsReplace("회원정보 수정!",Ut.f("../member/info?AuthKey=%s", memberModifyAuthKey));
+		ResultData resultRd = ResultData.newData(doModifyRd,"member",member);
+		return Ut.jsReplace("개인정보 수정완료","../home/main");
 	}
 	@RequestMapping("/usr/member/doChangePassword")
 	@ResponseBody
-	public String doChangePassword(String loginPwCheck, String loginPw) {
+	public String doChangePassword(String loginPwCheck, String loginPw, String memberPasswordAuthKey) {
+		
+		if(memberPasswordAuthKey == null) {
+			return Ut.jsHistoryBack(Ut.f("인증코드가 생성되지 않았습니다."));
+		}
+		
+		Attr getAttr = attrService.get("member", rq.getLoginedMemberId(), "extra", "memberModifyAuthKey");
+		
+		if(getAttr==null) {
+			return Ut.jsHistoryBack(Ut.f("인증코드가 만료되었습니다. 다시 시도해주세요"));
+		}
+		
+		if(!getAttr.getValue().equals(memberPasswordAuthKey)) {
+			return Ut.jsHistoryBack(Ut.f("인증코드가 일치하지 않습니다.다시 시도해주세요"));
+		}
 		
 		Member member = memberService.getMember(rq.getLoginedMemberId());
 		if(Ut.empty(loginPwCheck)) {
@@ -177,6 +207,13 @@ public class UsrMemberController {
 		
 		return Ut.jsReplace(Ut.f("비밀번호가 수정되었습니다!"), "/usr/member/info");
 	}
-	
+	@RequestMapping("/usr/member/createAuthKey")
+	@ResponseBody
+	public String createAuthKey() {
+		
+		String memberModifyAuthKey = memberService.genMemberModifyAuthKey(rq.getLoginedMemberId());
+		
+		return memberModifyAuthKey;
+	}
 	
 }
