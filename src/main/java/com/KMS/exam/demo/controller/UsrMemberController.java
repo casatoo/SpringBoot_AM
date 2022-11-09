@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.AttrService;
@@ -81,7 +82,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw, HttpSession httpSession, Model model) {
+	public String doLogin(String loginId, String loginPw,@RequestParam(defaultValue = "/")String afterUrl, HttpSession httpSession, Model model) {
 		
 		if(rq.isLogined()){
 			return Ut.jsReplace(Ut.f("이미 로그인중입니다"),"../home/main");
@@ -99,7 +100,8 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
 		rq.login(member);
-		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),"../home/main");
+		
+		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),afterUrl);
 	}
 	
 	@RequestMapping("/usr/member/doLogout")
@@ -109,7 +111,8 @@ public class UsrMemberController {
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),"../home/main");
 	}
 	@RequestMapping("/usr/member/login")
-	public String loginForm(HttpServletRequest req, Model model) {
+	public String loginForm(String afterUrl, HttpServletRequest req, Model model) {
+		model.addAttribute("afterUrl",afterUrl);
 		return "/usr/member/login";
 	}
 	@RequestMapping("/usr/member/join")

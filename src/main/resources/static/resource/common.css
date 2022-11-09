@@ -12,8 +12,9 @@
     font-weight: normal;
     font-style: normal;
 }
-html>body {
-	font-family: 'TTCrownMychewR';
+html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents, html>body .ProseMirror, html>body .toastui-editor-md-mode{
+	font-family: 'TTCrownMychewR', sans-serif;
+	text-underline-position: under;
 }
 /*라이브러리*/
 .table-box-type-1>table th, .table-box-type-1>table td {

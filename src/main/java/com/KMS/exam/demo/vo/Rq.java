@@ -57,6 +57,12 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		println(Ut.jsHistoryBack(msg));
 	}
+	
+	public void printjsReplace(String msg,String loginUrl) {
+		resp.setContentType("text/html; charset=UTF-8");
+		println(Ut.jsReplace(msg,loginUrl));
+	}
+
 
 	public void print(String str) {
 		try {

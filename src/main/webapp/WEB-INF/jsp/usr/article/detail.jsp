@@ -230,7 +230,7 @@ const modifyBtn = (count,id,relId,comment) => {
 					</tr>
 					<tr>
 						<th class="w-36 h-96">내용</th>
-						<td><div class="toast-ui-viewer">
+						<td class="text-left"><div class="toast-ui-viewer">
   <script type="text/x-template">${article.body}
   </script>
 </div></td>

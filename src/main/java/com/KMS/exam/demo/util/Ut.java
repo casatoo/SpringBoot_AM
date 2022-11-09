@@ -65,6 +65,26 @@ public class Ut {
 				</script>
 				""", msg, uri);
 	}
+	
+	
+	public static String jsHistorygo(String msg,int index) {
+
+		if (msg == null) {
+			msg = "";
+		}
+
+		return Ut.f("""
+				<script>
+				const msg = '%s'.trim();
+				if (msg.length > 0){
+					alert(msg);
+				}
+				history.go(%d);
+				</script>
+				""", msg,index);
+	}
+	
+	
 	public static String getDateStrLater(long seconds) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

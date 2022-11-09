@@ -21,11 +21,10 @@
 <link rel="shortcut icon" href="/favicon.ico"/>
 
 </head>
-
 <body>
 		<c:set var="rq" value="${rq}" />
 		<header class="bg-black text-white">
-				<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 ">
+				<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 " >
 						<a href="#" class="flex items-center px-3">
 						<i class="fa-sharp fa-solid fa-dove" style="font-size: 30px;"></i>
 						</a>
