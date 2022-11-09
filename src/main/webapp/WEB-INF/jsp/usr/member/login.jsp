@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="LOGIN" />
 <%@ include file="../common/head.jspf"%>
-<section class="flex justify-center mt-14">
 <script>
 console.log("${afterUrl}");
 </script>
+<section class="flex justify-center mt-14">
 	<div class="w-full max-w-xs">
 		<form action="../member/doLogin?"
 			class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

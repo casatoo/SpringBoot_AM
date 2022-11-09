@@ -99,5 +99,28 @@ public class Rq {
 	public void runB() {
 		System.out.println("B 호출됨");
 	}
+	
+	public String getLoginUri() {
+		return "../member/login?afterUri=" + getAfterLoginUri();
+	}
 
+	public String getAfterLoginUri() {
+		return getEncodedCurrentUri();
+	}
+	public String getEncodedCurrentUri() {
+
+		return Ut.getUriEncoded(getCurrentUri());
+	}
+
+
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+
+		if (queryString != null && queryString.length() > 0) {
+			currentUri += "?" + queryString;
+		}
+
+		return currentUri;
+	}
 }

@@ -20,7 +20,9 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 		
 		String afterUrl = req.getRequestURI();
+		String articleId = req.getParameter("id");
 		
+		afterUrl += "?id="+articleId;
 		if (!rq.isLogined()) {
 //			resp.getWriter().append("<script>")...
 

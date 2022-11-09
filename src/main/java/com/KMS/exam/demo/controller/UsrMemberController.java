@@ -82,7 +82,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw,@RequestParam(defaultValue = "/")String afterUrl, HttpSession httpSession, Model model) {
+	public String doLogin(String loginId, String loginPw,@RequestParam(defaultValue = "/")String afterUrl, String afterUrl2 ,HttpSession httpSession, Model model) {
 		
 		if(rq.isLogined()){
 			return Ut.jsReplace(Ut.f("이미 로그인중입니다"),"../home/main");
@@ -100,13 +100,16 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMemberByLoginId(loginId);
 		rq.login(member);
-		
+		if(afterUrl.equals("/")){
+			
+		}
 		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),afterUrl);
 	}
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout( Model model, HttpSession httpSession) {
+	public String doLogout(Model model, HttpSession httpSession) {
+		
 		rq.logout();
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),"../home/main");
 	}

@@ -19,9 +19,12 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-
+		String afterUrl = req.getRequestURI();
+		String params = req.getQueryString();
+		
+		afterUrl += "?id="+params;
 		req.setAttribute("rq", rq);
-
+		req.setAttribute("afterUrl", afterUrl);
 		return HandlerInterceptor.super.preHandle(req, resp, handler);
 	}
 
