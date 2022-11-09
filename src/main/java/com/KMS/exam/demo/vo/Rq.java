@@ -1,12 +1,12 @@
 package com.KMS.exam.demo.vo;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -28,12 +28,14 @@ public class Rq {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
-
+	private Map<String, String> paramMap;
+	
 	
 	public Rq(HttpServletRequest req, HttpServletResponse resp,MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
 		this.session = req.getSession();
+		paramMap = Ut.getParamMap(req);
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
@@ -101,17 +103,20 @@ public class Rq {
 	}
 	
 	public String getLoginUri() {
-		return "../member/login?afterUri=" + getAfterLoginUri();
+		return "../member/login?afterUri=" + getCurrentUri();
+	}
+	public String getLogoutUri() {
+		return "../member/doLogout?afterUri=" + getCurrentUri();
 	}
 
 	public String getAfterLoginUri() {
 		return getEncodedCurrentUri();
 	}
+	
 	public String getEncodedCurrentUri() {
 
 		return Ut.getUriEncoded(getCurrentUri());
 	}
-
 
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();

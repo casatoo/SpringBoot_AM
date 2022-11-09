@@ -3,6 +3,11 @@ package com.KMS.exam.demo.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -68,23 +73,6 @@ public class Ut {
 				""", msg, uri);
 	}
 	
-	
-	public static String jsHistorygo(String msg,int index) {
-
-		if (msg == null) {
-			msg = "";
-		}
-
-		return Ut.f("""
-				<script>
-				const msg = '%s'.trim();
-				if (msg.length > 0){
-					alert(msg);
-				}
-				history.go(%d);
-				</script>
-				""", msg,index);
-	}
 	public static String getUriEncoded(String str) {
 		try {
 			return URLEncoder.encode(str, "UTF-8");
@@ -114,6 +102,20 @@ public class Ut {
 		}
 
 		return sb.toString();
+	}
+	public static Map<String, String> getParamMap(HttpServletRequest request) {
+		Map<String, String> param = new HashMap<>();
+
+		Enumeration<String> parameterNames = request.getParameterNames();
+
+		while (parameterNames.hasMoreElements()) {
+			String paramName = parameterNames.nextElement();
+			String paramValue = request.getParameter(paramName);
+
+			param.put(paramName, paramValue);
+		}
+
+		return param;
 	}
 
 }

@@ -20,9 +20,6 @@
 <script src="/resource/common.js" defer="defer"></script>
 <link rel="shortcut icon" href="/favicon.ico"/>
 
-<script>
-console.log('${afterUrl}');
-</script>
 </head>
 <body>
 		<c:set var="rq" value="${rq}" />
@@ -52,7 +49,7 @@ console.log('${afterUrl}');
 						<c:choose>
 								<c:when test="${!rq.isLogined()}">
 										<ul class="flex items-center px-3">
-												<li><a href="../member/login?afterUrl=${afterUrl}" class="h-full px-3 flex items-center px-3"> <span>로그인</span>
+												<li><a href="${rq.loginUri}" class="h-full px-3 flex items-center px-3"> <span>로그인</span>
 												</a></li>
 												<li><a href="../member/join" class="h-full px-3 flex items-center px-3"> <span>회원가입</span>
 												</a></li>
@@ -60,7 +57,7 @@ console.log('${afterUrl}');
 								</c:when>
 								<c:otherwise>
 										<ul class="flex items-center px-3">
-												<li><a href="../member/doLogout" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
+												<li><a href="${rq.logoutUri}" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
 												</a></li>
 												<li><a href="../member/info" class="h-full px-3 flex items-center px-3"> <span>내 정보</span>
 												</a></li>
