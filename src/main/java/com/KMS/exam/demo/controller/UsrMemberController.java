@@ -77,7 +77,7 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMember((int) doJoinRd.getData1());
 		resultRd = ResultData.newData(doJoinRd,"member",member);
-		return Ut.jsReplace(Ut.f("회원가입 성공!"), "/");
+		return Ut.jsReplace(Ut.f("회원가입 성공!"),"../member/login");
 	}
 	
 	@RequestMapping("/usr/member/doLogin")

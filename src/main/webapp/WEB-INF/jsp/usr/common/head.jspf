@@ -21,6 +21,10 @@
 <link rel="shortcut icon" href="/favicon.ico"/>
 
 </head>
+
+<script>
+console.log('${rq.loginUri}');
+</script>
 <body>
 		<c:set var="rq" value="${rq}" />
 		<header class="bg-black text-white">

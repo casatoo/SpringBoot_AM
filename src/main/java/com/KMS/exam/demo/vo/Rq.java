@@ -35,7 +35,9 @@ public class Rq {
 		this.req = req;
 		this.resp = resp;
 		this.session = req.getSession();
+		
 		paramMap = Ut.getParamMap(req);
+		
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
@@ -103,6 +105,14 @@ public class Rq {
 	}
 	
 	public String getLoginUri() {
+		String requestUri = req.getRequestURI();
+		switch (requestUri) {
+		case "/usr/member/login":
+		case "/usr/member/join":
+		case "/usr/member/findLoginId":
+		case "/usr/member/findLoginPw":
+			return paramMap.get("afterLoginUri");
+		}
 		return "../member/login?afterUri=" + getCurrentUri();
 	}
 	public String getLogoutUri() {
