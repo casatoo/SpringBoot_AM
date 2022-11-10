@@ -106,13 +106,19 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(@RequestParam(defaultValue = "/")String afterUri, Model model, HttpSession httpSession) {
-		
+	public String doLogout(@RequestParam(defaultValue = "/")String afterUri, @RequestParam(defaultValue = "/")String beforeUri,Model model, HttpSession httpSession, HttpServletRequest req) {
+		switch (beforeUri) {
+		case "/usr/article/write":
+		case "/usr/article/modify":
+		case "/usr/member/info":
+			afterUri = "/";
+		}
 		rq.logout();
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),afterUri);
 	}
 	@RequestMapping("/usr/member/login")
 	public String loginForm(String afterUri, HttpServletRequest req, Model model) {
+		
 		model.addAttribute("afterUri",afterUri);
 		return "/usr/member/login";
 	}

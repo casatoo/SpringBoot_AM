@@ -108,7 +108,6 @@ public class Rq {
 		String requestUri = req.getRequestURI();
 		switch (requestUri) {
 		case "/usr/member/login":
-		case "/usr/member/join":
 		case "/usr/member/findLoginId":
 		case "/usr/member/findLoginPw":
 			return paramMap.get("afterLoginUri");
@@ -117,6 +116,11 @@ public class Rq {
 	}
 	public String getLogoutUri() {
 		return "../member/doLogout?afterUri=" + getCurrentUri();
+	}
+	
+	public String getBeforeUri() {
+		String requestUri = req.getRequestURI();
+		return requestUri;
 	}
 
 	public String getAfterLoginUri() {

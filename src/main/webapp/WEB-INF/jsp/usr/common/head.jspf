@@ -21,9 +21,8 @@
 <link rel="shortcut icon" href="/favicon.ico"/>
 
 </head>
-
 <script>
-console.log('${rq.loginUri}');
+console.log('${rq.beforeUri}');
 </script>
 <body>
 		<c:set var="rq" value="${rq}" />
@@ -61,7 +60,7 @@ console.log('${rq.loginUri}');
 								</c:when>
 								<c:otherwise>
 										<ul class="flex items-center px-3">
-												<li><a href="${rq.logoutUri}" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
+												<li><a href="${rq.logoutUri}&beforeUri=${rq.beforeUri}" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
 												</a></li>
 												<li><a href="../member/info" class="h-full px-3 flex items-center px-3"> <span>내 정보</span>
 												</a></li>

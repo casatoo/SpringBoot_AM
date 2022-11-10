@@ -3,6 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="LOGIN" />
 <%@ include file="../common/head.jspf"%>
+<script>
+	if(${rq.isLogined()}){
+		alert("이미 로그인중입니다.");
+		history.back();
+	}
+</script>
 <section class="flex justify-center mt-14">
 	<div class="w-full max-w-xs">
 		<form action="../member/doLogin?"
@@ -22,12 +28,14 @@
 			</div>
 			<div class="flex items-center justify-between">
 				<button
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-					type="submit">Sign In</button>
-				<a
 					class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-					href="#"> Forgot Password? </a>
+					type="submit">로그인</button>
+								<a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="../member/join">
+										회원가입 </a> <a
+					class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+					href="#"> 찾기 </a>
 			</div>
+			
 		</form>
 	</div>
 </section>
