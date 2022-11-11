@@ -120,6 +120,9 @@ public class Rq {
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
+	public String getJoinUri() {
+		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+	}
 
 	public String getLogoutUri() {
 		String requestUri = req.getRequestURI();

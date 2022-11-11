@@ -29,6 +29,7 @@ $( document ).ready( function() {
 
 <section class="flex justify-center mt-14">
 		<form action="../member/dojoin?" class="w-full max-w-lg">
+		<input type="hidden" name="afterLoginUri" value="${afterLoginUri}"/>
 			<div class="flex flex-wrap -mx-3 mb-6">
 				<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 					<label

@@ -51,7 +51,7 @@
 										<ul class="flex items-center px-3">
 												<li><a href="${rq.loginUri}" class="h-full px-3 flex items-center px-3"> <span>로그인</span>
 												</a></li>
-												<li><a href="../member/join" class="h-full px-3 flex items-center px-3"> <span>회원가입</span>
+												<li><a href="${rq.joinUri}" class="h-full px-3 flex items-center px-3"> <span>회원가입</span>
 												</a></li>
 										</ul>
 								</c:when>

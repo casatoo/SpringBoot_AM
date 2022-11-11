@@ -182,10 +182,6 @@ const modifyBtn = (count,id,relId,comment,listUri) => {
 		$(commentControllBox).empty();
 }
 </script>
-
-<script>
-console.log('${listUri}');
-</script>
 <div class="text-center text-3xl mt-11">
 	<h1>${article.id}번 게시글</h1>
 </div>

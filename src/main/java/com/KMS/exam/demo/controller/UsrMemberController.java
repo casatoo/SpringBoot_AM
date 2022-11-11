@@ -42,7 +42,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/dojoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email, Model model) {
+			String email, String afterLoginUri ,Model model) {
 		
 		ResultData resultRd;
 		
@@ -77,7 +77,7 @@ public class UsrMemberController {
 		}
 		Member member = memberService.getMember((int) doJoinRd.getData1());
 		resultRd = ResultData.newData(doJoinRd,"member",member);
-		return Ut.jsReplace(Ut.f("회원가입 성공!"),"../member/login");
+		return Ut.jsReplace(Ut.f("회원가입 성공!"),Ut.f("../member/login?afterLoginUri=%s",Ut.getUriEncoded(afterLoginUri)));
 	}
 	
 	@RequestMapping("/usr/member/doLogin")
@@ -114,13 +114,14 @@ public class UsrMemberController {
 		return Ut.jsReplace("로그아웃 되었습니다", afterLogoutUri);
 	}
 	@RequestMapping("/usr/member/login")
-	public String loginForm(String afterUri, HttpServletRequest req, Model model) {
+	public String loginForm(String afterLoginUri, HttpServletRequest req, Model model) {
 		
-		model.addAttribute("afterUri",afterUri);
+		model.addAttribute("afterLoginUri",afterLoginUri);
 		return "/usr/member/login";
 	}
 	@RequestMapping("/usr/member/join")
-	public String joinForm(HttpServletRequest req, Model model) {
+	public String joinForm(HttpServletRequest req, Model model, String afterLoginUri) {
+		model.addAttribute("afterLoginUri",afterLoginUri);
 		return "/usr/member/join";
 	}
 	

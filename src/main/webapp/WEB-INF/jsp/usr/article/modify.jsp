@@ -24,7 +24,6 @@
 		form.submit();
 	}
 	
-	console.log('${listUri}');
 </script>
 
 <div class="mt-11 ml-11">
