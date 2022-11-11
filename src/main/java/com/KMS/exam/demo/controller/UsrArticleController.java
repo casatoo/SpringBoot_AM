@@ -76,6 +76,9 @@ public class UsrArticleController {
 		int getTotalArticle = articleService.getTotalArticle(boardId, searchWord, searchFrom);
 		int pageCount = (int) Math.ceil((double)getTotalArticle/itemsInAPage);
 		
+		String replaceUri = rq.getEncodedCurrentUri();
+		
+		model.addAttribute("replaceUri",replaceUri);
 		model.addAttribute("searchFrom",searchFrom);
 		model.addAttribute("searchWord",searchWord);
 		model.addAttribute("getTotalArticle",getTotalArticle);
@@ -124,7 +127,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail( Model model, int id) {
+	public String showDetail( Model model, int id, String replaceUri) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		ResultData<Integer> getReactionResultRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
@@ -135,7 +138,7 @@ public class UsrArticleController {
 		if(getReactionResultRd.getData1()!=null) {
 			reactionRd = getReactionResultRd.getData1();
 		}
-		
+		model.addAttribute("replaceUri", replaceUri);
 		model.addAttribute("comments", comments);
 		model.addAttribute("article", article);
 		model.addAttribute("reactionRd",reactionRd);

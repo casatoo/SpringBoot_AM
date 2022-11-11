@@ -172,7 +172,7 @@ const loginAlert = () => {
 const modifyBtn = (count,id,relId,comment) => {
 	const commentBox = ".comment" + count;
 	const commentControllBox = ".comment-controll-box"+ count;
-	var ModifyForm = "<form action='../comment/doModify?' method='post'>";
+	var ModifyForm = "<form action='../comment/doModify?replaceUri=${replaceUri}' method='post'>";
 		ModifyForm +=	"<input type='hidden' value='"+ id +"' name='id'/>";
 		ModifyForm += "<input type='hidden' value='" + relId + "' name='relId'/>";
 		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"' size='50%' required/>";
@@ -180,6 +180,10 @@ const modifyBtn = (count,id,relId,comment) => {
 		$(commentBox).html(ModifyForm);
 		$(commentControllBox).empty();
 }
+</script>
+
+<script>
+console.log('${replaceUri}');
 </script>
 <div class="text-center text-3xl mt-11">
 	<h1>${article.id}번 게시글</h1>
@@ -241,11 +245,11 @@ const modifyBtn = (count,id,relId,comment) => {
 
 		<div class="btns mt-4 mb-4">
 			<button class="btn btn-outline"
-				onclick="location.href='../article/list?boardId=${article.boardId}&page=1';">리스트로
+				onclick="location.href='${replaceUri}'">리스트로
 				돌아가기</button>
 			<c:if test="${rq.loginedMemberId eq article.memberId}">
 				<button class="btn btn-outline "
-					onclick="location.href='../article/modify?id=${article.id }';">수정</button>
+					onclick="location.href='../article/modify?id=${article.id }&replaceUri=${replaceUri}';">수정</button>
 				<button class="btn btn-outline "
 					onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false; location.href='../article/doDelete?id=${article.id }&boardId=${article.boardId}';">삭제</button>
 			</c:if>
@@ -253,7 +257,7 @@ const modifyBtn = (count,id,relId,comment) => {
 	</div>
 	<div class="mx-40 text-sm">
 		<c:if test="${rq.isLogined()}">
-			<form action="../comment/doAdd?" method="post"
+			<form action="../comment/doAdd?replaceUri=${replaceUri}" method="post"
 				onsubmit="CommentWrite__submitForm(this); return false;">
 				<input type="hidden" value="${article.id}" name="id" /> <input
 					type="hidden" value="article" name="relTypeCode" /> <label
@@ -274,7 +278,7 @@ const modifyBtn = (count,id,relId,comment) => {
 									<button class="comment-modify-btn"
 										onclick="modifyBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}')">수정</button>
 									<button class="comment-delete-btn"
-										onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}';">삭제</button>
+										onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}&replaceUri=${replaceUri}';">삭제</button>
 								</c:if>
 								<button class="comment-comment-btn">댓글</button></td>
 						</tr>

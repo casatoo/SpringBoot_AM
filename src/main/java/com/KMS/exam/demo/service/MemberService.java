@@ -101,4 +101,13 @@ public class MemberService {
 		return memberModifyAuthKey;
 	}
 	
+	public ResultData<String> doCheckLoginId(String loginId) {
+		int matchLoginId = memberRepository.matchLoginId(loginId);
+		
+		if(matchLoginId == 1) {
+			return ResultData.from("F-1",Ut.f("%s 는 이미 사용중인 아이디 입니다.",loginId));
+		}
+		return ResultData.from("S-1",Ut.f("%s 는 사용가능한 아이디 입니다.",loginId));
+	}
+	
 }

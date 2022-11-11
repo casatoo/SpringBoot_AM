@@ -225,5 +225,13 @@ public class UsrMemberController {
 		
 		return memberModifyAuthKey;
 	}
+	@RequestMapping("/usr/member/checkLoginId")
+	@ResponseBody
+	public ResultData checkLoginId(String loginId) {
+		
+		ResultData rd = memberService.doCheckLoginId(loginId);
+		
+		return rd;
+	}
 	
 }

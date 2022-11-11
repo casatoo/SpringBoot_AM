@@ -139,7 +139,6 @@ public class Rq {
 		if (queryString != null && queryString.length() > 0) {
 			currentUri += "?" + queryString;
 		}
-
 		return currentUri;
 	}
 }

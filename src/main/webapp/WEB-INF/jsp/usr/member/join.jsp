@@ -4,6 +4,29 @@
 <c:set var="pageTitle" value="JOIN" />
 <%@ include file="../common/head.jspf"%>
 
+<script>
+$( document ).ready( function() {
+    $( '#loginId' ).keyup( function() {
+   	if($('#loginId').val().length > 2){
+  	$.get('../member/checkLoginId', {
+		loginId : $( '#loginId' ).val(),
+		ajaxMode : 'Y'
+	}, function(data) {
+		if(data.resultCode == 'F-1'){
+			$('#check-loginId').css("color","red");
+		}
+		if(data.resultCode == 'S-1'){
+			$('#check-loginId').css("color","green");
+		}
+		$('#check-loginId').empty().html(data.msg);
+	}, 'json');
+   	}
+    $('#check-loginId').empty().html("2자 이상 입력해주세요").css("color","red");
+    } );
+  } );
+</script>
+
+
 <section class="flex justify-center mt-14">
 		<form action="../member/dojoin?" class="w-full max-w-lg">
 			<div class="flex flex-wrap -mx-3 mb-6">
@@ -14,6 +37,7 @@
 						class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 						type="text" name="loginId" id="loginId" autocomplete="off"
 						required>
+						<p class="text-gray-600 text-xs italic h-4" id="check-loginId"></p>
 				</div>
 				<div class="w-full md:w-1/2 px-3">
 					<label
