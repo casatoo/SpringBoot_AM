@@ -12,6 +12,7 @@ $( document ).ready( function() {
 		loginId : $( '#loginId' ).val(),
 		ajaxMode : 'Y'
 	}, function(data) {
+		
 		if(data.resultCode == 'F-1'){
 			$('#check-loginId').css("color","red");
 		}
@@ -27,9 +28,29 @@ $( document ).ready( function() {
   } );
 </script>
 
+<script>
+	let memberJoin__submitFormDone = false;
+	
+	function memberJoin__submitFormDone(form){
+		
+		if(memberJoin__submitFormDone){
+			return;
+		}
+		form.loginId.value = form.loginId.value.trim();
+		
+		if (form.loginId.value.length < 2) {
+			alert('아이디는 2자 이상입니다.');
+			form.loginId.focus();
+			return;
+		}
+		
+		memberJoin__submitFormDone = true;
+		form.submit();
+	}
+</script>
 
 <section class="flex justify-center mt-14">
-		<form action="../member/dojoin?" class="w-full max-w-lg">
+		<form action="../member/dojoin?" class="w-full max-w-lg" onsubmit="memberJoin__submitFormDone(this); return false;">
 		<input type="hidden" name="afterLoginUri" value="${afterLoginUri}"/>
 			<div class="flex flex-wrap -mx-3 mb-6">
 				<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
