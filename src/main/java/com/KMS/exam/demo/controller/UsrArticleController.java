@@ -76,9 +76,6 @@ public class UsrArticleController {
 		int getTotalArticle = articleService.getTotalArticle(boardId, searchWord, searchFrom);
 		int pageCount = (int) Math.ceil((double)getTotalArticle/itemsInAPage);
 		
-		String replaceUri = rq.getEncodedCurrentUri();
-		
-		model.addAttribute("replaceUri",replaceUri);
 		model.addAttribute("searchFrom",searchFrom);
 		model.addAttribute("searchWord",searchWord);
 		model.addAttribute("getTotalArticle",getTotalArticle);

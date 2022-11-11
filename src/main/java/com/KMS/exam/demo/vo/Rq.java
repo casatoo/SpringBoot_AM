@@ -127,6 +127,7 @@ public class Rq {
 		switch (requestUri) {
 		case "/usr/article/write":
 		case "/usr/article/modify":
+		case "/usr/member/info":
 			return "../member/doLogout?afterLogoutUri=" + "/";
 		}
 
@@ -151,6 +152,9 @@ public class Rq {
 		}
 
 		return getEncodedCurrentUri();
+	}
+	public String getArticleDetailUriFromArticleList(Article article) {
+		return "../article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
 
 }

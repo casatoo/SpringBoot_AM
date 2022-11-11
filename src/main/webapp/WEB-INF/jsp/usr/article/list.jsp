@@ -42,7 +42,7 @@
 				<tr class="hover:bg-black transition duration-300 hover:text-white">
 					<th>${article.id}</th>
 					<td>${article.regDate.substring(5,16)}</td>
-					<td onClick="location.href='../article/detail?id=${article.id}&replaceUri=${replaceUri}'" style="cursor: pointer;">${article.title}</td>
+					<td onClick="location.href='${rq.getArticleDetailUriFromArticleList(article)}'" style="cursor: pointer;">${article.title}</td>
 					<td>${article.extra__writerName}</td>
 					<td>${article.hit}</td>
 					<td><span class="badge"><i

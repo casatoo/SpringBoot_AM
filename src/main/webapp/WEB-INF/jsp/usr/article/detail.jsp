@@ -245,7 +245,7 @@ console.log('${replaceUri}');
 
 		<div class="btns mt-4 mb-4">
 			<button class="btn btn-outline"
-				onclick="location.href='${replaceUri}'">리스트로
+				onclick="location.href='${param.listUri }'">리스트로
 				돌아가기</button>
 			<c:if test="${rq.loginedMemberId eq article.memberId}">
 				<button class="btn btn-outline "

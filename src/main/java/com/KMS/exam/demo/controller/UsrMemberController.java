@@ -108,6 +108,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/")String afterLogoutUri) {
+		
 		rq.logout();
 
 		return Ut.jsReplace("로그아웃 되었습니다", afterLogoutUri);
