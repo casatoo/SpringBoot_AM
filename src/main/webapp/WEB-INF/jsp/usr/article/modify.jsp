@@ -23,15 +23,18 @@
 
 		form.submit();
 	}
+	
+	console.log('${listUri}');
 </script>
 
 <div class="mt-11 ml-11">
 		<div class="text-4xl mb-11 ml-11">${article.id}번글수정</div>
 		<c:set var="article" value="${article}" />
-		<form action="../article/doModify?">
-
+		<form action="../article/doModify" onsubmit="ArticleModify__submit(this); return false;">
 				<div>
-						<input type="hidden" id="id" name="id" value="${article.id}" /> <input type="hidden" id="body" name="body" />
+						<input type="hidden" id="id" name="id" value="${article.id}" /> 
+						<input type="hidden" id="body" name="body" />
+						<input type="hidden" id="listUri" name="listUri" value="${listUri}"/>
 				</div>
 				<div>
 						<label for="title">글 제목</label> <input type="text" id="title" name="title" size="30" value="${article.title}" />
@@ -39,8 +42,8 @@
 				<div class="mt-11">
 						<label for="body">글 내용</label>
 						<div class="toast-ui-editor">
-						${article.body}
-								<script type="text/x-template"></script>
+						
+								<script type="text/x-template">${article.body}</script>
 						</div>
 				</div>
 				<button class="mt-11 btn btn-outline" type="submit">글 수정</button>

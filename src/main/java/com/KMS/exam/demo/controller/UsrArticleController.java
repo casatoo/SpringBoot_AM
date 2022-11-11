@@ -104,7 +104,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public String doModify(int id, String title, String body, String listUri) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		if (article == null) {
 			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
@@ -119,12 +119,12 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack(Ut.f("내용을 입력해주세요"));
 		}
 		articleService.modifyArticle(id, title, body);
-		return Ut.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), Ut.f("../article/detail?id=%d", id));
+		return Ut.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), Ut.f("../article/detail?id=%d&listUri=%s", id,listUri));
 
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail( Model model, int id, String replaceUri) {
+	public String showDetail( Model model, int id, String listUri) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		ResultData<Integer> getReactionResultRd  = reactionService.getReactionResult(id,rq.getLoginedMemberId());
@@ -135,7 +135,8 @@ public class UsrArticleController {
 		if(getReactionResultRd.getData1()!=null) {
 			reactionRd = getReactionResultRd.getData1();
 		}
-		model.addAttribute("replaceUri", replaceUri);
+		
+		model.addAttribute("listUri", Ut.getUriEncoded(listUri));
 		model.addAttribute("comments", comments);
 		model.addAttribute("article", article);
 		model.addAttribute("reactionRd",reactionRd);
@@ -162,11 +163,12 @@ public class UsrArticleController {
 		return "usr/article/write" ;
 	}
 	@RequestMapping("usr/article/modify")
-	public String articleModifyForm( Model model,int id) {
+	public String articleModifyForm( Model model,int id, String listUri) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
 				return rq.jsHistoryBackOnView("권한이 없습니다.");
 		}
+		model.addAttribute("listUri", Ut.getUriEncoded(listUri));
 		model.addAttribute("article", article);
 		return "usr/article/modify" ;
 	}

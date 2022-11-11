@@ -169,12 +169,13 @@ const loginAlert = () => {
 2. 수정, 삭제 버튼 삽입
 --%>
 <script>
-const modifyBtn = (count,id,relId,comment) => {
+const modifyBtn = (count,id,relId,comment,listUri) => {
 	const commentBox = ".comment" + count;
 	const commentControllBox = ".comment-controll-box"+ count;
 	var ModifyForm = "<form action='../comment/doModify?replaceUri=${replaceUri}' method='post'>";
 		ModifyForm +=	"<input type='hidden' value='"+ id +"' name='id'/>";
 		ModifyForm += "<input type='hidden' value='" + relId + "' name='relId'/>";
+		ModifyForm += "<input type='hidden' value='" + listUri + "' name='listUri'/>";
 		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"' size='50%' required/>";
 		ModifyForm += "<button class='comment-modify-btn' type='submit'>수정</button></form>";
 		$(commentBox).html(ModifyForm);
@@ -183,7 +184,7 @@ const modifyBtn = (count,id,relId,comment) => {
 </script>
 
 <script>
-console.log('${replaceUri}');
+console.log('${listUri}');
 </script>
 <div class="text-center text-3xl mt-11">
 	<h1>${article.id}번 게시글</h1>
@@ -249,7 +250,7 @@ console.log('${replaceUri}');
 				돌아가기</button>
 			<c:if test="${rq.loginedMemberId eq article.memberId}">
 				<button class="btn btn-outline "
-					onclick="location.href='../article/modify?id=${article.id }&replaceUri=${replaceUri}';">수정</button>
+					onclick="location.href='../article/modify?id=${article.id }&listUri=${listUri}';">수정</button>
 				<button class="btn btn-outline "
 					onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false; location.href='../article/doDelete?id=${article.id }&boardId=${article.boardId}';">삭제</button>
 			</c:if>
@@ -257,10 +258,12 @@ console.log('${replaceUri}');
 	</div>
 	<div class="mx-40 text-sm">
 		<c:if test="${rq.isLogined()}">
-			<form action="../comment/doAdd?replaceUri=${replaceUri}" method="post"
+			<form action="../comment/doAdd" method="post"
 				onsubmit="CommentWrite__submitForm(this); return false;">
-				<input type="hidden" value="${article.id}" name="id" /> <input
-					type="hidden" value="article" name="relTypeCode" /> <label
+				<input type="hidden" value="${article.id}" name="id" /> 
+				<input type="hidden" value="article" name="relTypeCode" /> 
+				<input type="hidden" value="${listUri}" name="listUri" /> 
+				<label
 					for="comment">댓글작성 :</label> <input type="text" placeholder="댓글"
 					id="comment" name="comment" class="h-9 w-auto" size="70" required />
 				<button class="h-9 comment-write-btn" type="submit">댓글 작성</button>
@@ -276,9 +279,9 @@ console.log('${replaceUri}');
 							<td class="comment-controll-box${status.count} w-36"><c:if
 									test="${rq.loginedMemberId eq comment.memberId}">
 									<button class="comment-modify-btn"
-										onclick="modifyBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}')">수정</button>
+										onclick="modifyBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}','${listUri}')">수정</button>
 									<button class="comment-delete-btn"
-										onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}&replaceUri=${replaceUri}';">삭제</button>
+										onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}&listUri=${listUri}';">삭제</button>
 								</c:if>
 								<button class="comment-comment-btn">댓글</button></td>
 						</tr>

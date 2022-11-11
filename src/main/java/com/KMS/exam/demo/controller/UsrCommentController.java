@@ -23,7 +23,7 @@ public class UsrCommentController {
 	
 	@RequestMapping("/usr/comment/doAdd")
 	@ResponseBody
-	public String doAdd(int id, String comment, String relTypeCode) {
+	public String doAdd(int id, String comment, String relTypeCode, String listUri) {
 		
 		if(Ut.empty(comment)) {
 			return Ut.jsHistoryBack(Ut.f("댓글을 입력해주세요"));
@@ -32,27 +32,27 @@ public class UsrCommentController {
 		
 		ResultData commentRd = commentService.doWrite(id,rq.getLoginedMemberId(),setComment, relTypeCode);
 		
-		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", id));
+		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d&listUri=%s", id,listUri));
 	}
 	
 	@RequestMapping("/usr/comment/doDelete")
 	@ResponseBody
-	public String doDelete(int id, int relId) {
+	public String doDelete(int id, int relId , String listUri ) {
 		
 		ResultData commentRd = commentService.doDelete(id);
 		ResultData<Integer> rd = ResultData.newData(commentRd, "Reaction", id);
 		
-		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", relId));
+		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d&listUri=%s", relId,Ut.getUriEncoded(listUri)));
 	}
 	
 	@RequestMapping("/usr/comment/doModify")
 	@ResponseBody
-	public String doModify(int id, String comment, int relId) {
+	public String doModify(int id, String comment, int relId , String listUri) {
 		
 		ResultData commentRd = commentService.doModify(id, comment);
 		ResultData<Integer> rd = ResultData.newData(commentRd, "Reaction", id);
 		
-		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d", relId));
+		return Ut.jsReplace(Ut.f(""),  Ut.f("../article/detail?id=%d&listUri=%s", relId,listUri));
 	}
 	
 	
