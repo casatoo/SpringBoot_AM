@@ -42,7 +42,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/dojoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email, String afterLoginUri ,Model model) {
+			String email,@RequestParam(defaultValue = "/") String afterLoginUri ,Model model) {
 		
 		ResultData resultRd;
 		

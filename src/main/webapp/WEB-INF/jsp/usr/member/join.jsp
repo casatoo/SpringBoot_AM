@@ -20,8 +20,9 @@ $( document ).ready( function() {
 		}
 		$('#check-loginId').empty().html(data.msg);
 	}, 'json');
-   	}
+   	}else{
     $('#check-loginId').empty().html("2자 이상 입력해주세요").css("color","red");
+   	}
     } );
   } );
 </script>
