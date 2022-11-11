@@ -37,7 +37,7 @@ $( document ).ready( function() {
 						class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 						type="text" name="loginId" id="loginId" autocomplete="off"
 						required>
-						<p class="text-gray-600 text-xs italic h-4" id="check-loginId"></p>
+						<p class="text-gray-600 text-s h-4" id="check-loginId"></p>
 				</div>
 				<div class="w-full md:w-1/2 px-3">
 					<label

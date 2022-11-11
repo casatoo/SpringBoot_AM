@@ -95,43 +95,7 @@ public class Rq {
 		req.setAttribute("historyBack", true);
 		return "usr/common/js";
 	}
-	public void runA() {
-		System.out.println("A 호출됨");
-		runB();
-	}
-
-	public void runB() {
-		System.out.println("B 호출됨");
-	}
 	
-	public String getLoginUri() {
-		String requestUri = req.getRequestURI();
-		switch (requestUri) {
-		case "/usr/member/login":
-		case "/usr/member/findLoginId":
-		case "/usr/member/findLoginPw":
-			return paramMap.get("afterLoginUri");
-		}
-		return "../member/login?afterUri=" + getCurrentUri();
-	}
-	public String getLogoutUri() {
-		return "../member/doLogout?afterUri=" + getCurrentUri();
-	}
-	
-	public String getBeforeUri() {
-		String requestUri = req.getRequestURI();
-		return requestUri;
-	}
-
-	public String getAfterLoginUri() {
-		return getEncodedCurrentUri();
-	}
-	
-	public String getEncodedCurrentUri() {
-
-		return Ut.getUriEncoded(getCurrentUri());
-	}
-
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();
 		String queryString = req.getQueryString();
@@ -139,6 +103,54 @@ public class Rq {
 		if (queryString != null && queryString.length() > 0) {
 			currentUri += "?" + queryString;
 		}
+
 		return currentUri;
 	}
+
+	public String getEncodedCurrentUri() {
+
+		return Ut.getUriEncoded(getCurrentUri());
+	}
+
+	public void printReplaceJs(String msg, String url) {
+		resp.setContentType("text/html; charset=UTF-8");
+		print(Ut.jsReplace(msg, url));
+	}
+
+	public String getLoginUri() {
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+
+	public String getLogoutUri() {
+		String requestUri = req.getRequestURI();
+
+		switch (requestUri) {
+		case "/usr/article/write":
+		case "/usr/article/modify":
+			return "../member/doLogout?afterLogoutUri=" + "/";
+		}
+
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}
+
+	public String getAfterLogoutUri() {
+
+		return getEncodedCurrentUri();
+	}
+
+	public String getAfterLoginUri() {
+		String requestUri = req.getRequestURI();
+
+		// 로그인 후 다시 돌아가면 안되는 URL
+		switch (requestUri) {
+		case "/usr/member/login":
+		case "/usr/member/join":
+		case "/usr/member/findLoginId":
+		case "/usr/member/findLoginPw":
+			return Ut.getUriEncoded(Ut.getAttr(paramMap, "afterLoginUri", ""));
+		}
+
+		return getEncodedCurrentUri();
+	}
+
 }

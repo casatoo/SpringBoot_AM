@@ -13,7 +13,7 @@
 	<div class="w-full max-w-xs">
 		<form action="../member/doLogin?"
 			class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-			<input type="hidden" name="afterUri" id="afterUri" value="${afterUri}"/>
+			<input type="hidden" name="afterLoginUri" id="afterLoginUri" value="${param.afterLoginUri}"/>
 			<div class="mb-4">
 				<label class="block text-gray-700 text-sm font-bold mb-2"
 					for="username"> Username </label> <input

@@ -82,7 +82,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw,@RequestParam(defaultValue = "/")String afterUri ,HttpSession httpSession, Model model) {
+	public String doLogin(String loginId, String loginPw,@RequestParam(defaultValue = "/")String afterLoginUri) {
 		
 		if(rq.isLogined()){
 			return Ut.jsReplace(Ut.f("이미 로그인중입니다"),"../home/main");
@@ -94,6 +94,7 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack(Ut.f("비밀번호를 입력해주세요"));
 		}
 		ResultData doLoginRd= memberService.doLogin(loginId,loginPw);
+		
 		if(doLoginRd.isFail()) {
 			ResultData resultRd = ResultData.from(doLoginRd.getResultCode(),doLoginRd.getMsg());
 			return Ut.jsReplace(resultRd.getMsg(), "../member/login");
@@ -101,20 +102,15 @@ public class UsrMemberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 		rq.login(member);
 		
-		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),afterUri);
+		return Ut.jsReplace(Ut.f("%s 회원님 환영합니다.",member.getName()),afterLoginUri);
 	}
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(@RequestParam(defaultValue = "/")String afterUri, @RequestParam(defaultValue = "/")String beforeUri,Model model, HttpSession httpSession, HttpServletRequest req) {
-		switch (beforeUri) {
-		case "/usr/article/write":
-		case "/usr/article/modify":
-		case "/usr/member/info":
-			afterUri = "/";
-		}
+	public String doLogout(@RequestParam(defaultValue = "/")String afterLogoutUri) {
 		rq.logout();
-		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."),afterUri);
+
+		return Ut.jsReplace("로그아웃 되었습니다", afterLogoutUri);
 	}
 	@RequestMapping("/usr/member/login")
 	public String loginForm(String afterUri, HttpServletRequest req, Model model) {
