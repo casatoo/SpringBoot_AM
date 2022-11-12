@@ -11,14 +11,23 @@
 --%>
 <script>
 const modifyBtn = (count) => {
-		$("#showComment").removeAttr('disabled').removeClass('border-none');
-		$("#comment-modify-submit").removeClass('hidden');
+		$("#showComment"+count).removeAttr('disabled').removeClass('border-none');
+		$("#comment-modify-submit"+count).removeClass('hidden');
+		$("#comment-modify-cancle"+count).removeClass('hidden');
 		$(".comment-modify-btn"+count).addClass('hidden');
 		$(".comment-delete-btn"+count).addClass('hidden');
 }
 </script>
 <%-- 수정 취소 --%>
 <script>
+const modifyCancleBtn = (count) =>{
+	$("#showComment"+count).attr("disabled", true).addClass('border-none');
+	$("#comment-modify-submit"+count).addClass('hidden');
+	$("#comment-modify-cancle"+count).addClass('hidden');
+	$(".comment-modify-btn"+count).removeClass('hidden');
+	$(".comment-delete-btn"+count).removeClass('hidden');
+}
+
 </script>
 <script>
 	const getComments = () =>{
@@ -42,7 +51,7 @@ const modifyBtn = (count) => {
 				for="comment">댓글작성 :</label> <input type="text" placeholder="댓글"
 				id="commentWrite" name="comment" class="h-9 w-auto" size="70"
 				required />
-			<button class="h-9 comment-write-btn smallBtn" type="submit">댓글 작성</button>
+			<button class="h-9 comment-write-btn largeBtn" type="submit">댓글 작성</button>
 		</form>
 	</c:if>
 	<div class="overflow-x-auto mt-4 mb-4 text-center table-box-type-1">
@@ -58,11 +67,13 @@ const modifyBtn = (count) => {
 								<input type="hidden" value="${comment.id}" name="id" /> <input
 									type="hidden" value="${comment.relId}" name="relId" /> <input
 									type="hidden" value="${listUri}" name="listUri" /> <input
-									type="text" id="showComment" name="comment"
+									type="text" id="showComment${status.count}" name="comment"
 									class="h-6 w-auto border-none box-border" disabled
 									value="${comment.comment}" required />
 								<button class="comment-modify-btn smallBtn hidden" type="submit"
-									id="comment-modify-submit">수정</button>
+									id="comment-modify-submit${status.count}">수정</button>
+								<button class="comment-modify-btn smallBtn hidden" type="button"
+									id="comment-modify-cancle${status.count}" onclick="modifyCancleBtn(${status.count})">취소</button>
 							</form>
 								<c:if test="${rq.loginedMemberId eq comment.memberId}">
 									<button class="comment-modify-btn${status.count} smallBtn" onclick="modifyBtn(${status.count})">수정</button>
