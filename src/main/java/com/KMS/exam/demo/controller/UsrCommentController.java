@@ -1,5 +1,7 @@
 package com.KMS.exam.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KMS.exam.demo.service.CommentService;
 import com.KMS.exam.demo.util.Ut;
+import com.KMS.exam.demo.vo.Comment;
 import com.KMS.exam.demo.vo.ResultData;
 import com.KMS.exam.demo.vo.Rq;
 
@@ -56,4 +59,12 @@ public class UsrCommentController {
 	}
 	
 	
+	@RequestMapping("/usr/comment/getComments")
+	@ResponseBody
+	public List doModify(int relId) {
+		
+		List<Comment> comments = commentService.getForPrintComments(relId);
+		
+		return comments;
+	}
 }

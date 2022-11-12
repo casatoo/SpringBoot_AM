@@ -24,22 +24,10 @@ html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents, html>
 body{
 	min-width:750px;
 }
-.comment-write-btn{
+.smallBtn{
 	border: 1px solid black;
+	width:35px;
 }
-.comment-modify-btn{
-	border: 1px solid black;
-	width: 35px;
-}
-.comment-delete-btn{
-	border: 1px solid black;
-	width: 35px;
-}
-.comment-comment-btn{
-	border: 1px solid black;
-	width: 35px;
-}
-
 /*
 TOAST UI
 */

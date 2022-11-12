@@ -160,28 +160,7 @@ const loginAlert = () => {
 }
 </script>
 
-<%-- 
-수정 폼 구현 
-1. 댓글 부분을 폼 형식을 변환
-2. 수정, 삭제 버튼 부분 삭제
-취소했을 경우
-1. 댓글부분을 다시 comment 로 채움
-2. 수정, 삭제 버튼 삽입
---%>
-<script>
-const modifyBtn = (count,id,relId,comment,listUri) => {
-	const commentBox = ".comment" + count;
-	const commentControllBox = ".comment-controll-box"+ count;
-	var ModifyForm = "<form action='../comment/doModify?replaceUri=${replaceUri}' method='post'>";
-		ModifyForm +=	"<input type='hidden' value='"+ id +"' name='id'/>";
-		ModifyForm += "<input type='hidden' value='" + relId + "' name='relId'/>";
-		ModifyForm += "<input type='hidden' value='" + listUri + "' name='listUri'/>";
-		ModifyForm += "<input type='text' id='comment' name='comment' class='h-6 w-auto' value='"+comment+"' size='50%' required/>";
-		ModifyForm += "<button class='comment-modify-btn' type='submit'>수정</button></form>";
-		$(commentBox).html(ModifyForm);
-		$(commentControllBox).empty();
-}
-</script>
+
 <div class="text-center text-3xl mt-11">
 	<h1>${article.id}번 게시글</h1>
 </div>
@@ -252,40 +231,7 @@ const modifyBtn = (count,id,relId,comment,listUri) => {
 			</c:if>
 		</div>
 	</div>
-	<div class="mx-40 text-sm">
-		<c:if test="${rq.isLogined()}">
-			<form action="../comment/doAdd" method="post"
-				onsubmit="CommentWrite__submitForm(this); return false;">
-				<input type="hidden" value="${article.id}" name="id" /> 
-				<input type="hidden" value="article" name="relTypeCode" /> 
-				<input type="hidden" value="${listUri}" name="listUri" /> 
-				<label
-					for="comment">댓글작성 :</label> <input type="text" placeholder="댓글"
-					id="comment" name="comment" class="h-9 w-auto" size="70" required />
-				<button class="h-9 comment-write-btn" type="submit">댓글 작성</button>
-			</form>
-		</c:if>
-		<div class="overflow-x-auto mt-4 mb-4 text-center table-box-type-1">
-			<table class="w-full">
-				<tbody>
-					<c:forEach var="comment" items="${comments}" varStatus="status">
-						<tr>
-							<th>${status.count}</th>
-							<td class="text-left comment${status.count}">${comment.extra__writerName}&nbsp;:&nbsp;&nbsp;${comment.comment}</td>
-							<td class="comment-controll-box${status.count} w-36"><c:if
-									test="${rq.loginedMemberId eq comment.memberId}">
-									<button class="comment-modify-btn"
-										onclick="modifyBtn(${status.count},${comment.id},${comment.relId},'${comment.comment}','${listUri}')">수정</button>
-									<button class="comment-delete-btn"
-										onclick="location.href='../comment/doDelete?id=${comment.id}&relId=${comment.relId}&listUri=${listUri}';">삭제</button>
-								</c:if>
-								<button class="comment-comment-btn">댓글</button></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-	</div>
+<%@ include file="../article/comment.jspf"%>
 
 </section>
 <%@ include file="../common/foot.jspf"%>
