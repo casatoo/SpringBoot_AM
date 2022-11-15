@@ -4,10 +4,7 @@
 <%@ include file="../common/head.jspf"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 <script>
-$(document).ready(
-			function() {
-				$('#loginId').keyup(
-						function() {
+				function checkLoginIdDup() {
 							if ($('#loginId').val().length > 2) {
 								$.get('../member/checkLoginId', {
 									loginId : $('#loginId').val(),
@@ -31,9 +28,8 @@ $(document).ready(
 										.html("2자 이상 입력해주세요").css("color",
 												"red");
 							}
-						});
-			});
-
+						}
+const checkLoginIdDupDebounced = _.debounce(checkLoginIdDup,500); 
 </script>
 
 <script>
@@ -56,14 +52,14 @@ $(document).ready(
 </script>
 
 <section class="flex justify-center mt-14">
-		<form action="../member/dojoin?" class="w-full max-w-lg" onsubmit="memberJoin__submitForm(this); return false;">
+		<form action="../member/dojoin?" class="w-full max-w-lg" onsubmit="memberJoin__submitForm(); return false;">
 				<input type="hidden" name="afterLoginUri" value="${afterLoginUri}" />
 				<div class="flex flex-wrap -mx-3 mb-6">
 						<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 								<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
 										ID </label> <input
 										class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-										type="text" name="loginId" id="loginId" autocomplete="off" required>
+										type="text" name="loginId" id="loginId" autocomplete="off" onkeyup="checkLoginIdDupDebounced(this);" required>
 								<p class="text-gray-600 text-s h-4" id="check-loginId"></p>
 						</div>
 						<div class="w-full md:w-1/2 px-3">
