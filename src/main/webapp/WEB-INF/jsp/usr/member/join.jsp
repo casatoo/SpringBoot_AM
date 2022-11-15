@@ -50,7 +50,9 @@ const checkLoginIdDupDebounced = _.debounce(checkLoginIdDup,500);
 		form.submit();
 	}
 </script>
-
+<div class="text-center text-3xl mt-11">
+	<h1>회원가입</h1>
+</div>
 <section class="flex justify-center mt-14">
 		<form action="../member/dojoin?" class="w-full max-w-lg" onsubmit="memberJoin__submitForm(); return false;">
 				<input type="hidden" name="afterLoginUri" value="${afterLoginUri}" />

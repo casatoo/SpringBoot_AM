@@ -62,7 +62,7 @@ const modifyCancleBtn = (count) =>{
 						<th>${status.count}</th>
 						<td>${comment.extra__writerName}</td>
 						<td class="text-left">
-							<form action="../comment/doModify?replaceUri=${replaceUri}"
+							<form action="../comment/doModify"
 								method="post" class="comment${status.count} inline-block w-4/5">
 								<input type="hidden" value="${comment.id}" name="id" /> <input
 									type="hidden" value="${comment.relId}" name="relId" /> <input

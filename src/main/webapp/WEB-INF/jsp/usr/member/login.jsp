@@ -9,6 +9,9 @@
 		history.back();
 	}
 </script>
+<div class="text-center text-3xl mt-11">
+	<h1>로그인</h1>
+</div>
 <section class="flex justify-center mt-14">
 	<div class="w-full max-w-xs">
 		<form action="../member/doLogin?"
@@ -33,7 +36,7 @@
 								<a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="../member/join">
 										회원가입 </a> <a
 					class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-					href="#"> 찾기 </a>
+					href="#">아이디 비밀번호 찾기 </a>
 			</div>
 			
 		</form>
