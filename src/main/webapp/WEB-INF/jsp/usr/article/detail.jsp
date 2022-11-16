@@ -15,7 +15,6 @@
 	const isLogined = ${rq.isLogined()};
 </script>
 
-
 <%-- 
 댓글작성 제한사항 설정 스크립트 
 작성된 벨류값을 가져와서 조건에 맞는지 확인하는 함수

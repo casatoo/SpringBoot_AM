@@ -1,5 +1,7 @@
 package com.KMS.exam.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.KMS.exam.demo.vo.Member;
@@ -24,5 +26,7 @@ public interface MemberRepository {
 	public void doModify(String nickname, String cellphoneNum, String email, int memberId);
 
 	public void doChangePassword(int memberId, String loginPw);
+
+	public List<Member> getMemberList();
 
 }

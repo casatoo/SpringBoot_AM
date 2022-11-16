@@ -1,7 +1,8 @@
 package com.KMS.exam.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -232,4 +233,11 @@ public class UsrMemberController {
 		return rd;
 	}
 	
+	@RequestMapping("usr/member/administrator")
+	public String administrator(HttpServletRequest req, Model model) {
+		List<Member> memberList = memberService.getMemberList();
+		
+		model.addAttribute("memberList",memberList);
+		return "/usr/member/administrator";
+	}
 }

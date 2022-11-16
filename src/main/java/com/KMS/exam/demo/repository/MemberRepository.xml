@@ -72,5 +72,10 @@
 		loginPw = #{loginPw}
 		WHERE id = #{memberId}
 	</update>
+	
+	<select id="getMemberList" resultType="Member">
+		SELECT *
+		FROM `member`
+	</select>
 
 </mapper>

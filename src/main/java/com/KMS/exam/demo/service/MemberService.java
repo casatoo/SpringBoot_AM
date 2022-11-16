@@ -1,5 +1,7 @@
 package com.KMS.exam.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -108,6 +110,10 @@ public class MemberService {
 			return ResultData.from("F-1",Ut.f("이미 사용중인 아이디 입니다."));
 		}
 		return ResultData.from("S-1",Ut.f("사용가능한 아이디 입니다."));
+	}
+	public List<Member> getMemberList() {
+		
+		return memberRepository.getMemberList();
 	}
 	
 }

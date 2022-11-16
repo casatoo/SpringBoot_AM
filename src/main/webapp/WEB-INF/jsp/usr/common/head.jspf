@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>${pageTitle}PAGE</title>
 <link rel="stylesheet" href="/resource/common.css" />
-		
+
 <%-- 제이쿼리 --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
@@ -18,15 +18,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
 <script src="/resource/common.js" defer="defer"></script>
-<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="shortcut icon" href="/favicon.ico" />
 
 </head>
 <body>
 		<c:set var="rq" value="${rq}" />
 		<header class="bg-black text-white">
-				<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 " >
-						<a href="#" class="flex items-center px-3">
-						<i class="fa-sharp fa-solid fa-dove" style="font-size: 30px;"></i>
+				<nav class="nav-bar flex justify-between flex-grow container mx-auto h-20 ">
+						<a href="#" class="flex items-center px-3"> <i class="fa-sharp fa-solid fa-dove" style="font-size: 30px;"></i>
 						</a>
 						<div class="flex justify-end flex-grow">
 								<h1 class="flex items-center px-3">
@@ -40,30 +39,32 @@
 								</div>
 								<div class="flex items-center px-3">
 										<c:if test="${rq.isLogined()}">
-											<a href="../article/write" class="hover:underline">글작성</a>
+												<a href="../article/write" class="hover:underline">글작성</a>
 										</c:if>
 								</div>
 						</div>
 						<c:set var="loginMember" value="${loginMember}" />
-
-						<c:choose>
-								<c:when test="${!rq.isLogined()}">
-										<ul class="flex items-center px-3">
+						<ul class="flex items-center px-3">
+								<c:choose>
+										<c:when test="${!rq.isLogined()}">
 												<li><a href="${rq.loginUri}" class="h-full px-3 flex items-center px-3"> <span>로그인</span>
 												</a></li>
 												<li><a href="${rq.joinUri}" class="h-full px-3 flex items-center px-3"> <span>회원가입</span>
 												</a></li>
-										</ul>
-								</c:when>
-								<c:otherwise>
-										<ul class="flex items-center px-3">
+										</c:when>
+										<c:otherwise>
 												<li><a href="${rq.logoutUri}" class="h-full px-3 flex items-center px-3"> <span>로그아웃</span>
 												</a></li>
 												<li><a href="../member/info" class="h-full px-3 flex items-center px-3"> <span>내 정보</span>
 												</a></li>
-										</ul>
-								</c:otherwise>
-						</c:choose>
+										</c:otherwise>
+								</c:choose>
+								<c:if test="${rq.getLoginedMember().getAuthLevel() == 7 }">
+										<li><a href="../member/administrator" class="h-full px-3 flex items-center px-3"> <span>관리자
+																페이지</span>
+										</a></li>
+								</c:if>
+						</ul>
 				</nav>
 		</header>
 		<main>
